@@ -83,7 +83,7 @@ namespace WindowsFormsApplication1
             foreach (Polygon polygon in polygons) polygon.BuildEdges();
 
             player1 = polygons[0];
-            player2 = polygons[0];
+            player2 = polygons[1];
         }
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -120,6 +120,38 @@ namespace WindowsFormsApplication1
                 }
             }
             player1.Offset(playerTranslation);
+            velocity = new Vector();
+            switch (e.KeyValue)
+            {
+                case 32: //SPACE
+
+                    break;
+                case 87: // UP
+                    velocity = new Vector(0, -i);
+                    break;
+                case 83: // DOWN
+                    velocity = new Vector(0, i);
+                    break;
+                case 68: // RIGHT
+                    velocity = new Vector(i, 0);
+                    break;
+                case 65: // LEFT
+                    velocity = new Vector(-i, 0);
+                    break;
+            }
+            playerTranslation = velocity;
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player1) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+            player2.Offset(playerTranslation);
+
             /*
             if (e.KeyCode == Keys.Left)
                 BallSpeed.X = -BallAxisSpeedX;
