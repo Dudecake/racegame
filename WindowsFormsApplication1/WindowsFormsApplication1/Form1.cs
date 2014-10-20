@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         Ship turn = new Ship();
-        Polygon collision = new Polygon();
+        Polygon polygon = new Polygon();
         Vector vector = new Vector();
         Collision collision = new Collision();
         
@@ -122,7 +122,7 @@ namespace WindowsFormsApplication1
         {
             if (Backbuffer != null)
             {
-                e.Graphics.DrawImageUnscaled(Backbuffer, Point.Empty);
+                e.Graphics.DrawImageUnscaled(Backbuffer, System.Drawing.Point.Empty);
             }
         }
 
@@ -141,7 +141,7 @@ namespace WindowsFormsApplication1
                 using (var g = Graphics.FromImage(Backbuffer))
                 {
                     g.Clear(Color.White);
-                    g.FillEllipse(Brushes.Black, BallPos.X - BallSize / 2, BallPos.Y - BallSize / 2, BallSize, BallSize);
+                    //g.FillEllipse(Brushes.Black, BallPos.X - BallSize / 2, BallPos.Y - BallSize / 2, BallSize, BallSize);
                 }
 
                 Invalidate();

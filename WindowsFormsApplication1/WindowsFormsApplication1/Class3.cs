@@ -87,17 +87,17 @@ namespace WindowsFormsApplication1
         {
             return new Vector(a.X * b, a.Y * b);
         }
-
+        /*
         public static Vector operator *(Vector a, int b)
         {
             return new Vector(a.X * b, a.Y * b);
         }
-
+        
         public static Vector operator *(Vector a, double b)
         {
             return new Vector((double)(a.X * b), (double)(a.Y * b));
         }
-
+        */
         public override bool Equals(object obj)
         {
             Vector v = (Vector)obj;
