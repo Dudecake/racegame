@@ -11,21 +11,22 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
+
     public partial class Form1 : Form
     {
         Bitmap Backbuffer;
-
+        
         const int BallAxisSpeedX = 2;
         const int BallAxisSpeedY = 2;
-
-        Point BallPos = new Point(30, 30);
+        
         Point BallSpeed = new Point(BallAxisSpeedX, BallAxisSpeedY);
+        Point BallPos = new Point(30, 30);
         const int BallSize = 50;
-
+        
         public Form1()
         {
             InitializeComponent();
-
+            
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
@@ -41,6 +42,7 @@ namespace WindowsFormsApplication1
             this.Paint += new PaintEventHandler(Form1_Paint);
 
             this.KeyDown += new KeyEventHandler(Form1_KeyDown);
+            
         }
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -87,8 +89,8 @@ namespace WindowsFormsApplication1
 
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            BallPos.X += BallSpeed.X;
-            BallPos.Y += BallSpeed.Y;
+            //BallPos.X += BallSpeed.X;
+            //BallPos.Y += BallSpeed.Y;
 
 
             Draw();
