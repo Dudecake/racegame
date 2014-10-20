@@ -18,6 +18,8 @@ namespace WindowsFormsApplication1
         Ship turn = new Ship();
         Polygon collision = new Polygon();
         Vector vector = new Vector();
+        Collision collision = new Collision();
+        
 
         Bitmap Backbuffer;
         
