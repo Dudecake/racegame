@@ -63,9 +63,9 @@ namespace WindowsFormsApplication1
             return new Point((int)p.X, (int)p.Y);
         }
 
-        public static implicit operator PointF(Vector p)
+        public static implicit operator PointD(Vector p)
         {
-            return new PointF(p.X, p.Y);
+            return new PointD(p.X, p.Y);
         }
 
         public static Vector operator +(Vector a, Vector b)
