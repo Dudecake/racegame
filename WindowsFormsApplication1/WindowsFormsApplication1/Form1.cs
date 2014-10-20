@@ -95,7 +95,7 @@ namespace WindowsFormsApplication1
             {
                 if (polygon == player) continue;
 
-                PolygonCollisionResult r = PolygonCollision(player, polygon, velocity);
+                WindowsFormsApplication1.Collision.PolygonCollisionResult r = collision.PolygonCollision(player, polygon, velocity);
 
                 if (r.WillIntersect)
                 {
