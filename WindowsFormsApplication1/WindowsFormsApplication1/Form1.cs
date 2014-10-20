@@ -21,6 +21,11 @@ namespace WindowsFormsApplication1
         {
             openWebsite(http://www.newgrounds.com/);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openWebsite(http://www.newgrounds.com/);
+        }
     }
     public static void openWebsite(string URL)
         {
