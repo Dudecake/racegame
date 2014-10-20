@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,13 +15,20 @@ namespace WindowsFormsApplication1
 
     public partial class Form1 : Form
     {
+        Ship turn = new Ship();
+        Polygon collision = new Polygon();
+        Vector vector = new Vector();
+
         Bitmap Backbuffer;
+        
+        List<Polygon> polygons = new List<Polygon>();
+        Polygon player;
         
         const int BallAxisSpeedX = 2;
         const int BallAxisSpeedY = 2;
-        
-        Point BallSpeed = new Point(BallAxisSpeedX, BallAxisSpeedY);
-        Point BallPos = new Point(30, 30);
+        //S = 1/2a*t^2
+        //Point BallSpeed = new Point(BallAxisSpeedX, BallAxisSpeedY);
+        //Point BallPos = new Point(30, 30);
         const int BallSize = 50;
         
         public Form1()
@@ -47,6 +55,56 @@ namespace WindowsFormsApplication1
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            int i = 14;
+            Vector velocity = new Vector();
+
+            switch (e.KeyValue)
+            {
+
+                case 32: //SPACE
+
+                    break;
+
+                case 38: // UP
+
+                    velocity = new Vector(0, -i);
+                    break;
+
+                case 40: // DOWN
+
+                    velocity = new Vector(0, i);
+                    break;
+
+                case 39: // RIGHT
+
+                    velocity = new Vector(i, 0);
+                    break;
+
+                case 37: // LEFT
+
+                    velocity = new Vector(-i, 0);
+                    break;
+
+            }
+
+            Vector playerTranslation = velocity;
+
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player) continue;
+
+                PolygonCollisionResult r = PolygonCollision(player, polygon, velocity);
+
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+
+            player.Offset(playerTranslation);
+			
+            /*
             if (e.KeyCode == Keys.Left)
                 BallSpeed.X = -BallAxisSpeedX;
             else if (e.KeyCode == Keys.Right)
@@ -55,6 +113,7 @@ namespace WindowsFormsApplication1
                 BallSpeed.Y = -BallAxisSpeedX; // Y axis is downwards so -ve is up.
             else if (e.KeyCode == Keys.Down)
                 BallSpeed.Y = BallAxisSpeedX;
+            */
         }
 
         void Form1_Paint(object sender, PaintEventArgs e)
