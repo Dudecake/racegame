@@ -63,7 +63,7 @@ namespace WindowsFormsApplication1
         {
             Offset(v.X, v.Y);
         }
-        /*
+        
         public void Offset(float x, float y)
         {
             for (int i = 0; i < points.Count; i++)
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
                 points[i] = new Vector(p.X + x, p.Y + y);
             }
         }
-        */
+        
         public override string ToString()
         {
             string result = "";

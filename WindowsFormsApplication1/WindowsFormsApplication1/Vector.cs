@@ -72,6 +72,11 @@ namespace WindowsFormsApplication1
             Y /= mag;
         }
 
+        public float DotProduct(Vector vector)
+        {
+            return this.X * vector.X + this.Y * vector.Y;
+        }
+
         //project this vector on to v
         public Vector Project(Vector v)
         {

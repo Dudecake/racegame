@@ -110,6 +110,7 @@ namespace racing_simulation_2d
             this.Controls.Add(this.label1);
             this.Controls.Add(this.screen);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;

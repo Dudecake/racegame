@@ -46,7 +46,7 @@ namespace WindowsFormsApplication1
 
                 // Find the axis perpendicular to the current edge
                 Vector axis = new Vector(-edge.Y, edge.X);
-                axis.Normalize();
+                axis.normalize();
 
                 // Find the projection of the polygon on the current axis
                 float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;

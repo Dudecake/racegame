@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace racing_simulation_2d
@@ -24,6 +25,8 @@ namespace racing_simulation_2d
         const float screenScale = 2.0f;
         Timer timer = new Timer();
 
+
+
         //keyboard controls
         bool leftHeld = false, rightHeld = false;
         bool upHeld = false, downHeld = false;
@@ -40,6 +43,11 @@ namespace racing_simulation_2d
         {
             InitializeComponent();
             Application.Idle += new EventHandler(ApplicationIdle);
+
+            System.Timers.Timer GameTimer = new System.Timers.Timer();
+            GameTimer.Interval = 10;
+            GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
+            GameTimer.Enabled = true;
 
             screen.Paint += new PaintEventHandler(screen_Paint);
             this.KeyDown += new KeyEventHandler(onKeyDown);
@@ -199,6 +207,11 @@ namespace racing_simulation_2d
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
+            //DoFrame();
+        }
+
+        void GameTimer_Tick(object sender, EventArgs e)
+        {
             DoFrame();
         }
 

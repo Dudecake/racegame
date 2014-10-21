@@ -10,6 +10,7 @@ namespace WindowsFormsApplication1
         {
             RigidBody rigidbody = new RigidBody();
             Vector vector = new Vector();
+
             private Vector m_forwardAxis, m_sideAxis;
             private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
             private Vector m_Position = new Vector();
@@ -100,7 +101,7 @@ namespace WindowsFormsApplication1
             wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
             wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
 
-            base.Setup(halfSize, mass, color);
+            Setup(halfSize, mass, color);
         }
 
         public void SetSteering(float steering)
@@ -153,7 +154,7 @@ namespace WindowsFormsApplication1
                 base.AddForce(worldResponseForce, worldWheelOffset);
             }
 
-            base.Update(timeStep);
+            Update(timeStep);
         }
     }
 

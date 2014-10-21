@@ -70,7 +70,7 @@ namespace racing_simulation_2d
 
                 //calculate super fake friction forces
                 //calculate response force
-                Vector responseForce = -sideVel * 20.0f;
+                Vector responseForce = -sideVel * 2.0f;
                 responseForce -= forwardVel;
 
                 //calculate torque on wheel
@@ -112,7 +112,7 @@ namespace racing_simulation_2d
 
         public void SetThrottle(float throttle, bool allWheel)
         {
-            const float torque = 40.0f;
+            const float torque = 80.0f;
 
             //apply transmission torque to back wheels
             if (allWheel)

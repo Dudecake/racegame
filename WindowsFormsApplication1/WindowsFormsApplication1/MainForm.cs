@@ -15,7 +15,7 @@ using System.Windows.Forms;
 namespace WindowsFormsApplication1
 {
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         Polygon polygon = new Polygon();
         Vector vector = new Vector();
@@ -32,15 +32,15 @@ namespace WindowsFormsApplication1
         Polygon player1;
         Polygon player2;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            
+            /*
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.floatBuffer, true);
-
+            */
             System.Timers.Timer GameTimer = new System.Timers.Timer();
             GameTimer.Interval = 10;
             GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
