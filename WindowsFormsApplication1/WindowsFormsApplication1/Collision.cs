@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1
 
             int edgeCountA = polygonA.Edges.Count;
             int edgeCountB = polygonB.Edges.Count;
-            double minIntervalDistance = double.PositiveInfinity;
+            float minIntervalDistance = float.PositiveInfinity;
             Vector translationAxis = new Vector();
             Vector edge;
 
@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1
                 axis.Normalize();
 
                 // Find the projection of the polygon on the current axis
-                double minA = 0; double minB = 0; double maxA = 0; double maxB = 0;
+                float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;
                 ProjectPolygon(axis, polygonA, ref minA, ref maxA);
                 ProjectPolygon(axis, polygonB, ref minB, ref maxB);
 
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
                 // ===== 2. Now find if the polygons *will* intersect =====
 
                 // Project the velocity on the current axis
-                double velocityProjection = axis.DotProduct(velocity);
+                float velocityProjection = axis.DotProduct(velocity);
 
                 // Get the projection of polygon A during the movement
                 if (velocityProjection < 0)
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
                 }
 
                 // Do the same test as above for the new projection
-                double intervalDistance = IntervalDistance(minA, maxA, minB, maxB);
+                float intervalDistance = IntervalDistance(minA, maxA, minB, maxB);
                 if (intervalDistance > 0) result.WillIntersect = false;
 
                 // If the polygons are not intersecting and won't intersect, exit the loop
@@ -102,7 +102,7 @@ namespace WindowsFormsApplication1
 
         // Calculate the distance between [minA, maxA] and [minB, maxB]
         // The distance will be negative if the intervals overlap
-        public double IntervalDistance(double minA, double maxA, double minB, double maxB)
+        public float IntervalDistance(float minA, float maxA, float minB, float maxB)
         {
             if (minA < minB)
             {
@@ -115,10 +115,10 @@ namespace WindowsFormsApplication1
         }
 
         // Calculate the projection of a polygon on an axis and returns it as a [min, max] interval
-        public void ProjectPolygon(Vector axis, Polygon polygon, ref double min, ref double max)
+        public void ProjectPolygon(Vector axis, Polygon polygon, ref float min, ref float max)
         {
             // To project a point on an axis use the dot product
-            double d = axis.DotProduct(polygon.Points[0]);
+            float d = axis.DotProduct(polygon.Points[0]);
             min = d;
             max = d;
             for (int i = 0; i < polygon.Points.Count; i++)

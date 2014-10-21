@@ -8,17 +8,17 @@ namespace WindowsFormsApplication1
 {
     class Turn
     {
-        double x = 0;
-        double y = 0;
-        double speed = 15; // m/s;
-        double heading = 120;
-        double plannedHeading = 0;
-        double turnRate = 1.5; // deg /s
+        float x = 0;
+        float y = 0;
+        float speed = 15; // m/s;
+        float heading = 120;
+        float plannedHeading = 0;
+        float turnRate = 1.5f; // deg /s
         public Turn()
         {
             plannedHeading = heading;
         }
-        public void update(double dt)
+        public void update(float dt)
         {
             x += dt * getVx();
             y += dt * getVy();
@@ -31,9 +31,9 @@ namespace WindowsFormsApplication1
                 Console.WriteLine(heading);
             }
         }
-        void computeTurn(double dt)
+        void computeTurn(float dt)
         {
-            double dh = plannedHeading - heading;
+            float dh = plannedHeading - heading;
             if (dh < -180)
                 dh += 360;
             if (dh > 180)
@@ -49,15 +49,15 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public void turnTo(double newHeading)
+        public void turnTo(float newHeading)
         {
             plannedHeading = newHeading;
         }
-        public double getVx()
+        public float getVx()
         {
             return speed * Math.Acos(heading * Math.PI / 180);
         }
-        public double getVy()
+        public float getVy()
         {
             return speed * Math.Asin(heading * Math.PI / 180);
         }

@@ -22,9 +22,11 @@ namespace WindowsFormsApplication1
         Polygon polygon = new Polygon();
         //Vector vector = new Vector();
         Collision collision = new Collision();
-        Veh
+        Vehicle vehicle = new Vehicle();
+        RigidBody rigidBody = new RigidBody();
+
         
-        double time = 1; 
+        float time = 1; 
 
         Bitmap Backbuffer;
         
@@ -47,7 +49,7 @@ namespace WindowsFormsApplication1
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.DoubleBuffer, true);
+            ControlStyles.floatBuffer, true);
 
             System.Timers.Timer GameTimer = new System.Timers.Timer();
             GameTimer.Interval = 10;
@@ -59,7 +61,7 @@ namespace WindowsFormsApplication1
             this.Paint += new PaintEventHandler(Form1_Paint);
 
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
-
+            
             Polygon p = new Polygon();
             p.Points.Add(new Vector(150, 100));
             p.Points.Add(new Vector(150, 150));
@@ -94,7 +96,7 @@ namespace WindowsFormsApplication1
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             /*
-            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            float i = 0.05 * Math.Pow(time, 2); //S = a*t^2
             time++;
             if (i >= 20)
             {
@@ -113,7 +115,7 @@ namespace WindowsFormsApplication1
                     velocity = new Vector(0, i);
                     break;
                 case 39: // RIGHT
-                    //double k = 5;
+                    //float k = 5;
                     turn.turnTo(250);
 
                     velocity = new Vector(i, 0);
@@ -249,10 +251,10 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            double k = 1000;
+            float k = 1000;
             turn.update(k);
 
-            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            float i = 0.05 * Math.Pow(time, 2); //S = a*t^2
             time++;
             if (i >= 20)
             {

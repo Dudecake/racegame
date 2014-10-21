@@ -32,10 +32,10 @@ namespace WindowsFormsApplication1
                 edges.Add(p2 - p1);
             }
         }
-
-        public List<Vector> Edges
+        
+        public List<Vector> getEdges()
         {
-            get { return edges; }
+            return edges;
         }
 
         public List<Vector> Points
@@ -47,15 +47,15 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                double totalX = 0;
-                double totalY = 0;
+                float totalX = 0;
+                float totalY = 0;
                 for (int i = 0; i < points.Count; i++)
                 {
                     totalX += points[i].X;
                     totalY += points[i].Y;
                 }
 
-                return new Vector(totalX / (double)points.Count, totalY / (double)points.Count);
+                return new Vector(totalX / (float)points.Count, totalY / (float)points.Count);
             }
         }
 
@@ -63,8 +63,8 @@ namespace WindowsFormsApplication1
         {
             Offset(v.X, v.Y);
         }
-
-        public void Offset(double x, double y)
+        /*
+        public void Offset(float x, float y)
         {
             for (int i = 0; i < points.Count; i++)
             {
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
                 points[i] = new Vector(p.X + x, p.Y + y);
             }
         }
-
+        */
         public override string ToString()
         {
             string result = "";

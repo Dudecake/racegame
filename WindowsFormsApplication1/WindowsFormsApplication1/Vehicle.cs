@@ -4,7 +4,7 @@ using System.Text;
 
 namespace racing_simulation_2d
 {
-    class Vehicle : RigidBody
+    class Vehicle
     {
         private class Wheel
         {
