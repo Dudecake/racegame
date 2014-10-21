@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         {
             plannedHeading = heading;
         }
-        void update(double dt)
+        public void update(double dt)
         {
             x += dt * getVx();
             y += dt * getVy();
@@ -26,7 +26,8 @@ namespace WindowsFormsApplication1
             {
                 computeTurn(dt);
             }
-
+            Console.WriteLine(x);
+            Console.WriteLine(y);
         }
         void computeTurn(double dt)
         {

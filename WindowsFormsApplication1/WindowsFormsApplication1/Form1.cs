@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows;
+//using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
     {
         Turn turn = new Turn();
         Polygon polygon = new Polygon();
-        Vector vector = new Vector();
+        //Vector vector = new Vector();
         Collision collision = new Collision();
         
         double time = 1; 
@@ -58,7 +58,7 @@ namespace WindowsFormsApplication1
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
 
             Polygon p = new Polygon();
-            p.Points.Add(new Vector(100, 40));
+            p.Points.Add(new Vector(100, 0));
             p.Points.Add(new Vector(150, 50));
             p.Points.Add(new Vector(100, 150));
             p.Points.Add(new Vector(0, 100));
@@ -85,15 +85,15 @@ namespace WindowsFormsApplication1
             foreach (Polygon polygon in polygons) polygon.BuildEdges();
 
             player1 = polygons[0];
-            player2 = polygons[1];
+            player2 = polygons[2];
         }
 
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             
-            double i = 3 * Math.Pow(time, 2); //V = a*t^2
+            double i = 0.05 * Math.Pow(time, 2); //V = a*t^2
             time++;
-            if (i <= 20)
+            if (i >= 20)
             {
                 i = 20;
             }
@@ -111,6 +111,9 @@ namespace WindowsFormsApplication1
                     velocity = new Vector(0, i);
                     break;
                 case 39: // RIGHT
+                    //double k = 5;
+                    turn.turnTo(250);
+
                     velocity = new Vector(i, 0);
                     break;
                 case 37: // LEFT
@@ -130,6 +133,28 @@ namespace WindowsFormsApplication1
             }
             player1.Offset(playerTranslation);
             velocity = new Vector();
+            /*
+            int j = 0;
+
+            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
+            {
+                j = 83;
+            }
+            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
+            {
+                j = 87;
+            }
+            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
+            {
+                j = 68;
+            }
+            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+            {
+                j = 65;
+            }
+
+            */
+            
             switch (e.KeyValue)
             {
                 case 32: //SPACE
@@ -148,11 +173,12 @@ namespace WindowsFormsApplication1
                     velocity = new Vector(-i, 0);
                     break;
             }
+            
             playerTranslation = velocity;
             foreach (Polygon polygon in polygons)
             {
-                if (polygon == player1) continue;
-                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
+                if (polygon == player2) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player2, polygon, velocity);
                 if (r.WillIntersect)
                 {
                     playerTranslation = velocity + r.MinimumTranslationVector;
@@ -221,122 +247,13 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
+            double k = 5;
+            turn.update(k);
             //V = a*t  a = acc in m/s^2  t = tijd
             //BallPos.X += BallSpeed.X;
             //BallPos.Y += BallSpeed.Y;
             Draw();
-            /*
-            double i = 1.5 * Math.Pow(time, 2); //V = a*t^2
-            time++;
-            if (i <= 20)
-            {
-                i = 20;
-            }
             
-            int i = 14;
-            Vector velocity = new Vector();
-            int j = 0;
-
-            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
-            {
-                j = 38;
-                if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
-                {
-                    j = 44;
-                }
-            }
-            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
-            {
-                j = 40;
-                if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
-                {
-                    j = 41;
-                }
-            }
-            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
-            {
-                j = 39;
-            }
-            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
-            {
-                j = 37;
-            }
-
-            switch (j)
-            {
-                case 32: //SPACE
-
-                    break;
-                case 38: // UP
-                    velocity = new Vector(0, -i);
-                    break;
-                case 40: // DOWN
-                    velocity = new Vector(0, i);
-                    break;
-                case 39: // RIGHT
-                    velocity = new Vector(i, 0);
-                    break;
-                case 37: // LEFT
-                    velocity = new Vector(-i, 0);
-                    break;
-                case 41: // UP/LEFT
-                    velocity = new Vector(-i, -i);
-                    break;
-                case 44: // DOWN/LEFT
-                    velocity = new Vector(-i, i);
-                    break;
-                case 42: // RIGHT/UP
-                    velocity = new Vector(i, -i);
-                    break;
-                case 43: // LEFT/DOWN
-                    velocity = new Vector(-i, i);
-                    break;
-            }
-            Vector playerTranslation = velocity;
-            foreach (Polygon polygon in polygons)
-            {
-                if (polygon == player1) continue;
-                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
-                if (r.WillIntersect)
-                {
-                    playerTranslation = velocity + r.MinimumTranslationVector;
-                    break;
-                }
-            }
-            player1.Offset(playerTranslation);
-            /*
-            velocity = new Vector();
-            switch (e.KeyValue)
-            {
-                case 32: //SPACE
-
-                    break;
-                case 87: // UP
-                    velocity = new Vector(0, -i);
-                    break;
-                case 83: // DOWN
-                    velocity = new Vector(0, i);
-                    break;
-                case 68: // RIGHT
-                    velocity = new Vector(i, 0);
-                    break;
-                case 65: // LEFT
-                    velocity = new Vector(-i, 0);
-                    break;
-            }
-            playerTranslation = velocity;
-            foreach (Polygon polygon in polygons)
-            {
-                if (polygon == player1) continue;
-                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
-                if (r.WillIntersect)
-                {
-                    playerTranslation = velocity + r.MinimumTranslationVector;
-                    break;
-                }
-            }
-            player2.Offset(playerTranslation);
-            */
             // TODO: Add the notion of dying (disable the timer and show a message box or something)
         }
 
