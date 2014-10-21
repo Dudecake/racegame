@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1
         double speed = 15; // m/s;
         double heading = 120;
         double plannedHeading = 0;
-        double turnRate = 3; // deg /s
+        double turnRate = 1.5; // deg /s
         public Turn()
         {
             plannedHeading = heading;
@@ -25,6 +25,10 @@ namespace WindowsFormsApplication1
             if (heading != plannedHeading)
             {
                 computeTurn(dt);
+            }
+            if (heading == plannedHeading)
+            {
+                Console.WriteLine(heading);
             }
         }
         void computeTurn(double dt)

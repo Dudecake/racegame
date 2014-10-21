@@ -51,12 +51,7 @@ namespace WindowsFormsApplication1
             GameTimer.Interval = 10;
             GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
             GameTimer.Enabled = true;
-            /*
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = 5000;
-            aTimer.Enabled = true;
-            */
+
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
             this.Paint += new PaintEventHandler(Form1_Paint);
@@ -64,10 +59,10 @@ namespace WindowsFormsApplication1
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
 
             Polygon p = new Polygon();
-            p.Points.Add(new Vector(100, 0));
-            p.Points.Add(new Vector(150, 50));
+            p.Points.Add(new Vector(150, 100));
+            p.Points.Add(new Vector(150, 150));
             p.Points.Add(new Vector(100, 150));
-            p.Points.Add(new Vector(0, 100));
+            p.Points.Add(new Vector(100, 100));
             polygons.Add(p);
 
             p = new Polygon();
@@ -96,14 +91,13 @@ namespace WindowsFormsApplication1
 
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            
+            /*
             double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
             time++;
             if (i >= 20)
             {
                 i = 20;
             }
-            //int i = 14;
             Vector velocity = new Vector();
             switch (e.KeyValue)
             {
@@ -160,7 +154,7 @@ namespace WindowsFormsApplication1
             }
 
             */
-            
+            /*
             switch (e.KeyValue)
             {
                 case 32: //SPACE
@@ -225,12 +219,12 @@ namespace WindowsFormsApplication1
                 }
             }
             Invalidate();
-            /*
+            
             if (Backbuffer != null)
             {
                 e.Graphics.DrawImageUnscaled(Backbuffer, System.Drawing.Point.Empty);
             }
-            */
+            
         }
         void Form1_CreateBackBuffer(object sender, EventArgs e)
         {
@@ -253,8 +247,66 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            double k = 5;
+            double k = 1000;
             turn.update(k);
+
+            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            time++;
+            if (i >= 20)
+            {
+                i = 20;
+            }
+            Vector velocity = new Vector();
+
+            int j = 0;
+
+            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
+            {
+                j = 83;
+            }
+            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
+            {
+                j = 87;
+            }
+            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
+            {
+                j = 68;
+            }
+            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+            {
+                j = 65;
+            }
+            switch (j)
+            {
+                case 32: //SPACE
+
+                    break;
+                case 87: // UP
+                    velocity = new Vector(0, -i);
+                    break;
+                case 83: // DOWN
+                    velocity = new Vector(0, i);
+                    break;
+                case 68: // RIGHT
+                    velocity = new Vector(i, 0);
+                    break;
+                case 65: // LEFT
+                    velocity = new Vector(-i, 0);
+                    break;
+            }
+            Vector playerTranslation = velocity;
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player1) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+            player1.Offset(playerTranslation);
+            
             //V = a*t  a = acc in m/s^2  t = tijd
             //BallPos.X += BallSpeed.X;
             //BallPos.Y += BallSpeed.Y;
