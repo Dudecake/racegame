@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
         Polygon polygon = new Polygon();
         Vector vector = new Vector();
         Collision collision = new Collision();
-        
+        double speed;
 
         Bitmap Backbuffer;
         
@@ -88,7 +88,9 @@ namespace WindowsFormsApplication1
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            int i = 14;
+            double i = speed; //V = a*t^2
+
+            //int i = 14;
             Vector velocity = new Vector();
             switch (e.KeyValue)
             {
@@ -212,6 +214,7 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
+            //V = a*t  a = acc in m/s^2  t = tijd
             //BallPos.X += BallSpeed.X;
             //BallPos.Y += BallSpeed.Y;
             Draw();
