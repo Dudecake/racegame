@@ -26,8 +26,6 @@ namespace WindowsFormsApplication1
             {
                 computeTurn(dt);
             }
-            Console.WriteLine(x);
-            Console.WriteLine(y);
         }
         void computeTurn(double dt)
         {

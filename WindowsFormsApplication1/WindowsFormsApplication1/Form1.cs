@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Timers;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -46,16 +47,16 @@ namespace WindowsFormsApplication1
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.DoubleBuffer, true);
 
-            Timer GameTimer = new Timer();
+            System.Timers.Timer GameTimer = new System.Timers.Timer();
             GameTimer.Interval = 10;
-            GameTimer.Elapsed += new EventHandler(GameTimer_Tick);
-            GameTimer.Start();
-
+            GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
+            GameTimer.Enabled = true;
+            /*
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             aTimer.Interval = 5000;
             aTimer.Enabled = true;
-
+            */
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
             this.Paint += new PaintEventHandler(Form1_Paint);
@@ -257,7 +258,7 @@ namespace WindowsFormsApplication1
             //V = a*t  a = acc in m/s^2  t = tijd
             //BallPos.X += BallSpeed.X;
             //BallPos.Y += BallSpeed.Y;
-            Draw();
+            //Draw();
             
             // TODO: Add the notion of dying (disable the timer and show a message box or something)
         }
