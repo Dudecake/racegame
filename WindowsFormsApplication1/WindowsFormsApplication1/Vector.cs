@@ -7,141 +7,89 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    public struct Vector
+    class Vector
     {
+        public float X, Y;
 
-        public double X;
-        public double Y;
+        public Vector() { X = 0; Y = 0; }
+        public Vector(float x, float y) { X = x; Y = y; }
 
-        static public Vector FromPoint(Point p)
+        //length property        
+        public float Length
         {
-            return Vector.FromPoint(p.X, p.Y);
-        }
-
-        static public Vector FromPoint(int x, int y)
-        {
-            return new Vector((double)x, (double)y);
-        }
-
-        public Vector(double x, double y)
-        {
-            this.X = x;
-            this.Y = y;
-        }
-
-        public double Magnitude
-        {
-            get { return (double)Math.Sqrt(X * X + Y * Y); }
-        }
-
-        public void Normalize()
-        {
-            double magnitude = Magnitude;
-            X = X / magnitude;
-            Y = Y / magnitude;
-        }
-
-        public Vector GetNormalized()
-        {
-            double magnitude = Magnitude;
-
-            return new Vector(X / magnitude, Y / magnitude);
-        }
-
-        public double DotProduct(Vector vector)
-        {
-            return this.X * vector.X + this.Y * vector.Y;
-        }
-
-        public double DistanceTo(Vector vector)
-        {
-            return (double)Math.Sqrt(Math.Pow(vector.X - this.X, 2) + Math.Pow(vector.Y - this.Y, 2));
-        }
-
-        public static implicit operator Point(Vector p)
-        {
-            return new Point((int)p.X, (int)p.Y);
-        }
-
-        public static implicit operator PointD(Vector p)
-        {
-            return new PointD(p.X, p.Y);
-        }
-
-        public static Vector operator +(Vector a, Vector b)
-        {
-            return new Vector(a.X + b.X, a.Y + b.Y);
-        }
-
-        public static Vector operator -(Vector a)
-        {
-            return new Vector(-a.X, -a.Y);
-        }
-
-        public static Vector operator -(Vector a, Vector b)
-        {
-            return new Vector(a.X - b.X, a.Y - b.Y);
-        }
-
-        public static Vector operator *(Vector a, double b)
-        {
-            return new Vector(a.X * b, a.Y * b);
-        }
-        /*
-        public static Vector operator *(Vector a, int b)
-        {
-            return new Vector(a.X * b, a.Y * b);
-        }
-        
-        public static Vector operator *(Vector a, double b)
-        {
-            return new Vector((double)(a.X * b), (double)(a.Y * b));
-        }
-        */
-        public override bool Equals(object obj)
-        {
-            Vector v = (Vector)obj;
-
-            return X == v.X && Y == v.Y;
-        }
-
-        public bool Equals(Vector v)
-        {
-            return X == v.X && Y == v.Y;
-        }
-
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^ Y.GetHashCode();
-        }
-
-        public static bool operator ==(Vector a, Vector b)
-        {
-            return a.X == b.X && a.Y == b.Y;
-        }
-
-        public static bool operator !=(Vector a, Vector b)
-        {
-            return a.X != b.X || a.Y != b.Y;
-        }
-
-        public override string ToString()
-        {
-            return X + ", " + Y;
-        }
-
-        public string ToString(bool rounded)
-        {
-            if (rounded)
+            get
             {
-                return (int)Math.Round(X) + ", " + (int)Math.Round(Y);
-            }
-            else
-            {
-                return ToString();
+                return (float)Math.Sqrt((double)(X * X + Y * Y));
             }
         }
 
+        //addition
+        public static Vector operator +(Vector L, Vector R)
+        {
+            return new Vector(L.X + R.X, L.Y + R.Y);
+        }
 
+        //subtraction
+        public static Vector operator -(Vector L, Vector R)
+        {
+            return new Vector(L.X - R.X, L.Y - R.Y);
+        }
+
+        //negative
+        public static Vector operator -(Vector R)
+        {
+            Vector temp = new Vector(-R.X, -R.Y);
+            return temp;
+        }
+
+        //scalar multiply
+        public static Vector operator *(Vector L, float R)
+        {
+            return new Vector(L.X * R, L.Y * R);
+        }
+
+        //divide multiply
+        public static Vector operator /(Vector L, float R)
+        {
+            return new Vector(L.X / R, L.Y / R);
+        }
+
+        //dot product
+        public static float operator *(Vector L, Vector R)
+        {
+            return (L.X * R.X + L.Y * R.Y);
+        }
+
+        //cross product, in 2d this is a scalar since we know it points in the Z direction
+        public static float operator %(Vector L, Vector R)
+        {
+            return (L.X * R.Y - L.Y * R.X);
+        }
+
+        //normalize the vector
+        public void normalize()
+        {
+            float mag = Length;
+
+            X /= mag;
+            Y /= mag;
+        }
+
+        //project this vector on to v
+        public Vector Project(Vector v)
+        {
+            //projected vector = (this dot v) * v;
+            float thisDotV = this * v;
+            return v * thisDotV;
+        }
+
+        //project this vector on to v, return signed magnatude
+        public Vector Project(Vector v, out float mag)
+        {
+            //projected vector = (this dot v) * v;
+            float thisDotV = this * v;
+            mag = thisDotV;
+            return v * thisDotV;
+        }
     }
-}
+} 
