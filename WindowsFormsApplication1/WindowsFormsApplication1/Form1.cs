@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,11 +16,12 @@ namespace WindowsFormsApplication1
 
     public partial class Form1 : Form
     {
-        Ship turn = new Ship();
+        Turn turn = new Turn();
         Polygon polygon = new Polygon();
         Vector vector = new Vector();
         Collision collision = new Collision();
-        double speed;
+        
+        double time = 1; 
 
         Bitmap Backbuffer;
         
@@ -53,10 +55,10 @@ namespace WindowsFormsApplication1
             this.Load += new EventHandler(Form1_CreateBackBuffer);
             this.Paint += new PaintEventHandler(Form1_Paint);
 
-            this.KeyDown += new KeyEventHandler(Form1_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
 
             Polygon p = new Polygon();
-            p.Points.Add(new Vector(100, 0));
+            p.Points.Add(new Vector(100, 40));
             p.Points.Add(new Vector(150, 50));
             p.Points.Add(new Vector(100, 150));
             p.Points.Add(new Vector(0, 100));
@@ -86,10 +88,15 @@ namespace WindowsFormsApplication1
             player2 = polygons[1];
         }
 
-        void Form1_KeyDown(object sender, KeyEventArgs e)
+        void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            double i = speed; //V = a*t^2
-
+            
+            double i = 3 * Math.Pow(time, 2); //V = a*t^2
+            time++;
+            if (i <= 20)
+            {
+                i = 20;
+            }
             //int i = 14;
             Vector velocity = new Vector();
             switch (e.KeyValue)
@@ -153,7 +160,7 @@ namespace WindowsFormsApplication1
                 }
             }
             player2.Offset(playerTranslation);
-
+            
             /*
             if (e.KeyCode == Keys.Left)
                 BallSpeed.X = -BallAxisSpeedX;
@@ -218,7 +225,124 @@ namespace WindowsFormsApplication1
             //BallPos.X += BallSpeed.X;
             //BallPos.Y += BallSpeed.Y;
             Draw();
+            /*
+            double i = 1.5 * Math.Pow(time, 2); //V = a*t^2
+            time++;
+            if (i <= 20)
+            {
+                i = 20;
+            }
+            
+            int i = 14;
+            Vector velocity = new Vector();
+            int j = 0;
+
+            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
+            {
+                j = 38;
+                if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+                {
+                    j = 44;
+                }
+            }
+            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
+            {
+                j = 40;
+                if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+                {
+                    j = 41;
+                }
+            }
+            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
+            {
+                j = 39;
+            }
+            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+            {
+                j = 37;
+            }
+
+            switch (j)
+            {
+                case 32: //SPACE
+
+                    break;
+                case 38: // UP
+                    velocity = new Vector(0, -i);
+                    break;
+                case 40: // DOWN
+                    velocity = new Vector(0, i);
+                    break;
+                case 39: // RIGHT
+                    velocity = new Vector(i, 0);
+                    break;
+                case 37: // LEFT
+                    velocity = new Vector(-i, 0);
+                    break;
+                case 41: // UP/LEFT
+                    velocity = new Vector(-i, -i);
+                    break;
+                case 44: // DOWN/LEFT
+                    velocity = new Vector(-i, i);
+                    break;
+                case 42: // RIGHT/UP
+                    velocity = new Vector(i, -i);
+                    break;
+                case 43: // LEFT/DOWN
+                    velocity = new Vector(-i, i);
+                    break;
+            }
+            Vector playerTranslation = velocity;
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player1) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+            player1.Offset(playerTranslation);
+            /*
+            velocity = new Vector();
+            switch (e.KeyValue)
+            {
+                case 32: //SPACE
+
+                    break;
+                case 87: // UP
+                    velocity = new Vector(0, -i);
+                    break;
+                case 83: // DOWN
+                    velocity = new Vector(0, i);
+                    break;
+                case 68: // RIGHT
+                    velocity = new Vector(i, 0);
+                    break;
+                case 65: // LEFT
+                    velocity = new Vector(-i, 0);
+                    break;
+            }
+            playerTranslation = velocity;
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player1) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+            player2.Offset(playerTranslation);
+            */
             // TODO: Add the notion of dying (disable the timer and show a message box or something)
+        }
+
+        private void Form1_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            time = 1;
         }
     }
 }

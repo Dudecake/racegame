@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Ship
+    class Turn
     {
         double x = 0;
         double y = 0;
@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
         double heading = 120;
         double plannedHeading = 0;
         double turnRate = 3; // deg /s
-        public Ship()
+        public Turn()
         {
             plannedHeading = heading;
         }

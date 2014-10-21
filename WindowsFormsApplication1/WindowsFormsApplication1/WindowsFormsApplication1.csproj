@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows" />
@@ -46,10 +47,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Class2.cs" />
-    <Compile Include="Class3.cs" />
-    <Compile Include="Class4.cs" />
+    <Compile Include="Turn.cs" />
+    <Compile Include="Polygon.cs" />
+    <Compile Include="Vector.cs" />
+    <Compile Include="Collision.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
