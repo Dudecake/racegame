@@ -48,8 +48,13 @@ namespace WindowsFormsApplication1
 
             Timer GameTimer = new Timer();
             GameTimer.Interval = 10;
-            GameTimer.Tick += new EventHandler(GameTimer_Tick);
+            GameTimer.Elapsed += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
+
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Interval = 5000;
+            aTimer.Enabled = true;
 
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
@@ -91,7 +96,7 @@ namespace WindowsFormsApplication1
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             
-            double i = 0.05 * Math.Pow(time, 2); //V = a*t^2
+            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
             time++;
             if (i >= 20)
             {
