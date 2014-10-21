@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace racing_simulation_2d
+namespace WindowsFormsApplication1
 {
-    class Vehicle
+    public class Vehicle
     {
         private class Wheel
         {
+            RigidBody rigidbody = new RigidBody();
+            Vector vector = new Vector();
             private Vector m_forwardAxis, m_sideAxis;
             private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
             private Vector m_Position = new Vector();
@@ -88,7 +90,7 @@ namespace racing_simulation_2d
         }
         private Wheel[] wheels = new Wheel[4];
 
-        new public void Setup(Vector halfSize, float mass, System.Drawing.Color color)
+        public void Setup(Vector halfSize, float mass, System.Drawing.Color color)
         {
             //front wheels
             wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
@@ -137,7 +139,7 @@ namespace racing_simulation_2d
             }
         }
 
-        new public void Update(float timeStep)
+        public void Update(float timeStep)
         {
             foreach (Wheel wheel in wheels)
             {

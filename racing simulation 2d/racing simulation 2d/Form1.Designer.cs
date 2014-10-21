@@ -46,7 +46,7 @@ namespace racing_simulation_2d
             | System.Windows.Forms.AnchorStyles.Right)));
             this.screen.Location = new System.Drawing.Point(12, 27);
             this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size(680, 621);
+            this.screen.Size = new System.Drawing.Size(1880, 981);
             this.screen.TabIndex = 0;
             this.screen.TabStop = false;
             // 
@@ -54,7 +54,7 @@ namespace racing_simulation_2d
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(612, 657);
+            this.label1.Location = new System.Drawing.Point(1812, 1017);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 2;
@@ -66,7 +66,7 @@ namespace racing_simulation_2d
             this.menu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(704, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1904, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -83,7 +83,9 @@ namespace racing_simulation_2d
             // 
             // allWheelDriveToolStripMenuItem
             // 
+            this.allWheelDriveToolStripMenuItem.Checked = true;
             this.allWheelDriveToolStripMenuItem.CheckOnClick = true;
+            this.allWheelDriveToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allWheelDriveToolStripMenuItem.Name = "allWheelDriveToolStripMenuItem";
             this.allWheelDriveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.allWheelDriveToolStripMenuItem.Text = "All Wheel Drive";
@@ -104,7 +106,7 @@ namespace racing_simulation_2d
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 682);
+            this.ClientSize = new System.Drawing.Size(1904, 1042);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.screen);
             this.Controls.Add(this.menuStrip1);

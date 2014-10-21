@@ -95,7 +95,7 @@ namespace racing_simulation_2d
 
             //apply vehicle controls
             vehicle.SetSteering(steering);
-            vehicle.SetThrottle(throttle, true); //menu.Checked
+            vehicle.SetThrottle(throttle, menu.Checked);
             vehicle.SetBrakes(brakes);
 
             //integrate vehicle physics

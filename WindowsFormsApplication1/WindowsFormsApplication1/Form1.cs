@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
-//using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -18,29 +17,20 @@ namespace WindowsFormsApplication1
 
     public partial class Form1 : Form
     {
-        Turn turn = new Turn();
         Polygon polygon = new Polygon();
-        //Vector vector = new Vector();
+        Vector vector = new Vector();
         Collision collision = new Collision();
         Vehicle vehicle = new Vehicle();
         RigidBody rigidBody = new RigidBody();
 
         
-        float time = 1; 
+        double time = 1; 
 
         Bitmap Backbuffer;
         
         List<Polygon> polygons = new List<Polygon>();
         Polygon player1;
         Polygon player2;
-        /*
-        const int BallAxisSpeedX = 2;
-        const int BallAxisSpeedY = 2;
-        Point BallSpeed = new Point(BallAxisSpeedX, BallAxisSpeedY);
-        Point BallPos = new Point(30, 30);
-        const int BallSize = 50;
-        */
-        //S = 1/2a*t^2
 
         public Form1()
         {
@@ -219,7 +209,7 @@ namespace WindowsFormsApplication1
                     {
                         p2 = polygon.Points[i + 1];
                     }
-                    e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
+                    //e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
                 }
             }
             Invalidate();
@@ -251,10 +241,7 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            float k = 1000;
-            turn.update(k);
-
-            float i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            float i = Convert.ToSingle(0.05 * Math.Pow(time, 2)); //S = a*t^2
             time++;
             if (i >= 20)
             {
@@ -310,10 +297,7 @@ namespace WindowsFormsApplication1
                 }
             }
             player1.Offset(playerTranslation);
-            
-            //V = a*t  a = acc in m/s^2  t = tijd
-            //BallPos.X += BallSpeed.X;
-            //BallPos.Y += BallSpeed.Y;
+
             //Draw();
             
             // TODO: Add the notion of dying (disable the timer and show a message box or something)

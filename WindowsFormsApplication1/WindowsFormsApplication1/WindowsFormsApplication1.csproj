@@ -48,9 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RigidBody.cs" />
-    <Compile Include="RigidBody_2.cs" />
     <Compile Include="Timer.cs" />
-    <Compile Include="Turn.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Collision.cs" />
@@ -60,14 +58,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="PointD.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vector02.cs" />
     <Compile Include="Vehicle.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vehicle_2.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -8,7 +8,7 @@ namespace WindowsFormsApplication1
 {
     class Collision
     {
-
+        Vector vector = new Vector();
         // Structure that stores the results of the PolygonCollision function
         public struct PolygonCollisionResult
         {

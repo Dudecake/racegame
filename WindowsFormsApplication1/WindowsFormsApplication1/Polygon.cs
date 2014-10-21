@@ -33,9 +33,9 @@ namespace WindowsFormsApplication1
             }
         }
         
-        public List<Vector> getEdges()
+        public List<Vector> Edges
         {
-            return edges;
+            get { return edges; }
         }
 
         public List<Vector> Points

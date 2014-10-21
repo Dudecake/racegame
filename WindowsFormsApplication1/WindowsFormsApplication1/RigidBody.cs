@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace racing_simulation_2d
+namespace WindowsFormsApplication1
 {
-    class RigidBody
+    public class RigidBody
     {
         //linear properties
         private Vector m_position = new Vector();

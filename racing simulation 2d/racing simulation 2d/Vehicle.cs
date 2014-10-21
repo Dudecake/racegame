@@ -112,7 +112,7 @@ namespace racing_simulation_2d
 
         public void SetThrottle(float throttle, bool allWheel)
         {
-            const float torque = 20.0f;
+            const float torque = 40.0f;
 
             //apply transmission torque to back wheels
             if (allWheel)

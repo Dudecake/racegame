@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Drawing;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Vector
+    public class Vector
     {
         public float X, Y;
 
@@ -92,4 +89,4 @@ namespace WindowsFormsApplication1
             return v * thisDotV;
         }
     }
-} 
+}

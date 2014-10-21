@@ -154,7 +154,7 @@ namespace racing_simulation_2d
         }
 
         //transform by matrix
-        public static Vector operator *(Vector L, Matrix R)
+        public static Vector operator *(Vector L, System.Drawing.Drawing2D.Matrix R)
         {
             Vector temp = new Vector();
 

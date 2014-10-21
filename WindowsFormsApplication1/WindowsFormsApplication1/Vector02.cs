@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace racing_simulation_2d
+namespace WindowsFormsApplication1
 {
-    class Vector
+    public class Vector
     {
         public float X, Y;
 
@@ -89,4 +89,4 @@ namespace racing_simulation_2d
             return v * thisDotV;
         }
     }
-}
+} 
