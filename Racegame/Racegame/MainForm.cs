@@ -50,6 +50,14 @@ namespace WindowsFormsApplication1
         public MainForm()
         {
             InitializeComponent();
+            Application.Idle += new EventHandler(ApplicationIdle);
+
+            screen.Paint += new PaintEventHandler(screen_Paint);
+            this.KeyDown += new KeyEventHandler(onKeyDown);
+            this.KeyUp += new KeyEventHandler(onKeyUp);
+
+            Init(screen.Size);
+
             /*
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -109,7 +117,7 @@ namespace WindowsFormsApplication1
             //timer.GetETime(); //reset timer
 
             vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
-            vehicle.SetLocation(new Vector(0, 0), 0);
+            rigidBody.SetLocation(new Vector(0, 0), 0);
         }
 
         //main rendering function
@@ -131,7 +139,7 @@ namespace WindowsFormsApplication1
         //draw the screen
         private void DrawScreen()
         {
-            vehicle.Draw(graphics, buffersize);
+            rigidBody.Draw(graphics, buffersize);
         }
 
         //process game logic
@@ -145,7 +153,7 @@ namespace WindowsFormsApplication1
 
             //apply vehicle controls
             vehicle.SetSteering(steering);
-            vehicle.SetThrottle(throttle, menu.Checked);
+            vehicle.SetThrottle(throttle, true); //menu.Checked
             vehicle.SetBrakes(brakes);
 
             //integrate vehicle physics
@@ -216,7 +224,7 @@ namespace WindowsFormsApplication1
             e.Handled = true;
         }
 
-        private void onKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void onKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
