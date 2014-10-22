@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace game_try
 {
     partial class Form1
     {
@@ -34,17 +34,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1024, 768);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ClientSize = new System.Drawing.Size(818, 560);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
     }
 }
 

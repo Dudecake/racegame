@@ -5,6 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+<<<<<<< HEAD
+=======
+using System.Timers;
+>>>>>>> FETCH_HEAD
 using System.Windows.Forms;
 
 namespace racing_simulation_2d
@@ -12,13 +16,29 @@ namespace racing_simulation_2d
     //our main application form
     public partial class frmMain : Form
     {
+<<<<<<< HEAD
+=======
+        Vehicle vehicle = new Vehicle();
+        RigidBody rigidBody = new RigidBody();
+        Vector vector = new Vector();
+        Timer timers = new Timer();
+        
+>>>>>>> FETCH_HEAD
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
         Size buffersize;
+<<<<<<< HEAD
         const float screenScale = 3.0f;
         Timer timer = new Timer();
 
+=======
+        const float screenScale = 2.0f;
+        Timer timer = new Timer();
+
+
+
+>>>>>>> FETCH_HEAD
         //keyboard controls
         bool leftHeld = false, rightHeld = false;
         bool upHeld = false, downHeld = false;
@@ -29,13 +49,25 @@ namespace racing_simulation_2d
         float brakes = 0; //0 is no brakes, 1 is full brakes
 
         //game objects
+<<<<<<< HEAD
         Vehicle vehicle = new Vehicle();
+=======
+        //Vehicle vehicle = new Vehicle();
+>>>>>>> FETCH_HEAD
 
         public frmMain()
         {
             InitializeComponent();
             Application.Idle += new EventHandler(ApplicationIdle);
 
+<<<<<<< HEAD
+=======
+            System.Timers.Timer GameTimer = new System.Timers.Timer();
+            GameTimer.Interval = 10;
+            GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
+            GameTimer.Enabled = true;
+
+>>>>>>> FETCH_HEAD
             screen.Paint += new PaintEventHandler(screen_Paint);
             this.KeyDown += new KeyEventHandler(onKeyDown);
             this.KeyUp += new KeyEventHandler(onKeyUp);
@@ -194,6 +226,7 @@ namespace racing_simulation_2d
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
+<<<<<<< HEAD
             DoFrame();
         }
 
@@ -598,6 +631,19 @@ namespace racing_simulation_2d
             lastTime = Environment.TickCount;
 
             return etime;
+=======
+            //DoFrame();
+        }
+
+        void GameTimer_Tick(object sender, EventArgs e)
+        {
+            DoFrame();
+        }
+
+        private void MenuExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+>>>>>>> FETCH_HEAD
         }
     }
 }

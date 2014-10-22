@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Timers;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
-//using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -15,12 +15,14 @@ using System.Windows.Forms;
 namespace WindowsFormsApplication1
 {
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        Turn turn = new Turn();
         Polygon polygon = new Polygon();
-        //Vector vector = new Vector();
+        Vector vector = new Vector();
         Collision collision = new Collision();
+        Vehicle vehicle = new Vehicle();
+        RigidBody rigidBody = new RigidBody();
+
         
         double time = 1; 
 
@@ -29,24 +31,16 @@ namespace WindowsFormsApplication1
         List<Polygon> polygons = new List<Polygon>();
         Polygon player1;
         Polygon player2;
-        /*
-        const int BallAxisSpeedX = 2;
-        const int BallAxisSpeedY = 2;
-        Point BallSpeed = new Point(BallAxisSpeedX, BallAxisSpeedY);
-        Point BallPos = new Point(30, 30);
-        const int BallSize = 50;
-        */
-        //S = 1/2a*t^2
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            
+            /*
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.DoubleBuffer, true);
-
+            ControlStyles.floatBuffer, true);
+            */
             System.Timers.Timer GameTimer = new System.Timers.Timer();
             GameTimer.Interval = 10;
             GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
@@ -57,7 +51,7 @@ namespace WindowsFormsApplication1
             this.Paint += new PaintEventHandler(Form1_Paint);
 
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
-
+            
             Polygon p = new Polygon();
             p.Points.Add(new Vector(150, 100));
             p.Points.Add(new Vector(150, 150));
@@ -92,7 +86,7 @@ namespace WindowsFormsApplication1
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             /*
-            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            float i = 0.05 * Math.Pow(time, 2); //S = a*t^2
             time++;
             if (i >= 20)
             {
@@ -111,7 +105,7 @@ namespace WindowsFormsApplication1
                     velocity = new Vector(0, i);
                     break;
                 case 39: // RIGHT
-                    //double k = 5;
+                    //float k = 5;
                     turn.turnTo(250);
 
                     velocity = new Vector(i, 0);
@@ -215,7 +209,7 @@ namespace WindowsFormsApplication1
                     {
                         p2 = polygon.Points[i + 1];
                     }
-                    e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
+                    //e.Graphics.DrawLine(new Pen(Color.Black), p1, p2);
                 }
             }
             Invalidate();
@@ -247,10 +241,7 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            double k = 1000;
-            turn.update(k);
-
-            double i = 0.05 * Math.Pow(time, 2); //S = a*t^2
+            float i = Convert.ToSingle(0.05 * Math.Pow(time, 2)); //S = a*t^2
             time++;
             if (i >= 20)
             {
@@ -306,10 +297,7 @@ namespace WindowsFormsApplication1
                 }
             }
             player1.Offset(playerTranslation);
-            
-            //V = a*t  a = acc in m/s^2  t = tijd
-            //BallPos.X += BallSpeed.X;
-            //BallPos.Y += BallSpeed.Y;
+
             //Draw();
             
             // TODO: Add the notion of dying (disable the timer and show a message box or something)
@@ -319,5 +307,199 @@ namespace WindowsFormsApplication1
         {
             time = 1;
         }
+        
+        /*
+        //graphics
+        Graphics graphics; //gdi+
+        Bitmap backbuffer;
+        Size buffersize;
+        const float screenScale = 3.0f;
+        Timer timer = new Timer();
+
+        //keyboard controls
+        bool leftHeld = false, rightHeld = false;
+        bool upHeld = false, downHeld = false;
+
+        //vehicle controls
+        float steering = 0; //-1 is full left, 0 is center, 1 is full right
+        float throttle = 0; //0 is coasting, 1 is full throttle
+        float brakes = 0; //0 is no brakes, 1 is full brakes
+
+        //game objects
+        Vehicle vehicle = new Vehicle();
+
+        public void frmMain()
+        {
+            InitializeComponent();
+            Application.Idle += new EventHandler(ApplicationIdle);
+
+            screen.Paint += new PaintEventHandler(screen_Paint);
+            this.KeyDown += new KeyEventHandler(onKeyDown);
+            this.KeyUp += new KeyEventHandler(onKeyUp);
+
+            Init(screen.Size);
+        }
+
+        //intialize rendering
+        private void Init(Size size)
+        {
+            //setup rendering device
+            buffersize = size;
+            backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
+            graphics = Graphics.FromImage(backbuffer);
+
+            timer.GetETime(); //reset timer
+
+            vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
+            vehicle.SetLocation(new Vector(0, 0), 0);
+        }
+
+        //main rendering function
+        private void Render(Graphics g)
+        {
+            //clear back buffer
+            graphics.Clear(Color.Black);
+            graphics.ResetTransform();
+            graphics.ScaleTransform(screenScale, -screenScale);
+            graphics.TranslateTransform(buffersize.Width / 2.0f / screenScale, -buffersize.Height / 2.0f / screenScale);
+
+            //draw to back buffer
+            DrawScreen();
+
+            //present back buffer
+            g.DrawImage(backbuffer, new Rectangle(0, 0, buffersize.Width, buffersize.Height), 0, 0, buffersize.Width, buffersize.Height, GraphicsUnit.Pixel);
+        }
+
+        //draw the screen
+        private void DrawScreen()
+        {
+            vehicle.Draw(graphics, buffersize);
+        }
+
+        //process game logic
+        private void DoFrame()
+        {
+            //get elapsed time since last frame
+            float etime = timer.GetETime();
+
+            //process input
+            ProcessInput();
+
+            //apply vehicle controls
+            vehicle.SetSteering(steering);
+            vehicle.SetThrottle(throttle, menu.Checked);
+            vehicle.SetBrakes(brakes);
+
+            //integrate vehicle physics
+            vehicle.Update(etime);
+
+            //keep the vehicle on the screen
+            //ConstrainVehicle();
+
+            //redraw our screen
+            screen.Invalidate();
+        }
+        
+        //keep the vehicle on the screen
+        private void ConstrainVehicle()
+        {
+            Vector position = vehicle.GetPosition();
+            Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
+
+            while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
+            while (position.Y > screenSize.Y / 2.0f) { position.Y -= screenSize.Y; }
+            while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
+            while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
+        }
+        
+        //process keyboard input
+        private void ProcessInput()
+        {
+            if (leftHeld)
+                steering = -1;
+            else if (rightHeld)
+                steering = 1;
+            else
+                steering = 0;
+
+            if (upHeld)
+                throttle = 1;
+            else
+                throttle = 0;
+
+            if (downHeld)
+                brakes = 1;
+            else
+                brakes = 0;
+        }
+
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    leftHeld = true;
+                    break;
+                case Keys.Right:
+                    rightHeld = true;
+                    break;
+                case Keys.Up:
+                    upHeld = true;
+                    break;
+                case Keys.Down:
+                    downHeld = true;
+                    break;
+                default: //no match found
+                    return; //return so handled dosnt get set
+            }
+
+            //match found
+            e.Handled = true;
+        }
+
+        private void onKeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    leftHeld = false;
+                    break;
+                case Keys.Right:
+                    rightHeld = false;
+                    break;
+                case Keys.Up:
+                    upHeld = false;
+                    break;
+                case Keys.Down:
+                    downHeld = false;
+                    break;
+                default: //no match found
+                    return; //return so handled dosnt get set
+            }
+
+            //match found
+            e.Handled = true;
+        }
+
+        //rendering - only when screen is invalidated
+        private void screen_Paint(object sender, PaintEventArgs e)
+        {
+            Render(e.Graphics);
+        }
+
+        //when the os gives us time, run the game
+        private void ApplicationIdle(object sender, EventArgs e)
+        {
+            // While the application is still idle, run frame routine.
+            DoFrame();
+        }
+
+        private void MenuExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+
+    */
     }
 }
