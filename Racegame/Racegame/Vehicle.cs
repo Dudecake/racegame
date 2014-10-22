@@ -91,6 +91,8 @@ namespace WindowsFormsApplication1
         }
         private Wheel[] wheels = new Wheel[4];
 
+        RigidBody rigidbody = new RigidBody();
+
         public void Setup(Vector halfSize, float mass, System.Drawing.Color color)
         {
             //front wheels
@@ -145,13 +147,13 @@ namespace WindowsFormsApplication1
             foreach (Wheel wheel in wheels)
             {
                 //wheel.m_wheelSpeed = 30.0f;
-                Vector worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
-                Vector worldGroundVel = base.PointVel(worldWheelOffset);
-                Vector relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
+                Vector worldWheelOffset = rigidbody.RelativeToWorld(wheel.GetAttachPoint());
+                Vector worldGroundVel = rigidbody.PointVel(worldWheelOffset);
+                Vector relativeGroundSpeed = rigidbody.WorldToRelative(worldGroundVel);
                 Vector relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
-                Vector worldResponseForce = base.RelativeToWorld(relativeResponseForce);
+                Vector worldResponseForce = rigidbody.RelativeToWorld(relativeResponseForce);
 
-                base.AddForce(worldResponseForce, worldWheelOffset);
+                rigidbody.AddForce(worldResponseForce, worldWheelOffset);
             }
 
             Update(timeStep);
