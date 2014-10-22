@@ -19,10 +19,9 @@ namespace WindowsFormsApplication1
     {
         Polygon polygon = new Polygon();
         Vector vector = new Vector();
-        Collision collision = new Collision();
+        //Collision collision = new Collision();
         Vehicle vehicle = new Vehicle();
         RigidBody rigidBody = new RigidBody();
-        PerformanceCounter perfUptimeCount = new PerformanceCounter("System", "System Up Time");
 
         //graphics
         Graphics graphics; //gdi+
@@ -58,8 +57,7 @@ namespace WindowsFormsApplication1
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
 
             Init(screen.Size);
-
-            
+    
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
@@ -117,9 +115,10 @@ namespace WindowsFormsApplication1
             graphics = Graphics.FromImage(backbuffer);
 
             timer.GetETime(); //reset timer
-
+            Console.Write("i");
             vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
             rigidBody.SetLocation(new Vector(0, 0), 0);
+            Console.Write("j");
         }
 
         //main rendering function
@@ -147,18 +146,6 @@ namespace WindowsFormsApplication1
         //process game logic
         private void DoFrame()
         {
-            TimeSpan uptimeSpan = TimeSpan.FromSeconds(perfUptimeCount.NextValue());
-            string systemUptimeMessage = string.Format("Up time is {0} hours {1} mins {2} secs {3} millisecs",
-            (int)uptimeSpan.Hours,
-            (int)uptimeSpan.Minutes,
-            (int)uptimeSpan.Seconds,
-            (int)uptimeSpan.Milliseconds
-            );
-            /*
-            var time = GetSystemUpTime();
-            var upTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms", time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
-            */
-
             //get elapsed time since last frame
             float etime = timer.GetETime();
 
@@ -166,7 +153,7 @@ namespace WindowsFormsApplication1
             ProcessInput();
 
             //apply vehicle controls
-            vehicle.SetSteering(steering, systemUptimeMessage);
+            vehicle.SetSteering(steering);
             vehicle.SetThrottle(throttle, true); //menu.Checked
             vehicle.SetBrakes(brakes);
 
@@ -267,14 +254,14 @@ namespace WindowsFormsApplication1
         {
             Render(e.Graphics);
         }
-        /*
+        
         //when the os gives us time, run the game
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
             DoFrame();
         }
-        */
+        
         /*
         private void MenuExit_Click(object sender, EventArgs e)
         {
@@ -376,7 +363,7 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            DoFrame();
+            //DoFrame();
         }
     }
 }

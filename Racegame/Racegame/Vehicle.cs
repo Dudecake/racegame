@@ -15,19 +15,20 @@ namespace WindowsFormsApplication1
             Vector vector = new Vector();
 
             private Vector m_forwardAxis, m_sideAxis;
-            private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
+            public float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
             private Vector m_Position = new Vector();
 
             public Wheel(Vector position, float radius)
             {
                 m_Position = position;
-                SetSteeringAngle(0, " ");
+                SetSteeringAngle(0);
                 m_wheelSpeed = 0;
                 m_wheelRadius = radius;
                 m_wheelInertia = radius * radius; //fake value
+                Console.Write("i");
             }
 
-            public void SetSteeringAngle(float newAngle, string time)
+            public void SetSteeringAngle(float newAngle)
             {
                 Matrix mat = new Matrix();
                 PointF[] vectors = new PointF[2];
@@ -44,7 +45,6 @@ namespace WindowsFormsApplication1
 
                 m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
                 m_sideAxis = new Vector(vectors[1].X, vectors[1].Y);
-                Console.WriteLine(time);
             }
 
             public void AddTransmissionTorque(float newValue)
@@ -97,7 +97,7 @@ namespace WindowsFormsApplication1
 
         RigidBody rigidbody = new RigidBody();
 
-        public void Setup(Vector halfSize, float mass, System.Drawing.Color color)
+        new public void Setup(Vector halfSize, float mass, Color color)
         {
             //front wheels
             wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
@@ -107,16 +107,16 @@ namespace WindowsFormsApplication1
             wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
             wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
 
-            Setup(halfSize, mass, color);
+            //base.Setup(halfSize, mass, color);
         }
 
-        public void SetSteering(float steering, string time)
+        public void SetSteering(float steering)
         {
             const float steeringLock = 0.75f;
 
             //apply steering angle to front wheels
-            wheels[0].SetSteeringAngle(-steering * steeringLock, time);
-            wheels[1].SetSteeringAngle(-steering * steeringLock , time);
+            wheels[0].SetSteeringAngle(-steering * steeringLock);
+            wheels[1].SetSteeringAngle(-steering * steeringLock);
         }
 
         public void SetThrottle(float throttle, bool allWheel)
@@ -150,7 +150,7 @@ namespace WindowsFormsApplication1
         {
             foreach (Wheel wheel in wheels)
             {
-                //wheel.m_wheelSpeed = 30.0f;
+                wheel.m_wheelSpeed = 30.0f;
                 Vector worldWheelOffset = rigidbody.RelativeToWorld(wheel.GetAttachPoint());
                 Vector worldGroundVel = rigidbody.PointVel(worldWheelOffset);
                 Vector relativeGroundSpeed = rigidbody.WorldToRelative(worldGroundVel);

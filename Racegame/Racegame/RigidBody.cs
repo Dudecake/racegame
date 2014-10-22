@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace WindowsFormsApplication1
 {
@@ -20,8 +22,8 @@ namespace WindowsFormsApplication1
 
         //graphical properties
         private Vector m_halfSize = new Vector();
-        System.Drawing.Rectangle rect = new System.Drawing.Rectangle();
-        private System.Drawing.Color m_color;
+        Rectangle rect = new Rectangle();
+        private Color m_color;
 
         public RigidBody()
         {
@@ -31,7 +33,7 @@ namespace WindowsFormsApplication1
         }
 
         //intialize out parameters
-        public void Setup(Vector halfSize, float mass, System.Drawing.Color color)
+        public void Setup(Vector halfSize, float mass, Color color)
         {
             //store physical parameters
             m_halfSize = halfSize;
@@ -73,10 +75,10 @@ namespace WindowsFormsApplication1
             m_torque = 0; //clear torque
         }
 
-        public void Draw(System.Drawing.Graphics graphics, System.Drawing.Size buffersize)
+        public void Draw(Graphics graphics, Size buffersize)
         {
             //store transform, (like opengl's glPushMatrix())
-            System.Drawing.Drawing2D.Matrix mat1 = graphics.Transform;
+            Matrix mat1 = graphics.Transform;
 
             //transform into position
             graphics.TranslateTransform(m_position.X, m_position.Y);
@@ -85,10 +87,10 @@ namespace WindowsFormsApplication1
             try
             {
                 //draw body
-                graphics.DrawRectangle(new System.Drawing.Pen(m_color), rect);
+                graphics.DrawRectangle(new Pen(m_color), rect);
 
                 //draw line in the "forward direction"
-                graphics.DrawLine(new System.Drawing.Pen(System.Drawing.Color.Yellow), 1, 0, 1, 5);
+                graphics.DrawLine(new Pen(Color.Yellow), 1, 0, 1, 5);
             }
             catch (OverflowException exc)
             {
@@ -102,12 +104,12 @@ namespace WindowsFormsApplication1
         //take a relative vector and make it a world vector
         public Vector RelativeToWorld(Vector relative)
         {
-            System.Drawing.Drawing2D.Matrix mat = new System.Drawing.Drawing2D.Matrix();
-            System.Drawing.PointF[] vectors = new System.Drawing.PointF[1];
+            Matrix mat = new Matrix();
+            PointF[] vectors = new PointF[1];
 
             vectors[0].X = relative.X;
             vectors[0].Y = relative.Y;
-
+            //Console.Write("a");
             mat.Rotate(m_angle / (float)Math.PI * 180.0f);
             mat.TransformVectors(vectors);
 
@@ -117,8 +119,8 @@ namespace WindowsFormsApplication1
         //take a world vector and make it a relative vector
         public Vector WorldToRelative(Vector world)
         {
-            System.Drawing.Drawing2D.Matrix mat = new System.Drawing.Drawing2D.Matrix();
-            System.Drawing.PointF[] vectors = new System.Drawing.PointF[1];
+            Matrix mat = new Matrix();
+            PointF[] vectors = new PointF[1];
 
             vectors[0].X = world.X;
             vectors[0].Y = world.Y;
