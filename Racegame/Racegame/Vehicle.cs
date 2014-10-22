@@ -117,7 +117,7 @@ namespace WindowsFormsApplication1
 
         public void SetThrottle(float throttle, bool allWheel)
         {
-            const float torque = 20.0f;
+            const float torque = 80.0f;
 
             //apply transmission torque to back wheels
             if (allWheel)
