@@ -5,10 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
-<<<<<<< HEAD
-=======
-using System.Timers;
->>>>>>> FETCH_HEAD
 using System.Windows.Forms;
 
 namespace racing_simulation_2d
@@ -16,29 +12,13 @@ namespace racing_simulation_2d
     //our main application form
     public partial class frmMain : Form
     {
-<<<<<<< HEAD
-=======
-        Vehicle vehicle = new Vehicle();
-        RigidBody rigidBody = new RigidBody();
-        Vector vector = new Vector();
-        Timer timers = new Timer();
-        
->>>>>>> FETCH_HEAD
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
         Size buffersize;
-<<<<<<< HEAD
         const float screenScale = 3.0f;
         Timer timer = new Timer();
 
-=======
-        const float screenScale = 2.0f;
-        Timer timer = new Timer();
-
-
-
->>>>>>> FETCH_HEAD
         //keyboard controls
         bool leftHeld = false, rightHeld = false;
         bool upHeld = false, downHeld = false;
@@ -49,25 +29,13 @@ namespace racing_simulation_2d
         float brakes = 0; //0 is no brakes, 1 is full brakes
 
         //game objects
-<<<<<<< HEAD
         Vehicle vehicle = new Vehicle();
-=======
-        //Vehicle vehicle = new Vehicle();
->>>>>>> FETCH_HEAD
 
         public frmMain()
         {
             InitializeComponent();
             Application.Idle += new EventHandler(ApplicationIdle);
 
-<<<<<<< HEAD
-=======
-            System.Timers.Timer GameTimer = new System.Timers.Timer();
-            GameTimer.Interval = 10;
-            GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
-            GameTimer.Enabled = true;
-
->>>>>>> FETCH_HEAD
             screen.Paint += new PaintEventHandler(screen_Paint);
             this.KeyDown += new KeyEventHandler(onKeyDown);
             this.KeyUp += new KeyEventHandler(onKeyUp);
@@ -226,7 +194,6 @@ namespace racing_simulation_2d
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
-<<<<<<< HEAD
             DoFrame();
         }
 
@@ -266,7 +233,7 @@ namespace racing_simulation_2d
                 vectors[1].X = -1;
                 vectors[1].Y = 0;
 
-                mat.Rotate(newAngle / (float)Math.PI * 80.0f);
+                mat.Rotate(newAngle / (float)Math.PI * 180.0f);
                 mat.TransformVectors(vectors);
 
                 m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
@@ -297,13 +264,13 @@ namespace racing_simulation_2d
                 Vector velDifference = relativeGroundSpeed + patchSpeed;
 
                 //project ground speed onto side axis
-                float forwardMag = 50;
+                float forwardMag = 0;
                 Vector sideVel = velDifference.Project(m_sideAxis);
                 Vector forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
 
                 //calculate super fake friction forces
                 //calculate response force
-                Vector responseForce = -sideVel * 7.0f;
+                Vector responseForce = -sideVel * 2.0f;
                 responseForce -= forwardVel;
 
                 //calculate torque on wheel
@@ -313,7 +280,7 @@ namespace racing_simulation_2d
                 m_wheelSpeed += m_wheelTorque / m_wheelInertia * timeStep;
 
                 //clear our transmission torque accumulator
-                m_wheelTorque = 80;
+                m_wheelTorque = 0;
 
                 //return force acting on body
                 return responseForce;
@@ -631,19 +598,6 @@ namespace racing_simulation_2d
             lastTime = Environment.TickCount;
 
             return etime;
-=======
-            //DoFrame();
-        }
-
-        void GameTimer_Tick(object sender, EventArgs e)
-        {
-            DoFrame();
-        }
-
-        private void MenuExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
->>>>>>> FETCH_HEAD
         }
     }
 }

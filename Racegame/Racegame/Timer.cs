@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace racing_simulation_2d
+namespace WindowsFormsApplication1
 {
     public class Timer
     {
