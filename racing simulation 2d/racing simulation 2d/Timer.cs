@@ -4,7 +4,7 @@ using System.Text;
 
 namespace racing_simulation_2d
 {
-    public class Timer
+    class Timer
     {
         //store last time sample
         private int lastTime = Environment.TickCount;

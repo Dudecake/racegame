@@ -308,7 +308,7 @@ namespace WindowsFormsApplication1
             time = 1;
         }
         
-        
+        /*
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
@@ -326,7 +326,7 @@ namespace WindowsFormsApplication1
         float brakes = 0; //0 is no brakes, 1 is full brakes
 
         //game objects
-       /* Vehicle vehicle = new Vehicle(); */
+        Vehicle vehicle = new Vehicle();
 
         public void frmMain()
         {
@@ -433,7 +433,7 @@ namespace WindowsFormsApplication1
                 brakes = 0;
         }
 
-        private void onKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void onKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -500,6 +500,6 @@ namespace WindowsFormsApplication1
         }
     }
 
-    
+    */
     }
-
+}
