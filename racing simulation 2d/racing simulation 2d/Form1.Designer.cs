@@ -46,7 +46,7 @@ namespace racing_simulation_2d
             | System.Windows.Forms.AnchorStyles.Right)));
             this.screen.Location = new System.Drawing.Point(12, 27);
             this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size(459, 308);
+            this.screen.Size = new System.Drawing.Size(1240, 621);
             this.screen.TabIndex = 0;
             this.screen.TabStop = false;
             // 
@@ -54,7 +54,7 @@ namespace racing_simulation_2d
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(391, 344);
+            this.label1.Location = new System.Drawing.Point(1172, 657);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 2;
@@ -66,7 +66,7 @@ namespace racing_simulation_2d
             this.menu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(483, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -106,7 +106,7 @@ namespace racing_simulation_2d
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(483, 369);
+            this.ClientSize = new System.Drawing.Size(1264, 682);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.screen);
             this.Controls.Add(this.menuStrip1);

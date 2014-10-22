@@ -11,7 +11,7 @@ namespace WindowsFormsApplication1
     {
         private class Wheel
         {
-            RigidBody rigidbody = new RigidBody();
+            RigidBody rigidBody = new RigidBody();
             Vector vector = new Vector();
 
             private Vector m_forwardAxis, m_sideAxis;
@@ -95,9 +95,9 @@ namespace WindowsFormsApplication1
         }
         private Wheel[] wheels = new Wheel[4];
 
-        RigidBody rigidbody = new RigidBody();
+        RigidBody rigidBody = new RigidBody();
 
-        new public void Setup(Vector halfSize, float mass, Color color)
+        public void Setup(Vector halfSize, float mass, Color color)
         {
             //front wheels
             wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
@@ -107,7 +107,7 @@ namespace WindowsFormsApplication1
             wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
             wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
 
-            //base.Setup(halfSize, mass, color);
+            rigidBody.Setup(halfSize, mass, color);
         }
 
         public void SetSteering(float steering)
@@ -151,16 +151,16 @@ namespace WindowsFormsApplication1
             foreach (Wheel wheel in wheels)
             {
                 wheel.m_wheelSpeed = 30.0f;
-                Vector worldWheelOffset = rigidbody.RelativeToWorld(wheel.GetAttachPoint());
-                Vector worldGroundVel = rigidbody.PointVel(worldWheelOffset);
-                Vector relativeGroundSpeed = rigidbody.WorldToRelative(worldGroundVel);
+                Vector worldWheelOffset = rigidBody.RelativeToWorld(wheel.GetAttachPoint());
+                Vector worldGroundVel = rigidBody.PointVel(worldWheelOffset);
+                Vector relativeGroundSpeed = rigidBody.WorldToRelative(worldGroundVel);
                 Vector relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
-                Vector worldResponseForce = rigidbody.RelativeToWorld(relativeResponseForce);
+                Vector worldResponseForce = rigidBody.RelativeToWorld(relativeResponseForce);
 
-                rigidbody.AddForce(worldResponseForce, worldWheelOffset);
+                rigidBody.AddForce(worldResponseForce, worldWheelOffset);
             }
 
-            Update(timeStep);
+            rigidBody.Update(timeStep);
         }
     }
 
