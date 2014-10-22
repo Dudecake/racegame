@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
+using System.Diagnostics;
 
 namespace WindowsFormsApplication1
 {
@@ -18,16 +21,16 @@ namespace WindowsFormsApplication1
             public Wheel(Vector position, float radius)
             {
                 m_Position = position;
-                SetSteeringAngle(0);
+                SetSteeringAngle(0, " ");
                 m_wheelSpeed = 0;
                 m_wheelRadius = radius;
                 m_wheelInertia = radius * radius; //fake value
             }
 
-            public void SetSteeringAngle(float newAngle)
+            public void SetSteeringAngle(float newAngle, string time)
             {
-                System.Drawing.Drawing2D.Matrix mat = new System.Drawing.Drawing2D.Matrix();
-                System.Drawing.PointF[] vectors = new System.Drawing.PointF[2];
+                Matrix mat = new Matrix();
+                PointF[] vectors = new PointF[2];
 
                 //foward vector
                 vectors[0].X = 0;
@@ -41,6 +44,7 @@ namespace WindowsFormsApplication1
 
                 m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
                 m_sideAxis = new Vector(vectors[1].X, vectors[1].Y);
+                Console.WriteLine(time);
             }
 
             public void AddTransmissionTorque(float newValue)
@@ -106,13 +110,13 @@ namespace WindowsFormsApplication1
             Setup(halfSize, mass, color);
         }
 
-        public void SetSteering(float steering)
+        public void SetSteering(float steering, string time)
         {
             const float steeringLock = 0.75f;
 
             //apply steering angle to front wheels
-            wheels[0].SetSteeringAngle(-steering * steeringLock);
-            wheels[1].SetSteeringAngle(-steering * steeringLock);
+            wheels[0].SetSteeringAngle(-steering * steeringLock, time);
+            wheels[1].SetSteeringAngle(-steering * steeringLock , time);
         }
 
         public void SetThrottle(float throttle, bool allWheel)

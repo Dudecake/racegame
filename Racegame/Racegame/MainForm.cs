@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1
         Collision collision = new Collision();
         Vehicle vehicle = new Vehicle();
         RigidBody rigidBody = new RigidBody();
+        PerformanceCounter perfUptimeCount = new PerformanceCounter("System", "System Up Time");
 
         //graphics
         Graphics graphics; //gdi+
@@ -39,31 +40,31 @@ namespace WindowsFormsApplication1
         float throttle = 0; //0 is coasting, 1 is full throttle
         float brakes = 0; //0 is no brakes, 1 is full brakes
         
-        double time = 1; 
+        //double time = 1; 
 
         Bitmap Backbuffer;
-        
+        /*
         List<Polygon> polygons = new List<Polygon>();
         Polygon player1;
         Polygon player2;
-
+        */
         public MainForm()
         {
             InitializeComponent();
-            Application.Idle += new EventHandler(ApplicationIdle);
+            //Application.Idle += new EventHandler(ApplicationIdle);
 
             screen.Paint += new PaintEventHandler(screen_Paint);
-            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
 
             Init(screen.Size);
 
-            /*
+            
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.floatBuffer, true);
-            */
+            ControlStyles.DoubleBuffer, true);
+            
             System.Timers.Timer GameTimer = new System.Timers.Timer();
             GameTimer.Interval = 10;
             GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
@@ -74,7 +75,7 @@ namespace WindowsFormsApplication1
             this.Paint += new PaintEventHandler(Form1_Paint);
 
             //this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
-            
+            /*
             Polygon p = new Polygon();
             p.Points.Add(new Vector(150, 100));
             p.Points.Add(new Vector(150, 150));
@@ -104,6 +105,7 @@ namespace WindowsFormsApplication1
 
             player1 = polygons[0];
             player2 = polygons[2];
+            */
         }
 
         //intialize rendering
@@ -114,7 +116,7 @@ namespace WindowsFormsApplication1
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
 
-            //timer.GetETime(); //reset timer
+            timer.GetETime(); //reset timer
 
             vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
             rigidBody.SetLocation(new Vector(0, 0), 0);
@@ -145,6 +147,18 @@ namespace WindowsFormsApplication1
         //process game logic
         private void DoFrame()
         {
+            TimeSpan uptimeSpan = TimeSpan.FromSeconds(perfUptimeCount.NextValue());
+            string systemUptimeMessage = string.Format("Up time is {0} hours {1} mins {2} secs {3} millisecs",
+            (int)uptimeSpan.Hours,
+            (int)uptimeSpan.Minutes,
+            (int)uptimeSpan.Seconds,
+            (int)uptimeSpan.Milliseconds
+            );
+            /*
+            var time = GetSystemUpTime();
+            var upTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms", time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
+            */
+
             //get elapsed time since last frame
             float etime = timer.GetETime();
 
@@ -152,7 +166,7 @@ namespace WindowsFormsApplication1
             ProcessInput();
 
             //apply vehicle controls
-            vehicle.SetSteering(steering);
+            vehicle.SetSteering(steering, systemUptimeMessage);
             vehicle.SetThrottle(throttle, true); //menu.Checked
             vehicle.SetBrakes(brakes);
 
@@ -163,7 +177,7 @@ namespace WindowsFormsApplication1
             ConstrainVehicle();
 
             //redraw our screen
-            //screen.Invalidate();
+            screen.Invalidate();
         }
         
         //keep the vehicle on the screen
@@ -253,13 +267,14 @@ namespace WindowsFormsApplication1
         {
             Render(e.Graphics);
         }
-
+        /*
         //when the os gives us time, run the game
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
             DoFrame();
         }
+        */
         /*
         private void MenuExit_Click(object sender, EventArgs e)
         {
@@ -309,11 +324,11 @@ namespace WindowsFormsApplication1
                 }
             }
             player1.Offset(playerTranslation);
-            */
-        
-
+        }   
+        */
         void Form1_Paint(object sender, PaintEventArgs e)
         {
+            /*
             Vector p1;
             Vector p2;
             foreach (Polygon polygon in polygons)
@@ -338,7 +353,7 @@ namespace WindowsFormsApplication1
             {
                 e.Graphics.DrawImageUnscaled(Backbuffer, System.Drawing.Point.Empty);
             }
-            
+            */
         }
         void Form1_CreateBackBuffer(object sender, EventArgs e)
         {
@@ -361,256 +376,7 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-        
-            
-        
-            /*
-            float i = Convert.ToSingle(0.05 * Math.Pow(time, 2)); //S = a*t^2
-            time++;
-            if (i >= 20)
-            {
-                i = 20;
-            }
-            Vector velocity = new Vector();
-
-            int j = 0;
-
-            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
-            {
-                j = 83;
-            }
-            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
-            {
-                j = 87;
-            }
-            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
-            {
-                j = 68;
-            }
-            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
-            {
-                j = 65;
-            }
-            switch (j)
-            {
-                case 32: //SPACE
-
-                    break;
-                case 87: // UP
-                    velocity = new Vector(0, -i);
-                    break;
-                case 83: // DOWN
-                    velocity = new Vector(0, i);
-                    break;
-                case 68: // RIGHT
-                    velocity = new Vector(i, 0);
-                    break;
-                case 65: // LEFT
-                    velocity = new Vector(-i, 0);
-                    break;
-            }
-            Vector playerTranslation = velocity;
-            foreach (Polygon polygon in polygons)
-            {
-                if (polygon == player1) continue;
-                Collision.PolygonCollisionResult r = collision.PolygonCollision(player1, polygon, velocity);
-                if (r.WillIntersect)
-                {
-                    playerTranslation = velocity + r.MinimumTranslationVector;
-                    break;
-                }
-            }
-            player1.Offset(playerTranslation);
-
-            //Draw();
-            
-            // TODO: Add the notion of dying (disable the timer and show a message box or something)
-        }
-
-        private void Form1_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            time = 1;
-        }
-        
-        /*
-        
-
-        //game objects
-        Vehicle vehicle = new Vehicle();
-
-        public void frmMain()
-        {
-            InitializeComponent();
-            Application.Idle += new EventHandler(ApplicationIdle);
-
-            screen.Paint += new PaintEventHandler(screen_Paint);
-            this.KeyDown += new KeyEventHandler(onKeyDown);
-            this.KeyUp += new KeyEventHandler(onKeyUp);
-
-            Init(screen.Size);
-        }
-
-        //intialize rendering
-        private void Init(Size size)
-        {
-            //setup rendering device
-            buffersize = size;
-            backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
-            graphics = Graphics.FromImage(backbuffer);
-
-            timer.GetETime(); //reset timer
-
-            vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
-            vehicle.SetLocation(new Vector(0, 0), 0);
-        }
-
-        //main rendering function
-        private void Render(Graphics g)
-        {
-            //clear back buffer
-            graphics.Clear(Color.Black);
-            graphics.ResetTransform();
-            graphics.ScaleTransform(screenScale, -screenScale);
-            graphics.TranslateTransform(buffersize.Width / 2.0f / screenScale, -buffersize.Height / 2.0f / screenScale);
-
-            //draw to back buffer
-            DrawScreen();
-
-            //present back buffer
-            g.DrawImage(backbuffer, new Rectangle(0, 0, buffersize.Width, buffersize.Height), 0, 0, buffersize.Width, buffersize.Height, GraphicsUnit.Pixel);
-        }
-
-        //draw the screen
-        private void DrawScreen()
-        {
-            vehicle.Draw(graphics, buffersize);
-        }
-
-        //process game logic
-        private void DoFrame()
-        {
-            //get elapsed time since last frame
-            float etime = timer.GetETime();
-
-            //process input
-            ProcessInput();
-
-            //apply vehicle controls
-            vehicle.SetSteering(steering);
-            vehicle.SetThrottle(throttle, menu.Checked);
-            vehicle.SetBrakes(brakes);
-
-            //integrate vehicle physics
-            vehicle.Update(etime);
-
-            //keep the vehicle on the screen
-            //ConstrainVehicle();
-
-            //redraw our screen
-            screen.Invalidate();
-        }
-        
-        //keep the vehicle on the screen
-        private void ConstrainVehicle()
-        {
-            Vector position = vehicle.GetPosition();
-            Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
-
-            while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
-            while (position.Y > screenSize.Y / 2.0f) { position.Y -= screenSize.Y; }
-            while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
-            while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
-        }
-        
-        //process keyboard input
-        private void ProcessInput()
-        {
-            if (leftHeld)
-                steering = -1;
-            else if (rightHeld)
-                steering = 1;
-            else
-                steering = 0;
-
-            if (upHeld)
-                throttle = 1;
-            else
-                throttle = 0;
-
-            if (downHeld)
-                brakes = 1;
-            else
-                brakes = 0;
-        }
-
-        private void onKeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Left:
-                    leftHeld = true;
-                    break;
-                case Keys.Right:
-                    rightHeld = true;
-                    break;
-                case Keys.Up:
-                    upHeld = true;
-                    break;
-                case Keys.Down:
-                    downHeld = true;
-                    break;
-                default: //no match found
-                    return; //return so handled dosnt get set
-            }
-
-            //match found
-            e.Handled = true;
-        }
-
-        private void onKeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Left:
-                    leftHeld = false;
-                    break;
-                case Keys.Right:
-                    rightHeld = false;
-                    break;
-                case Keys.Up:
-                    upHeld = false;
-                    break;
-                case Keys.Down:
-                    downHeld = false;
-                    break;
-                default: //no match found
-                    return; //return so handled dosnt get set
-            }
-
-            //match found
-            e.Handled = true;
-        }
-
-        //rendering - only when screen is invalidated
-        private void screen_Paint(object sender, PaintEventArgs e)
-        {
-            Render(e.Graphics);
-        }
-
-        //when the os gives us time, run the game
-        private void ApplicationIdle(object sender, EventArgs e)
-        {
-            // While the application is still idle, run frame routine.
             DoFrame();
         }
-
-        private void MenuExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        
-    }
-    */
-    }
     }
 }
