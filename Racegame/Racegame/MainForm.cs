@@ -53,8 +53,8 @@ namespace WindowsFormsApplication1
             Application.Idle += new EventHandler(ApplicationIdle);
 
             screen.Paint += new PaintEventHandler(screen_Paint);
-            this.KeyDown += new KeyEventHandler(onKeyDown);
-            this.KeyUp += new KeyEventHandler(onKeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
+            //this.KeyUp += new KeyEventHandler(onKeyUp);
 
             Init(screen.Size);
 
@@ -73,7 +73,7 @@ namespace WindowsFormsApplication1
             this.Load += new EventHandler(Form1_CreateBackBuffer);
             this.Paint += new PaintEventHandler(Form1_Paint);
 
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
+            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(Form1_KeyDown);
             
             Polygon p = new Polygon();
             p.Points.Add(new Vector(150, 100));
@@ -169,7 +169,7 @@ namespace WindowsFormsApplication1
         //keep the vehicle on the screen
         private void ConstrainVehicle()
         {
-            Vector position = vehicle.GetPosition();
+            Vector position = rigidBody.GetPosition();
             Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
 
             while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
@@ -224,7 +224,7 @@ namespace WindowsFormsApplication1
             e.Handled = true;
         }
 
-        private void onKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void onKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
