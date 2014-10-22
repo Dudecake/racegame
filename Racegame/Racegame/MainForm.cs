@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Timers;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace WindowsFormsApplication1
 {
@@ -53,8 +53,8 @@ namespace WindowsFormsApplication1
             Application.Idle += new EventHandler(ApplicationIdle);
 
             screen.Paint += new PaintEventHandler(screen_Paint);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
-            //this.KeyUp += new KeyEventHandler(onKeyUp);
+            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
 
             Init(screen.Size);
 
@@ -199,7 +199,7 @@ namespace WindowsFormsApplication1
                 brakes = 0;
         }
 
-        private void onKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void onKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
         
             switch (e.KeyCode)
