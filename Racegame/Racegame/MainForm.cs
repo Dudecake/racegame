@@ -23,21 +23,6 @@ namespace WindowsFormsApplication1
         Vehicle vehicle = new Vehicle();
         RigidBody rigidBody = new RigidBody();
 
-        //graphics
-        Graphics graphics; //gdi+
-        Bitmap backbuffer;
-        Size buffersize;
-        const float screenScale = 3.0f;
-        Timer timer = new Timer();
-
-        //keyboard controls
-        bool leftHeld = false, rightHeld = false;
-        bool upHeld = false, downHeld = false;
-
-        //vehicle controls
-        float steering = 0; //-1 is full left, 0 is center, 1 is full right
-        float throttle = 0; //0 is coasting, 1 is full throttle
-        float brakes = 0; //0 is no brakes, 1 is full brakes
         
         double time = 1; 
 
@@ -50,6 +35,7 @@ namespace WindowsFormsApplication1
         public MainForm()
         {
             InitializeComponent();
+<<<<<<< HEAD
             Application.Idle += new EventHandler(ApplicationIdle);
 
             screen.Paint += new PaintEventHandler(screen_Paint);
@@ -58,6 +44,8 @@ namespace WindowsFormsApplication1
 
             Init(screen.Size);
 
+=======
+>>>>>>> origin/master
             /*
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -106,6 +94,7 @@ namespace WindowsFormsApplication1
             player2 = polygons[2];
         }
 
+<<<<<<< HEAD
         //intialize rendering
         private void Init(Size size)
         {
@@ -266,6 +255,8 @@ namespace WindowsFormsApplication1
             this.Close();
         }
 
+=======
+>>>>>>> origin/master
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             /*
@@ -309,9 +300,72 @@ namespace WindowsFormsApplication1
                 }
             }
             player1.Offset(playerTranslation);
-            */
-        
+            velocity = new Vector();
+            /*
+            int j = 0;
 
+            if ((Keyboard.GetKeyStates(Key.Down) & KeyStates.Down) > 0)
+            {
+                j = 83;
+            }
+            if ((Keyboard.GetKeyStates(Key.Up) & KeyStates.Down) > 0)
+            {
+                j = 87;
+            }
+            if ((Keyboard.GetKeyStates(Key.Right) & KeyStates.Down) > 0)
+            {
+                j = 68;
+            }
+            if ((Keyboard.GetKeyStates(Key.Left) & KeyStates.Down) > 0)
+            {
+                j = 65;
+            }
+
+            */
+            /*
+            switch (e.KeyValue)
+            {
+                case 32: //SPACE
+
+                    break;
+                case 87: // UP
+                    velocity = new Vector(0, -i);
+                    break;
+                case 83: // DOWN
+                    velocity = new Vector(0, i);
+                    break;
+                case 68: // RIGHT
+                    velocity = new Vector(i, 0);
+                    break;
+                case 65: // LEFT
+                    velocity = new Vector(-i, 0);
+                    break;
+            }
+            
+            playerTranslation = velocity;
+            foreach (Polygon polygon in polygons)
+            {
+                if (polygon == player2) continue;
+                Collision.PolygonCollisionResult r = collision.PolygonCollision(player2, polygon, velocity);
+                if (r.WillIntersect)
+                {
+                    playerTranslation = velocity + r.MinimumTranslationVector;
+                    break;
+                }
+            }
+            player2.Offset(playerTranslation);
+            
+            /*
+            if (e.KeyCode == Keys.Left)
+                BallSpeed.X = -BallAxisSpeedX;
+            else if (e.KeyCode == Keys.Right)
+                BallSpeed.X = BallAxisSpeedX;
+            else if (e.KeyCode == Keys.Up)
+                BallSpeed.Y = -BallAxisSpeedX; // Y axis is downwards so -ve is up.
+            else if (e.KeyCode == Keys.Down)
+                BallSpeed.Y = BallAxisSpeedX;
+            */
+        }
         void Form1_Paint(object sender, PaintEventArgs e)
         {
             Vector p1;
@@ -361,10 +415,6 @@ namespace WindowsFormsApplication1
         }
         void GameTimer_Tick(object sender, EventArgs e)
         {
-        
-            
-        
-            /*
             float i = Convert.ToSingle(0.05 * Math.Pow(time, 2)); //S = a*t^2
             time++;
             if (i >= 20)
@@ -433,7 +483,21 @@ namespace WindowsFormsApplication1
         }
         
         /*
-        
+        //graphics
+        Graphics graphics; //gdi+
+        Bitmap backbuffer;
+        Size buffersize;
+        const float screenScale = 3.0f;
+        Timer timer = new Timer();
+
+        //keyboard controls
+        bool leftHeld = false, rightHeld = false;
+        bool upHeld = false, downHeld = false;
+
+        //vehicle controls
+        float steering = 0; //-1 is full left, 0 is center, 1 is full right
+        float throttle = 0; //0 is coasting, 1 is full throttle
+        float brakes = 0; //0 is no brakes, 1 is full brakes
 
         //game objects
         Vehicle vehicle = new Vehicle();
@@ -608,9 +672,8 @@ namespace WindowsFormsApplication1
         {
             this.Close();
         }
-        
     }
+
     */
-    }
     }
 }
