@@ -16,14 +16,17 @@ namespace game_try
         public Keys[] keysHeld;
         public Stopwatch gameTime;
         public float deltaTime;
+        public List<Sprite> inGameSprites = new List<Sprite>();
+        public bool Clicked;
 
-        public void Update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt,float dt)
+        public void Update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt,float dt, bool clked)
         {
             mousePoint = mp;
             keysPressed = kp;
             keysHeld = kh;
             gameTime = gt;
-            deltaTime = dt;
+            deltaTime = dt / 1000f;
+            Clicked = clked;
         }
 
 

@@ -35,6 +35,16 @@ namespace game_try
             bfgfx.Graphics.DrawImageUnscaled(b, rec);
         }
 
+        public void drawImageClipped(Bitmap b, Rectangle rec)
+        {
+            bfgfx.Graphics.DrawImageUnscaledAndClipped(b, rec);
+        }
+
+        public void drawRectrangle(Pen p, Rectangle rec)
+        {
+            bfgfx.Graphics.DrawRectangle(p, rec);
+        }
+
         public void End()
         {
             bfgfx.Render(Gfx);

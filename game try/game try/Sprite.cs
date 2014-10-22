@@ -12,8 +12,18 @@ namespace game_try
         public float X, Y;
         public int Width, Height;
         public Bitmap Texture;
+        private const float Gravity = 9.81f;
+        private float Friction = 0.95f;
+        public PointF Velocity;
+        public SpriteType type;
+        public bool hasGravity;
+        public bool canCollide;
+        public bool canMove;
+        private float boingBoing;
 
-        public Sprite(Bitmap texture, float x, float y, int width, int height)
+        public enum SpriteType { Floor, MovingFloor, Object, Player, Enemy , View, Ball}
+
+        public Sprite(Bitmap texture, float x, float y, int width, int height, SpriteType thisType)
         {
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
@@ -25,6 +35,175 @@ namespace game_try
             Width = width;
             Height = height;
             Texture = b;
+            Texture.MakeTransparent(Color.White);
+            type = thisType;
+
+            switch(thisType)
+            {
+                case SpriteType.Floor:
+                    canCollide = true;
+                    break;
+                case SpriteType.MovingFloor:
+                    canMove = true;
+                    canCollide = true;
+                    break;
+                case SpriteType.Object:
+                    canMove = true;
+                    hasGravity = true;
+                    canCollide = true;
+                    break;
+                case SpriteType.Player:
+                    canMove = true;
+                    hasGravity = true;
+                    canCollide = true;
+                    break;
+                case SpriteType.Enemy:
+                    canMove = true;
+                    hasGravity = true;
+                    canCollide = true;
+                    break;
+                case SpriteType.View:
+                    canMove = true;
+                    break;
+                case SpriteType.Ball:
+                    boingBoing = 0.85f;
+                    break;
+            }
+        }
+
+        public void Update(InputManager iManager)
+        {
+            if(hasGravity)
+            Velocity.Y += Gravity;
+
+            if (canMove)
+            {
+                this.X += Velocity.X * iManager.deltaTime;
+                this.Y += Velocity.Y * iManager.deltaTime;
+            }
+
+            collider(iManager);
+        }
+
+        private void collider(InputManager iManager)
+        {
+            foreach(Sprite s in iManager.inGameSprites)
+            {
+                if(this.isCollidingWith(s))
+                {
+                    switch(this.type)
+                    {
+                        case SpriteType.Floor:
+                            switch (s.type)
+                            {
+                                case SpriteType.MovingFloor:
+                                    if(s.isTouchingTop(this))
+                                    {
+                                        s.Y = this.Y - s.Height;
+                                        s.Velocity.Y *= -1;
+                                    }
+                                    else if(s.isTouchingBottom(this))
+                                    {
+                                        s.Y = this.Y + this.Height;
+                                        s.Velocity.Y *= -1;
+                                    }
+                                    else if(s.isTouchingLeft(this))
+                                    {
+                                        s.X = this.X - s.Width;
+                                        s.Velocity.X *= -1;
+                                    }
+                                    else if(s.isTouchingRight(this))
+                                    {
+                                        s.X = this.X + this.Width;
+                                        s.Velocity.X *= -1;
+                                    }
+                                    break;
+                                case SpriteType.Object:
+                                    if (s.isTouchingTop(this))
+                                    {
+                                        s.Y = this.Y - s.Height;
+                                        s.X *= Friction;
+                                        s.Y *= boingBoing;
+                                    }
+                                    else if (s.isTouchingBottom(this))
+                                    {
+                                        s.Y = this.Y + this.Height;
+                                        s.Velocity.Y *= 0.5f;
+                                        Velocity.Y *= -1;
+                                    }
+                                    else if (s.isTouchingLeft(this))
+                                    {
+                                        s.X = this.X - s.Width;
+                                        s.Velocity.X *= 0.70f;
+                                        s.Velocity.X *= -1;
+                                    }
+                                    else if (s.isTouchingRight(this))
+                                    {
+                                        s.X = this.X + this.Width;
+                                        s.Velocity.X *= 0.70f;
+                                        s.Velocity.X *= -1;
+                                    }
+                                    break;
+                                case SpriteType.Player:
+                                    if (s.isTouchingTop(this))
+                                    {
+                                        s.Y = this.Y - s.Height;
+                                        s.Velocity.Y = 0;
+                                    }
+                                    else if (s.isTouchingBottom(this))
+                                    {
+                                        s.Y = this.Y + this.Height;
+                                        s.Velocity.Y *= 0.5f;
+                                        s.Velocity.Y *= -1;
+                                    }
+                                    else if (s.isTouchingLeft(this))
+                                    {
+                                        s.X = this.X - s.Width;
+                                        s.Velocity.X = 0;
+                                    }
+                                    else if (s.isTouchingRight(this))
+                                    {
+                                        s.X = this.X + this.Width;
+                                        s.Velocity.X = 0;
+                                    }
+                                    break;
+                                case SpriteType.Enemy:
+                                    if (s.isTouchingTop(this))
+                                    {
+                                        s.Y = this.Y - s.Height;
+                                        s.Y *= boingBoing;
+                                        s.X *= Friction;
+                                    }
+                                    else if (s.isTouchingBottom(this))
+                                    {
+                                        s.Y = this.Y + this.Height;
+                                        s.Velocity.Y *= 0.5f;
+                                        s.Velocity.Y *= -1;
+                                    }
+                                    else if (s.isTouchingLeft(this))
+                                    {
+                                        s.X = this.X - s.Width;
+                                        s.Velocity.X = 0;
+                                    }
+                                    else if (s.isTouchingRight(this))
+                                    {
+                                        s.X = this.X + this.Width;
+                                        s.Velocity.X = 0;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case SpriteType.MovingFloor:
+                            break;
+                        case SpriteType.Object:
+                            break;
+                        case SpriteType.Player:
+                            break;
+                        case SpriteType.Enemy:
+                            break;
+                    }
+                }
+            }
         }
 
         public Rectangle ToRec
@@ -59,6 +238,56 @@ namespace game_try
 
     static class SpriteHelper
     {
+        public static bool isCollidingWith(this Sprite s1, Sprite s2)
+        {
+            if (s1.ToRec.IntersectsWith(s2.ToRec))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
+        public static bool isTouchingLeft(this Sprite s1, Sprite s2)
+        {
+            if (s1.Right.IntersectsWith(s2.Left))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingRight(this Sprite s1, Sprite s2)
+        {
+            if (s1.Left.IntersectsWith(s2.Right))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingTop(this Sprite s1, Sprite s2)
+        {
+            if (s1.Bottom.IntersectsWith(s2.Top))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingBottom(this Sprite s1, Sprite s2)
+        {
+            if (s1.Top.IntersectsWith(s2.Bottom))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isOnStage(this Sprite s1, Rectangle clientRect)
+        {
+            if (s1.ToRec.IntersectsWith(clientRect))
+                return true;
+            else
+                return false;
+        }
     }
 }

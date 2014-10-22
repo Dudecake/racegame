@@ -19,6 +19,11 @@ namespace game_try
             InitializeComponent();
         }
 
+        private int interval = 1000 / 63;
+        private long upTime;
+        private int upCounter;
+        private int Ups;
+        private int previousSecond;
         private bool allowInput;
         private int fps;
         private int fpsCounter;
@@ -26,16 +31,18 @@ namespace game_try
         private List<Keys> keysPressed = new List<Keys>();
         private List<Keys> keysHeld = new List<Keys>();
         private InputManager iManager = new InputManager();
+        private ScreenManager sManager = new ScreenManager();
         private Stopwatch gameTime = new Stopwatch();
         private Spritebatch spriteBatch;
         private Point mousePoint;
         private float deltaTime;
         private long lasttime;
-        private Sprite s;
+        private Map gameMap;
+        private bool Clicked;
 
         private void LoadContent()
         {
-            s = new Sprite(Properties.Resources.Dementia_GTA2, 50, 50, 50, 30);
+            sManager.LoadContent(iManager);
             spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
             Thread game = new Thread(GameLoop);
             game.Start(); 
@@ -59,10 +66,11 @@ namespace game_try
         {
             allowInput = false;   
             this.Invoke(new MethodInvoker(delegate {
-                this.Text = fps.ToString();
                 mousePoint = this.PointToClient(Cursor.Position);
+                this.Text = " Fps: " + fps.ToString() + " Ups: " + Ups.ToString();
             }));
-            iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime);
+            iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime, Clicked);
+            Clicked = false;
             keysPressed.Clear();
             keysHeld.Clear();
             allowInput = true;
@@ -70,13 +78,24 @@ namespace game_try
 
         private void Logic()
         {
-
+            sManager.Update(iManager);
+            if(gameTime.ElapsedMilliseconds - upTime > interval)
+            {
+                if(gameTime.Elapsed.Seconds != previousSecond)
+                {
+                    previousSecond = gameTime.Elapsed.Seconds;
+                    Ups = upCounter;
+                    upCounter = 0;
+                }
+                upTime = gameTime.ElapsedMilliseconds;
+                upCounter++;
+            }
         }
 
         private void Render()
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(s);
+            sManager.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -106,6 +125,12 @@ namespace game_try
             LoadContent();
         }
 
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+            Clicked = true;
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -119,6 +144,14 @@ namespace game_try
             if (allowInput)
                 keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
         }
+
+
+
+
+
+
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
