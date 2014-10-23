@@ -116,7 +116,7 @@ namespace WindowsFormsApplication1
 
             timer.GetETime(); //reset timer
 
-            vehicle.Setup(new Vector(3, 8) / 2.0f, 5, Color.Red);
+            vehicle.Setup(new Vector(11,21) / 2.0f, 5, Color.Red);
             vehicle.SetLocation(new Vector(0, 0), 0);
         }
 
@@ -571,6 +571,7 @@ namespace WindowsFormsApplication1
         private Vector m_halfSize = new Vector();
         Rectangle rect = new Rectangle();
         private Color m_color;
+        private Bitmap m_bitmap = new Bitmap(Properties.Resources.Z_Type_GTA2);
  
         public RigidBody()
         { 
@@ -634,10 +635,10 @@ namespace WindowsFormsApplication1
             try
             {
                 //draw body
-                graphics.DrawRectangle(new Pen(m_color), rect);
-
+                //graphics.DrawRectangle(new Pen(m_color), rect);
+                graphics.DrawImage(m_bitmap, rect);
                 //draw line in the "forward direction"
-                graphics.DrawLine(new Pen(Color.Yellow), 1, 0, 1, 5);
+                //graphics.DrawLine(new Pen(Color.Yellow), 1, 0, 1, 5);
             }
             catch(OverflowException exc)
             {
