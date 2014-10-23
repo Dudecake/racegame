@@ -399,8 +399,6 @@ namespace WindowsFormsApplication1
         {
             DoFrame();
         }
-
-
         //our vehicle object
     class Vehicle : RigidBody
     {
