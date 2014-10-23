@@ -118,7 +118,7 @@ namespace WindowsFormsApplication1
             timer.GetETime(); //reset timer
 
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
-            vehicle.SetLocation(new Vector(-210, -15), 0);
+            vehicle.SetLocation(new Vector(210, -7), 0);
         }
 
         //main rendering function
@@ -501,7 +501,7 @@ namespace WindowsFormsApplication1
 
         public void SetSteering(float steering)
         {
-            const float steeringLock = 0.6f;
+            const float steeringLock = 0.4f;
 
             //apply steering angle to front wheels
             wheels[0].SetSteeringAngle(-steering * steeringLock);
