@@ -32,8 +32,8 @@ namespace WindowsFormsApplication1
         Timer timer = new Timer();
 
         //keyboard controls
-        bool leftHeld = false, rightHeld = false;
-        bool upHeld = false, downHeld = false;
+        bool AHeld = false, DHeld = false;
+        bool WHeld = false, SHeld = false;
 
         //vehicle controls
         float steering = 0; //-1 is full left, 0 is center, 1 is full right
@@ -117,8 +117,8 @@ namespace WindowsFormsApplication1
 
             timer.GetETime(); //reset timer
 
-            vehicle.Setup(new Vector(8, 15) / 2.0f, 5, Color.Red);
-            vehicle.SetLocation(new Vector(0, 0), 0);
+            vehicle.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
+            vehicle.SetLocation(new Vector(-210, -15), 0);
         }
 
         //main rendering function
@@ -183,19 +183,19 @@ namespace WindowsFormsApplication1
         //process keyboard input
         private void ProcessInput()
         {
-            if (leftHeld)
+            if (AHeld)
                 steering = -1;
-            else if (rightHeld)
+            else if (DHeld)
                 steering = 1;
             else
                 steering = 0;
 
-            if (upHeld)
+            if (WHeld)
                 throttle = 1;
             else
                 throttle = 0;
 
-            if (downHeld)
+            if (SHeld)
                 brakes = 12;
             else
                 brakes = 0.4f;
@@ -244,17 +244,17 @@ namespace WindowsFormsApplication1
             */
             switch (e.KeyCode)
             {
-                case Keys.Left:
-                    leftHeld = true;
+                case Keys.A:
+                    AHeld = true;
                     break;
-                case Keys.Right:
-                    rightHeld = true;
+                case Keys.D:
+                    DHeld = true;
                     break;
-                case Keys.Up:
-                    upHeld = true;
+                case Keys.W:
+                    WHeld = true;
                     break;
-                case Keys.Down:
-                    downHeld = true;
+                case Keys.S:
+                    SHeld = true;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -268,17 +268,17 @@ namespace WindowsFormsApplication1
         {
             switch (e.KeyCode)
             {
-                case Keys.Left:
-                    leftHeld = false;
+                case Keys.A:
+                    AHeld = false;
                     break;
-                case Keys.Right:
-                    rightHeld = false;
+                case Keys.D:
+                    DHeld = false;
                     break;
-                case Keys.Up:
-                    upHeld = false;
+                case Keys.W:
+                    WHeld = false;
                     break;
-                case Keys.Down:
-                    downHeld = false;
+                case Keys.S:
+                    SHeld = false;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -501,7 +501,7 @@ namespace WindowsFormsApplication1
 
         public void SetSteering(float steering)
         {
-            const float steeringLock = 0.75f;
+            const float steeringLock = 0.4f;
 
             //apply steering angle to front wheels
             wheels[0].SetSteeringAngle(-steering * steeringLock);
