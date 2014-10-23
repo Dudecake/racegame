@@ -35,20 +35,18 @@
             // screen
             // 
             this.screen.BackgroundImage = global::WindowsFormsApplication1.Properties.Resources.design_1;
-            this.screen.Location = new System.Drawing.Point(-8, -5);
-            this.screen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.screen.Location = new System.Drawing.Point(-6, -4);
             this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size(1024, 768);
+            this.screen.Size = new System.Drawing.Size(1002, 722);
             this.screen.TabIndex = 0;
             this.screen.TabStop = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 721);
+            this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.screen);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.screen)).EndInit();

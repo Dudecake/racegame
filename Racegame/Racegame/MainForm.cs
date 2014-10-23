@@ -22,7 +22,8 @@ namespace WindowsFormsApplication1
         //Vector vector = new Vector();
         Vehicle vehicle = new Vehicle();
         //RigidBody rigidBody = new RigidBody();
-        
+        Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
+
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
@@ -116,7 +117,7 @@ namespace WindowsFormsApplication1
 
             timer.GetETime(); //reset timer
 
-            vehicle.Setup(new Vector(11,21) / 2.0f, 5, Color.Red);
+            vehicle.Setup(new Vector(8, 15) / 2.0f, 5, Color.Red);
             vehicle.SetLocation(new Vector(0, 0), 0);
         }
 
@@ -125,6 +126,7 @@ namespace WindowsFormsApplication1
         {
             //clear back buffer
             graphics.Clear(Color.Black);
+            graphics.DrawImage(m_map, -171, -128);
             graphics.ResetTransform();
             graphics.ScaleTransform(screenScale, -screenScale);
             graphics.TranslateTransform(buffersize.Width / 2.0f / screenScale, -buffersize.Height / 2.0f / screenScale);
