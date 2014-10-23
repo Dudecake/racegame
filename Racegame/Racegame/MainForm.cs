@@ -501,7 +501,7 @@ namespace WindowsFormsApplication1
 
         public void SetSteering(float steering)
         {
-            const float steeringLock = 0.4f;
+            const float steeringLock = 0.6f;
 
             //apply steering angle to front wheels
             wheels[0].SetSteeringAngle(-steering * steeringLock);
@@ -515,8 +515,8 @@ namespace WindowsFormsApplication1
             //apply transmission torque to back wheels
             if (allWheel)
             {
-                wheels[0].AddTransmissionTorque(throttle * torque);
-                wheels[1].AddTransmissionTorque(throttle * torque);
+                wheels[0].AddTransmissionTorque(throttle * torque / 2);
+                wheels[1].AddTransmissionTorque(throttle * torque / 2);
             }
 
             wheels[2].AddTransmissionTorque(throttle * torque);
