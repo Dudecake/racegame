@@ -194,9 +194,9 @@ namespace WindowsFormsApplication1
                 throttle = 0;
 
             if (downHeld)
-                brakes = 1;
+                brakes = 12;
             else
-                brakes = 1;
+                brakes = 0.4f;
         }
 
         private void onKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -523,7 +523,7 @@ namespace WindowsFormsApplication1
 
         public void SetBrakes(float brakes)
         {
-            const float brakeTorque = 0.3f;
+            const float brakeTorque = 0.7f;
 
 
             //apply brake torque apposing wheel vel
