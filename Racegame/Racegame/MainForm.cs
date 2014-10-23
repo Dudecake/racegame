@@ -31,6 +31,11 @@ namespace WindowsFormsApplication1
         const float screenScale = 3.0f;
         Timer timer = new Timer();
 
+        private int fps;
+        private int fpsCounter;
+        private long fpsTime;
+        private Stopwatch gameTime = new Stopwatch();
+
         //keyboard controls
         bool AHeld = false, DHeld = false;
         bool WHeld = false, SHeld = false;
@@ -51,7 +56,7 @@ namespace WindowsFormsApplication1
         public MainForm()
         {
             InitializeComponent();
-            //Application.Idle += new EventHandler(ApplicationIdle);
+            Application.Idle += new EventHandler(ApplicationIdle);
 
             screen.Paint += new PaintEventHandler(screen_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
@@ -65,7 +70,7 @@ namespace WindowsFormsApplication1
             ControlStyles.DoubleBuffer, true);
             
             System.Timers.Timer GameTimer = new System.Timers.Timer();
-            GameTimer.Interval = 10;
+            GameTimer.Interval = 1;
             GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
             GameTimer.Enabled = true;
 
@@ -114,7 +119,7 @@ namespace WindowsFormsApplication1
             buffersize = size;
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
-
+            gameTime.Start();
             timer.GetETime(); //reset timer
 
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
@@ -164,8 +169,20 @@ namespace WindowsFormsApplication1
             //keep the vehicle on the screen
             ConstrainVehicle();
 
+            //CheckFps();
+
             //redraw our screen
             screen.Invalidate();
+            
+            try
+            {
+                this.Text = String.Format("{0}FPS", fps);
+            }
+            catch
+            {
+                Console.Write("i");
+            }
+            
         }
         
         //keep the vehicle on the screen
@@ -298,7 +315,8 @@ namespace WindowsFormsApplication1
         private void ApplicationIdle(object sender, EventArgs e)
         {
             // While the application is still idle, run frame routine.
-            //DoFrame();
+            DoFrame();
+            CheckFps();
         }
         
         /*
@@ -397,9 +415,25 @@ namespace WindowsFormsApplication1
                 Invalidate();
             }
         }
+        
+        private void CheckFps()
+        {
+            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
+            {
+                fpsTime = gameTime.ElapsedMilliseconds;
+                fps = fpsCounter;
+                fpsCounter = 0; 
+            }
+            else
+            {
+                fpsCounter++;
+            }
+        }
+        //*/
         void GameTimer_Tick(object sender, EventArgs e)
         {
-            DoFrame();
+            //DoFrame();
+            //CheckFps();
         }
         //our vehicle object
     class Vehicle : RigidBody
