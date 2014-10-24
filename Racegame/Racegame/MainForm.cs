@@ -356,6 +356,14 @@ namespace WindowsFormsApplication1
                 fpsTime = gameTime.ElapsedMilliseconds;
                 fps = fpsCounter;
                 fpsCounter = 0;
+                string i = vehicle2.GetRect().ToString();
+                string j = vehicle2.GetAngle().ToString();
+                Vector2 k = vehicle2.GetPosition();
+                string l = k.X.ToString();
+                string m = k.Y.ToString();
+                Console.Write(i + " ");
+                Console.Write(j + " ");
+                Console.WriteLine(l + " " + m);
             }
             else
             {
@@ -944,6 +952,15 @@ namespace WindowsFormsApplication1
                 rect.Y = (int)-m_halfSize.Y;
                 rect.Width = (int)(m_halfSize.X * 2.0f);
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
+            }
+
+            public Rectangle GetRect()
+            {
+                return rect;
+            }
+            public float GetAngle()
+            {
+                return m_angle;
             }
 
             public void SetLocation(Vector2 position, float angle)
