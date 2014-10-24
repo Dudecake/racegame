@@ -65,6 +65,7 @@ namespace WindowsFormsApplication1
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown2);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
             Init(screen.Size);
     
             this.SetStyle(
@@ -128,7 +129,7 @@ namespace WindowsFormsApplication1
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
             vehicle.SetLocation(new Vector(210, -7), 0);
             vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
-            vehicle2.SetLocation(new Vector(210, -7), 0);
+            vehicle2.SetLocation(new Vector(190, -7), 0);
         }
 
         //main rendering function
@@ -171,7 +172,7 @@ namespace WindowsFormsApplication1
             vehicle2.Update(etime);
 
             //keep the vehicle on the screen
-            ConstrainVehicle();
+            ConstrainVehicle2();
 
             //CheckFps();
 
@@ -211,7 +212,7 @@ namespace WindowsFormsApplication1
 
             //CheckFps();
 
-            //redraw our screen
+            //redraw our screenconstra
             screen.Invalidate();
             
             try
@@ -236,11 +237,21 @@ namespace WindowsFormsApplication1
             while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
             while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
         }
+        private void ConstrainVehicle2()
+        {
+            Vector position = vehicle2.GetPosition();
+            Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
+
+            while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
+            while (position.Y > screenSize.Y / 2.0f) { position.Y -= screenSize.Y; }
+            while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
+            while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
+        }
         private void ProcessInput2()
         {
-            if (Rightheld)
+            if (Leftheld)
                 steering = -1;
-            else if (Leftheld)
+            else if (Rightheld)
                 steering = 1;
             else
                 steering = 0;
@@ -275,10 +286,33 @@ namespace WindowsFormsApplication1
                 default: //no match found
                     return; //return so handled dosnt get set
             }
+            //match found
+            e.Handled = true;
+        }
+            private void onKeyUp2(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    Leftheld = false;
+                    break;
+                case Keys.Right:
+                    Rightheld = false;
+                    break;
+                case Keys.Up:
+                    Upheld = false;
+                    break;
+                case Keys.Down:
+                    Downheld = false;
+                    break;
+                default: //no match found
+                    return; //return so handled dosnt get set
+            }
 
             //match found
             e.Handled = true;
         }
+         
 
         //process keyboard input
         private void ProcessInput()
