@@ -17,6 +17,8 @@ namespace game_try
         public Form1()
         {
             InitializeComponent();
+
+            paper = pictureBox1.CreateGraphics();
         }
 
         private int interval = 1000 / 63;
@@ -31,7 +33,7 @@ namespace game_try
         private List<Keys> keysPressed = new List<Keys>();
         private List<Keys> keysHeld = new List<Keys>();
         private InputManager iManager = new InputManager();
-        private ScreenManager sManager = new ScreenManager();
+        //private ScreenManager sManager = new ScreenManager();
         private Stopwatch gameTime = new Stopwatch();
         private Spritebatch spriteBatch;
         private Point mousePoint;
@@ -40,12 +42,10 @@ namespace game_try
         private Map gameMap;
         private bool Clicked;
         Graphics paper;
-        Objects obj;
+        
 
         private void LoadContent()
         {
-            paper = pictureBox1.CreateGraphics();
-            obj = new Objects(paper);
             gameMap = new Map(ClientRectangle.Height / 13);
             gameMap.setMap(iManager);
             spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
@@ -83,7 +83,7 @@ namespace game_try
 
         private void Logic()
         {
-            sManager.Update(iManager);
+            //sManager.Update(iManager);
             if(gameTime.ElapsedMilliseconds - upTime > interval)
             {
                 foreach(Sprite s in iManager.inGameSprites)

@@ -50,16 +50,28 @@ namespace game_try
                         switch(numb)
                         {
                             case 1:
-                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.brick, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Floor));
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.Giant_Ice_Block, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Road));
+                                //obj.DrawRoad(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
                                 break;
                             case 2:
-                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.Dementia_GTA2, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Floor));
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.piq_55641, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Grass));
+                                //obj.DrawGrass(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
                                 break;
                             case 3:
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.Block_2, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Wall));
+                                //obj.DrawWall(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
                                 break;
                             case 4:
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.GreenQuestionBlock, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Check));
+                                //obj.DrawCheck(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
                                 break;
                             case 5:
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources.smw_glowing_question_block_3d_by_redyoshiu_d58qk45, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Start));
+                                //obj.DrawStart(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
+                                break;
+                            case 6:
+                                iManager.inGameSprites.Add(new Sprite(Properties.Resources._120px_Question_Block_NSMB, x * tileSqr, y * tileSqr, tileSqr, tileSqr, Sprite.SpriteType.Pitstop));
+                                //obj.DrawPitStop(tileSqr, tileSqr, tileSqr * x, tileSqr * y);
                                 break;
                         }
                     }

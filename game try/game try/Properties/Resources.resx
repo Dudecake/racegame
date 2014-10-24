@@ -124,4 +124,22 @@
   <data name="Dementia_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Dementia-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Block_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Block-2.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Giant_Ice_Block" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Giant_Ice_Block.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GreenQuestionBlock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GreenQuestionBlock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="piq_55641" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\piq_55641.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="smw_glowing_question_block_3d_by_redyoshiu_d58qk45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\smw_glowing_question_block_3d_by_redyoshiu-d58qk45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_120px_Question_Block_NSMB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\120px-Question_Block_NSMB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

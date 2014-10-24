@@ -55,7 +55,6 @@
     <Compile Include="Objects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScreenManager.cs" />
     <Compile Include="Spritebatch.cs" />
     <Compile Include="Sprite.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -89,6 +88,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\brick.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\120px-Question_Block_NSMB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Block-2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Giant_Ice_Block.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GreenQuestionBlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\piq_55641.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smw_glowing_question_block_3d_by_redyoshiu-d58qk45.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

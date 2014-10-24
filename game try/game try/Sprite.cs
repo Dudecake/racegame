@@ -13,15 +13,15 @@ namespace game_try
         public int Width, Height;
         public Bitmap Texture;
         private const float Gravity = 9.81f;
-        private float Friction = 0.95f;
+        //private float Friction = 0.95f;
         public PointF Velocity;
         public SpriteType type;
-        public bool hasGravity;
+        //public bool hasGravity;
         public bool canCollide;
-        public bool canMove;
-        private float boingBoing;
+        //public bool canMove;
+        //private float boingBoing;
 
-        public enum SpriteType { Floor, MovingFloor, Object, Player, Enemy , View, Ball}
+        public enum SpriteType { Road, Grass, Wall, Check, Start, Pitstop }
 
         public Sprite(Bitmap texture, float x, float y, int width, int height, SpriteType thisType)
         {
@@ -40,47 +40,48 @@ namespace game_try
 
             switch(thisType)
             {
-                case SpriteType.Floor:
+                case SpriteType.Road:
+
+
                     canCollide = true;
                     break;
-                case SpriteType.MovingFloor:
-                    canMove = true;
+                case SpriteType.Grass:
+                    
+
                     canCollide = true;
                     break;
-                case SpriteType.Object:
-                    canMove = true;
-                    hasGravity = true;
+                case SpriteType.Wall:
+                    
+                    
                     canCollide = true;
                     break;
-                case SpriteType.Player:
-                    canMove = true;
-                    hasGravity = true;
+                case SpriteType.Check:
+                    
+                    
                     canCollide = true;
                     break;
-                case SpriteType.Enemy:
-                    canMove = true;
-                    hasGravity = true;
+                case SpriteType.Start:
+                    
+                    
                     canCollide = true;
                     break;
-                case SpriteType.View:
-                    canMove = true;
-                    break;
-                case SpriteType.Ball:
-                    boingBoing = 0.85f;
+                case SpriteType.Pitstop:
+
+                    canCollide = true;
                     break;
             }
         }
 
         public void Update(InputManager iManager)
         {
-            if(hasGravity)
-            Velocity.Y += Gravity;
+            //if(hasGravity)
+            //Velocity.Y += Gravity;
 
-            if (canMove)
-            {
-                this.X += Velocity.X * iManager.deltaTime;
-                this.Y += Velocity.Y * iManager.deltaTime;
-            }
+            //if (canMove)
+            //{
+            //    this.X += Velocity.X * iManager.deltaTime;
+            //    this.Y += Velocity.Y * iManager.deltaTime;
+            //}
 
             collider(iManager);
         }
@@ -93,113 +94,41 @@ namespace game_try
                 {
                     switch(this.type)
                     {
-                        case SpriteType.Floor:
-                            switch (s.type)
-                            {
-                                case SpriteType.MovingFloor:
-                                    if(s.isTouchingTop(this))
-                                    {
-                                        s.Y = this.Y - s.Height;
-                                        s.Velocity.Y *= -1;
-                                    }
-                                    else if(s.isTouchingBottom(this))
-                                    {
-                                        s.Y = this.Y + this.Height;
-                                        s.Velocity.Y *= -1;
-                                    }
-                                    else if(s.isTouchingLeft(this))
-                                    {
-                                        s.X = this.X - s.Width;
-                                        s.Velocity.X *= -1;
-                                    }
-                                    else if(s.isTouchingRight(this))
-                                    {
-                                        s.X = this.X + this.Width;
-                                        s.Velocity.X *= -1;
-                                    }
-                                    break;
-                                case SpriteType.Object:
-                                    if (s.isTouchingTop(this))
-                                    {
-                                        s.Y = this.Y - s.Height;
-                                        s.X *= Friction;
-                                        s.Y *= boingBoing;
-                                    }
-                                    else if (s.isTouchingBottom(this))
-                                    {
-                                        s.Y = this.Y + this.Height;
-                                        s.Velocity.Y *= 0.5f;
-                                        Velocity.Y *= -1;
-                                    }
-                                    else if (s.isTouchingLeft(this))
-                                    {
-                                        s.X = this.X - s.Width;
-                                        s.Velocity.X *= 0.70f;
-                                        s.Velocity.X *= -1;
-                                    }
-                                    else if (s.isTouchingRight(this))
-                                    {
-                                        s.X = this.X + this.Width;
-                                        s.Velocity.X *= 0.70f;
-                                        s.Velocity.X *= -1;
-                                    }
-                                    break;
-                                case SpriteType.Player:
-                                    if (s.isTouchingTop(this))
-                                    {
-                                        s.Y = this.Y - s.Height;
-                                        s.Velocity.Y = 0;
-                                    }
-                                    else if (s.isTouchingBottom(this))
-                                    {
-                                        s.Y = this.Y + this.Height;
-                                        s.Velocity.Y *= 0.5f;
-                                        s.Velocity.Y *= -1;
-                                    }
-                                    else if (s.isTouchingLeft(this))
-                                    {
-                                        s.X = this.X - s.Width;
-                                        s.Velocity.X = 0;
-                                    }
-                                    else if (s.isTouchingRight(this))
-                                    {
-                                        s.X = this.X + this.Width;
-                                        s.Velocity.X = 0;
-                                    }
-                                    break;
-                                case SpriteType.Enemy:
-                                    if (s.isTouchingTop(this))
-                                    {
-                                        s.Y = this.Y - s.Height;
-                                        s.Y *= boingBoing;
-                                        s.X *= Friction;
-                                    }
-                                    else if (s.isTouchingBottom(this))
-                                    {
-                                        s.Y = this.Y + this.Height;
-                                        s.Velocity.Y *= 0.5f;
-                                        s.Velocity.Y *= -1;
-                                    }
-                                    else if (s.isTouchingLeft(this))
-                                    {
-                                        s.X = this.X - s.Width;
-                                        s.Velocity.X = 0;
-                                    }
-                                    else if (s.isTouchingRight(this))
-                                    {
-                                        s.X = this.X + this.Width;
-                                        s.Velocity.X = 0;
-                                    }
-                                    break;
-                            }
+                        case SpriteType.Road:
+                            //switch (s.type)
+                            //{
+                                
+                            //}
+                            //break;
+                        case SpriteType.Grass:
+                            //switch (s.type)
+                            //{
+
+                            //}
                             break;
-                        case SpriteType.MovingFloor:
+                        case SpriteType.Wall:
+                            //switch (s.type)
+                            //{
+
+                            //}
                             break;
-                        case SpriteType.Object:
+                        case SpriteType.Check:
+                            //switch (s.type)
+                            //{
+
+                            //}
                             break;
-                        case SpriteType.Player:
+                        case SpriteType.Start:
+                            //switch (s.type)
+                            //{
+
+                            //}
                             break;
-                        case SpriteType.Enemy:
+                        case SpriteType.Pitstop:
+                            //switch (s.type)
+                            //{
+
+                            //}
                             break;
                     }
                 }
@@ -289,5 +218,8 @@ namespace game_try
             else
                 return false;
         }
+
+
+        /**/
     }
 }

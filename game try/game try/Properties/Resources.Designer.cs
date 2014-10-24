@@ -63,6 +63,26 @@ namespace game_try.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _120px_Question_Block_NSMB {
+            get {
+                object obj = ResourceManager.GetObject("_120px_Question_Block_NSMB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Block_2 {
+            get {
+                object obj = ResourceManager.GetObject("Block_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap brick {
             get {
                 object obj = ResourceManager.GetObject("brick", resourceCulture);
@@ -76,6 +96,46 @@ namespace game_try.Properties {
         internal static System.Drawing.Bitmap Dementia_GTA2 {
             get {
                 object obj = ResourceManager.GetObject("Dementia_GTA2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Giant_Ice_Block {
+            get {
+                object obj = ResourceManager.GetObject("Giant_Ice_Block", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GreenQuestionBlock {
+            get {
+                object obj = ResourceManager.GetObject("GreenQuestionBlock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap piq_55641 {
+            get {
+                object obj = ResourceManager.GetObject("piq_55641", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smw_glowing_question_block_3d_by_redyoshiu_d58qk45 {
+            get {
+                object obj = ResourceManager.GetObject("smw_glowing_question_block_3d_by_redyoshiu_d58qk45", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

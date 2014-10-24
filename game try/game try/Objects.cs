@@ -20,7 +20,7 @@ namespace game_try
 
         public Objects(Graphics Paper)
         {
-            Paper = paper;
+            paper = Paper;
         }
 
         public void DrawRoad(int X, int Y, int Width, int Height)
