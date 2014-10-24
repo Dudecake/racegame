@@ -97,6 +97,186 @@
   <ItemGroup>
     <None Include="Resources\Dementia-GTA2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\61px-Jefferson-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\62px-AnistonBD4-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\62px-Arachnid-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\62px-Stinger-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\63px-A-Type-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\63px-Beamer-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\63px-FuroreGT-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\63px-MichelliRoadster-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px-Benson-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px-Hachura-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px-Rumbler-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px-TranceAM-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64px-Wellard-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArmedLandRoamer-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BigBug-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BoxTruck-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B-Type-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bug-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bulwark-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bus-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CopCar-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DementiaLimousine-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Eddy-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FireTruck-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\G4BankVan-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GarbageTruck-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GT-A1-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HotDogVan-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ice-CreamVan-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JagularXK-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KarmaBus-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LandRoamer-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maurice-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Medicar-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Meteor-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Miara-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Minx-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Morton-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pacifier-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Panto-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pickup-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pickup-GTA2-gang.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Romero-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Schmidt-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shark-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SpecialAgentCar-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SportsLimousine-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spritzer-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StretchLimousine-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwatVan-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tank-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Taxi-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TaxiXpress-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TowTruck-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\T-Rex-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TruckCab-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TruckCabSX-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TVVan-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\U-JerkTruck-GTA2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Van-GTA2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

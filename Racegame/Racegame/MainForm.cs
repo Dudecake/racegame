@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
     {
         Polygon polygon = new Polygon();
         Collision collision = new Collision();
-        Vehicle vehicle = new Vehicle();
+        Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
         Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
 
@@ -35,7 +35,6 @@ namespace WindowsFormsApplication1
 
         private int fps;
         private int fpsCounter;
-        private long fpsTime;
         private Stopwatch gameTime = new Stopwatch();
 
         //keyboard controls
@@ -71,12 +70,7 @@ namespace WindowsFormsApplication1
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.DoubleBuffer, true);
-
-            System.Timers.Timer GameTimer = new System.Timers.Timer();
-            GameTimer.Interval = 1;
-            GameTimer.Elapsed += new ElapsedEventHandler(GameTimer_Tick);
-            GameTimer.Enabled = true;
-
+            
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
             //this.Paint += new PaintEventHandler(Form1_Paint);
@@ -86,16 +80,54 @@ namespace WindowsFormsApplication1
         private void Init(Size size)
         {
             //setup rendering device
+            Random rand = new Random();
             buffersize = size;
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
             gameTime.Start();
             timer.GetETime(); //reset timer
-            Bitmap auto = new Bitmap(Properties.Resources.Z_Type_GTA2);
-            Bitmap smiley = new Bitmap(Properties.Resources.Dementia_GTA2);
-            vehicle.Setup(new Vector2(7, 13) / 2.0f, 5, auto);
-            vehicle.SetLocation(new Vector2(210, -7), 0);
-            vehicle2.Setup(new Vector2(7, 13) / 2.0f, 5, smiley);
+            Bitmap[] autos = new Bitmap[2];
+            #region Vehicle selection
+            for (byte i = 0; i < 2; i++)
+            {
+                switch(rand.Next(10))
+                {
+                    case 0:
+                        autos[i] = Properties.Resources._61px_Jefferson_GTA2;
+                        break;
+                    case 1:
+                        autos[i] = Properties.Resources._62px_AnistonBD4_GTA2;
+                        break;
+                    case 2:
+                        autos[i] = Properties.Resources._62px_Arachnid_GTA2;
+                        break;
+                    case 3:
+                        autos[i] = Properties.Resources._62px_Stinger_GTA2;
+                        break;
+                    case 4:
+                        autos[i] = Properties.Resources._63px_A_Type_GTA2;
+                        break;
+                    case 5:
+                        autos[i] = Properties.Resources._63px_Beamer_GTA2;
+                        break;
+                    case 6:
+                        autos[i] = Properties.Resources._63px_FuroreGT_GTA2;
+                        break;
+                    case 7:
+                        autos[i] = Properties.Resources._63px_MichelliRoadster_GTA2;
+                        break;
+                    case 8:
+                        autos[i] = Properties.Resources.Dementia_GTA2;
+                        break;
+                    case 9:
+                        autos[i] = Properties.Resources.Z_Type_GTA2;
+                        break;
+                }
+            }
+            #endregion
+            vehicle1.Setup(new Vector2(7, 13) / 2.0f, 5, autos[0]);
+            vehicle1.SetLocation(new Vector2(210, -7), 0);
+            vehicle2.Setup(new Vector2(7, 13) / 2.0f, 5, autos[1]);
             vehicle2.SetLocation(new Vector2(190, -7), 0);
         }
 
@@ -119,7 +151,7 @@ namespace WindowsFormsApplication1
         //draw the screen
         private void DrawScreen()
         {
-            vehicle.Draw(graphics, buffersize);
+            vehicle1.Draw(graphics, buffersize);
             vehicle2.Draw(graphics, buffersize);
         }
 
@@ -134,15 +166,15 @@ namespace WindowsFormsApplication1
             ProcessInput2();
 
             //apply vehicle controls
-            vehicle.SetSteering(steering);
-            vehicle.SetThrottle(throttle, true); //menu.Checked
-            vehicle.SetBrakes(brakes);
+            vehicle1.SetSteering(steering);
+            vehicle1.SetThrottle(throttle, true); //menu.Checked
+            vehicle1.SetBrakes(brakes);
             vehicle2.SetSteering(steering2);
             vehicle2.SetThrottle(throttle2, true); //menu.Checked
             vehicle2.SetBrakes(brakes2);
 
             //integrate vehicle physics
-            vehicle.Update(etime);
+            vehicle1.Update(etime);
             vehicle2.Update(etime);
 
             //keep the vehicle on the screen
@@ -160,7 +192,7 @@ namespace WindowsFormsApplication1
         //keep the vehicle on the screen
         private void ConstrainVehicle()
         {
-            Vector2 position = vehicle.GetPosition();
+            Vector2 position = vehicle1.GetPosition();
             Vector2 screenSize = new Vector2(screen.Width / screenScale, screen.Height / screenScale);
 
             while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
@@ -178,6 +210,7 @@ namespace WindowsFormsApplication1
             while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
             while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
         }
+        #region Input
         private void ProcessInput2()
         {
             if (Leftheld)
@@ -314,7 +347,7 @@ namespace WindowsFormsApplication1
             //match found
             e.Handled = true;
         }
-
+        #endregion
         //rendering - only when screen is invalidated
         private void screen_Paint(object sender, PaintEventArgs e)
         {
@@ -336,24 +369,10 @@ namespace WindowsFormsApplication1
 
             Backbuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
         }
-        void Draw()
-        {
-            if (Backbuffer != null)
-            {
-                using (var g = Graphics.FromImage(Backbuffer))
-                {
-                    g.Clear(Color.White);
-                    //g.FillEllipse(Brushes.Black, BallPos.X - BallSize / 2, BallPos.Y - BallSize / 2, BallSize, BallSize);
-                }
-                Invalidate();
-            }
-        }
-
         private void CheckFps()
         {
-            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
+            if (gameTime.ElapsedMilliseconds > 1000)
             {
-                fpsTime = gameTime.ElapsedMilliseconds;
                 fps = fpsCounter;
                 fpsCounter = 0;
                 string i = vehicle2.GetRect().ToString();
@@ -364,19 +383,15 @@ namespace WindowsFormsApplication1
                 Console.Write(i + " ");
                 Console.Write(j + " ");
                 Console.WriteLine(l + " " + m);
+                gameTime.Reset();
             }
             else
             {
                 fpsCounter++;
             }
         }
-        void GameTimer_Tick(object sender, EventArgs e)
-        {
-
-        }
-
         //our vehicle object
-        class Vehicle : RigidBody
+        class Vehicle1 : RigidBody1
         {
             private class Wheel
             {
@@ -529,7 +544,7 @@ namespace WindowsFormsApplication1
         }
 
         //our simulation object
-        class RigidBody
+        class RigidBody1
         {
             //linear properties
             private Vector2 m_position = new Vector2();
@@ -547,9 +562,9 @@ namespace WindowsFormsApplication1
             private Vector2 m_halfSize = new Vector2();
             Rectangle rect = new Rectangle();
             //private Color m_color;
-            private Bitmap m_bitmap = new Bitmap(Properties.Resources.Z_Type_GTA2);
+            private Bitmap m_bitmap;// = new Bitmap(Properties.Resources.Z_Type_GTA2);
 
-            public RigidBody()
+            public RigidBody1()
             {
                 //set these defaults so we dont get divide by zeros
                 m_mass = 1.0f;
@@ -929,7 +944,7 @@ namespace WindowsFormsApplication1
             private Vector2 m_halfSize = new Vector2();
             Rectangle rect = new Rectangle();
             //private Color m_color;
-            private Bitmap m_bitmap; // = new Bitmap(Properties.Resources.Z_Type_GTA2);
+            private Bitmap m_bitmap;// = new Bitmap(Properties.Resources.Z_Type_GTA2);
 
             public RigidBody2()
             {

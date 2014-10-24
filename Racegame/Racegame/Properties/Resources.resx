@@ -127,4 +127,184 @@
   <data name="Z_Type_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Z-Type-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ArmedLandRoamer_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ArmedLandRoamer-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BigBug_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BigBug-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoxTruck_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BoxTruck-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bug_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bug-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bulwark_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bulwark-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bus_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bus-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Type_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B-Type-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CopCar_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CopCar-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DementiaLimousine_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DementiaLimousine-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Eddy_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eddy-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FireTruck_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FireTruck-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="G4BankVan_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\G4BankVan-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GarbageTruck_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GarbageTruck-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GT_A1_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GT-A1-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HotDogVan_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HotDogVan-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ice_CreamVan_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ice-CreamVan-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JagularXK_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\JagularXK-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KarmaBus_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KarmaBus-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LandRoamer_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LandRoamer-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maurice_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Maurice-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Medicar_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Medicar-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Meteor_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Meteor-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Miara_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Miara-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minx_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Minx-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Morton_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Morton-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pacifier_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pacifier-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Panto_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Panto-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pickup_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pickup-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pickup_GTA2_gang" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pickup-GTA2-gang.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Romero_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Romero-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Schmidt_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Schmidt-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Shark_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Shark-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SpecialAgentCar_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpecialAgentCar-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SportsLimousine_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SportsLimousine-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Spritzer_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spritzer-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StretchLimousine_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StretchLimousine-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SwatVan_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SwatVan-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tank_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tank-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TaxiXpress_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TaxiXpress-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Taxi_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Taxi-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TowTruck_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TowTruck-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TruckCabSX_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TruckCabSX-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TruckCab_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TruckCab-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TVVan_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TVVan-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="T_Rex_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\T-Rex-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="U_JerkTruck_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\U-JerkTruck-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Van_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Van-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_61px_Jefferson_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\61px-Jefferson-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_62px_AnistonBD4_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\62px-AnistonBD4-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_62px_Arachnid_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\62px-Arachnid-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_62px_Stinger_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\62px-Stinger-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_63px_A_Type_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\63px-A-Type-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_63px_Beamer_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\63px-Beamer-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_63px_FuroreGT_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\63px-FuroreGT-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_63px_MichelliRoadster_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\63px-MichelliRoadster-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_64px_Benson_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px-Benson-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_64px_Hachura_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px-Hachura-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_64px_Rumbler_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px-Rumbler-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_64px_TranceAM_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px-TranceAM-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_64px_Wellard_GTA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\64px-Wellard-GTA2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
