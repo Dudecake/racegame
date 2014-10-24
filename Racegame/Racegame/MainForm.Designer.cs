@@ -39,6 +39,7 @@
             this.screen.Size = new System.Drawing.Size(1024, 768);
             this.screen.TabIndex = 1;
             this.screen.VSync = false;
+            this.screen.Load += new System.EventHandler(this.screen_Load);
             // 
             // MainForm
             // 

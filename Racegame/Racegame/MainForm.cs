@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-//using OpenTK;
-//using OpenTK.Graphics;
-//using OpenTK.Graphics.OpenGL;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,8 @@ namespace WindowsFormsApplication1
         private int fpsCounter;
         private long fpsTime;
         private Stopwatch gameTime = new Stopwatch();
+
+        bool loaded = false;
 
         //keyboard controls
         bool AHeld = false, DHeld = false;
@@ -87,12 +90,14 @@ namespace WindowsFormsApplication1
         //intialize rendering
         private void Init(Size size)
         {
+
             //setup rendering device
             buffersize = size;
-            backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
+            backbuffer = new Bitmap(m_map, -171, -128);
             graphics = Graphics.FromImage(backbuffer);
             gameTime.Start();
             timer.GetETime(); //reset timer
+            
             Bitmap auto = new Bitmap(Properties.Resources.Z_Type_GTA2);
             Bitmap SMiley = new Bitmap(Properties.Resources.Dementia_GTA2);
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, auto);
@@ -100,22 +105,80 @@ namespace WindowsFormsApplication1
             vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, SMiley);
             vehicle2.SetLocation(new Vector(190, -7), 0);
         }
+        static int LoadTexture(string filename)
+        {
+            if (String.IsNullOrEmpty(filename))
+                throw new ArgumentException(filename);
+
+            int id = GL.GenTexture();
+            GL.BindTexture(TextureTarget.Texture2D, id);
+
+            Bitmap bmp = new Bitmap(filename);
+            BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+
+            bmp.UnlockBits(bmp_data);
+
+            // We haven't uploaded mipmaps, so disable mipmapping (otherwise the texture will not appear).
+            // On newer video cards, we can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
+            // mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+            return id;
+        }
+
+        private void screen_Load(object sender, EventArgs e)
+        {
+            loaded = true;
+            //LoadTexture("Design 1.png");
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            SetupViewport();
+        }
+
+        private void SetupViewport()
+        {
+            int w = screen.Width;
+            int h = screen.Height;
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, w, 0, h, -1, 1);
+            GL.Viewport(0, 0, w, h);
+        }
 
         //main rendering function
         private void Render(Graphics g)
         {
+            if (!loaded) return;
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.ColorBufferBit);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            if (screen.Focused) GL.Color3(Color.Yellow);
+            else GL.Color3(Color.Blue);
+            GL.Begin(PrimitiveType.Quads);
+            //GL.Vertex2(10, 20);
+            //GL.Vertex2(100, 20);
+            //GL.Vertex2(100, 50);
+            GL.End();
+
+            screen.SwapBuffers();
+            
             //clear back buffer
             graphics.Clear(Color.Black);
             graphics.DrawImage(m_map, -171, -128);
             graphics.ResetTransform();
             graphics.ScaleTransform(screenScale, -screenScale);
             graphics.TranslateTransform(buffersize.Width / 2.0f / screenScale, -buffersize.Height / 2.0f / screenScale);
-
+            
             //draw to back buffer
             DrawScreen();
 
             //present back buffer
             g.DrawImage(backbuffer, new Rectangle(0, 0, buffersize.Width, buffersize.Height), 0, 0, buffersize.Width, buffersize.Height, GraphicsUnit.Pixel);
+        
         }
 
         //draw the screen
@@ -1063,6 +1126,8 @@ namespace WindowsFormsApplication1
                 return etime;
             }
         }
+
+        
     }
 }
 
