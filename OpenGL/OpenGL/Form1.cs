@@ -36,7 +36,6 @@ namespace OpenGL
             Application.Idle += Application_Idle;
             sw.Start();
         }
-
         private void SetupViewport()
         {
             int w = glControl1.Width;
@@ -57,10 +56,10 @@ namespace OpenGL
             if (glControl1.Focused) GL.Color3(Color.Yellow);
             else GL.Color3(Color.Blue);
             GL.Rotate(rotation, Vector3.UnitZ);
-            GL.Begin(BeginMode.Triangles);
-            GL.Vertex2(10, 20);
-            GL.Vertex2(100, 20);
+            GL.Begin(PrimitiveType.Triangles);
+            GL.Vertex2(10, 50);
             GL.Vertex2(100, 50);
+            GL.Vertex2(100, 80);
             GL.End();
 
             glControl1.SwapBuffers();

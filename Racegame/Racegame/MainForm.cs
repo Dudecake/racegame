@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-//using OpenTK;
-//using OpenTK.Graphics;
-//using OpenTK.Graphics.OpenGL;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -22,10 +22,8 @@ namespace WindowsFormsApplication1
     {
         Polygon polygon = new Polygon();
         Collision collision = new Collision();
-        //Vector vector = new Vector();
         Vehicle vehicle = new Vehicle();
         Vehicle2 vehicle2 = new Vehicle2();
-        //RigidBody rigidBody = new RigidBody();
         Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
 
         //graphics
@@ -94,11 +92,11 @@ namespace WindowsFormsApplication1
             gameTime.Start();
             timer.GetETime(); //reset timer
             Bitmap auto = new Bitmap(Properties.Resources.Z_Type_GTA2);
-            Bitmap SMiley = new Bitmap(Properties.Resources.Dementia_GTA2);
-            vehicle.Setup(new Vector(7, 13) / 2.0f, 5, auto);
-            vehicle.SetLocation(new Vector(210, -7), 0);
-            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, SMiley);
-            vehicle2.SetLocation(new Vector(190, -7), 0);
+            Bitmap smiley = new Bitmap(Properties.Resources.Dementia_GTA2);
+            vehicle.Setup(new Vector2(7, 13) / 2.0f, 5, auto);
+            vehicle.SetLocation(new Vector2(210, -7), 0);
+            vehicle2.Setup(new Vector2(7, 13) / 2.0f, 5, smiley);
+            vehicle2.SetLocation(new Vector2(190, -7), 0);
         }
 
         //main rendering function
@@ -162,8 +160,8 @@ namespace WindowsFormsApplication1
         //keep the vehicle on the screen
         private void ConstrainVehicle()
         {
-            Vector position = vehicle.GetPosition();
-            Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
+            Vector2 position = vehicle.GetPosition();
+            Vector2 screenSize = new Vector2(screen.Width / screenScale, screen.Height / screenScale);
 
             while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
             while (position.Y > screenSize.Y / 2.0f) { position.Y -= screenSize.Y; }
@@ -172,8 +170,8 @@ namespace WindowsFormsApplication1
         }
         private void ConstrainVehicle2()
         {
-            Vector position = vehicle2.GetPosition();
-            Vector screenSize = new Vector(screen.Width / screenScale, screen.Height / screenScale);
+            Vector2 position = vehicle2.GetPosition();
+            Vector2 screenSize = new Vector2(screen.Width / screenScale, screen.Height / screenScale);
 
             while (position.X > screenSize.X / 2.0f) { position.X -= screenSize.X; }
             while (position.Y > screenSize.Y / 2.0f) { position.Y -= screenSize.Y; }
@@ -374,11 +372,11 @@ namespace WindowsFormsApplication1
         {
             private class Wheel
             {
-                private Vector m_forwardAxis, m_sideAxis;
+                private Vector2 m_forwardAxis, m_sideAxis;
                 private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
-                private Vector m_Position = new Vector();
+                private Vector2 m_Position = new Vector2();
 
-                public Wheel(Vector position, float radius)
+                public Wheel(Vector2 position, float radius)
                 {
                     m_Position = position;
                     SetSteeringAngle(0);
@@ -402,8 +400,8 @@ namespace WindowsFormsApplication1
                     mat.Rotate(newAngle / (float)Math.PI * 180.0f);
                     mat.TransformVectors(vectors);
 
-                    m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
-                    m_sideAxis = new Vector(vectors[1].X, vectors[1].Y);
+                    m_forwardAxis = new Vector2(vectors[0].X, vectors[0].Y);
+                    m_sideAxis = new Vector2(vectors[1].X, vectors[1].Y);
                 }
 
                 public void AddTransmissionTorque(float newValue)
@@ -416,27 +414,27 @@ namespace WindowsFormsApplication1
                     return m_wheelSpeed;
                 }
 
-                public Vector GetAttachPoint()
+                public Vector2 GetAttachPoint()
                 {
                     return m_Position;
                 }
 
-                public Vector CalculateForce(Vector relativeGroundSpeed, float timeStep)
+                public Vector2 CalculateForce(Vector2 relativeGroundSpeed, float timeStep)
                 {
                     //calculate speed of tire patch at ground
-                    Vector patchSpeed = -m_forwardAxis * m_wheelSpeed * m_wheelRadius;
+                    Vector2 patchSpeed = -m_forwardAxis * m_wheelSpeed * m_wheelRadius;
 
                     //get velocity difference between ground and patch
-                    Vector velDifference = relativeGroundSpeed + patchSpeed;
+                    Vector2 velDifference = relativeGroundSpeed + patchSpeed;
 
                     //project ground speed onto side axis
                     float forwardMag = 0;
-                    Vector sideVel = velDifference.Project(m_sideAxis);
-                    Vector forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
+                    Vector2 sideVel = velDifference.Project(m_sideAxis);
+                    Vector2 forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
 
                     //calculate super fake friction forces
                     //calculate response force
-                    Vector responseForce = -sideVel * 2.0f;
+                    Vector2 responseForce = -sideVel * 2.0f;
                     responseForce -= forwardVel;
 
                     //calculate torque on wheel
@@ -454,15 +452,15 @@ namespace WindowsFormsApplication1
             }
             private Wheel[] wheels = new Wheel[4];
 
-            new public void Setup(Vector halfSize, float mass, Bitmap color)
+            new public void Setup(Vector2 halfSize, float mass, Bitmap color)
             {
                 //front wheels
-                wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
-                wheels[1] = new Wheel(new Vector(-halfSize.X, halfSize.Y), 0.5f);
+                wheels[0] = new Wheel(new Vector2(halfSize.X, halfSize.Y), 0.5f);
+                wheels[1] = new Wheel(new Vector2(-halfSize.X, halfSize.Y), 0.5f);
 
                 //rear wheels
-                wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
-                wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
+                wheels[2] = new Wheel(new Vector2(halfSize.X, -halfSize.Y), 0.5f);
+                wheels[3] = new Wheel(new Vector2(-halfSize.X, -halfSize.Y), 0.5f);
 
                 base.Setup(halfSize, mass, color);
             }
@@ -509,11 +507,11 @@ namespace WindowsFormsApplication1
                 foreach (Wheel wheel in wheels)
                 {
                     //wheel.m_wheelSpeed = 30.0f;
-                    Vector worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
-                    Vector worldGroundVel = base.PointVel(worldWheelOffset);
-                    Vector relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
-                    Vector relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
-                    Vector worldResponseForce = base.RelativeToWorld(relativeResponseForce);
+                    Vector2 worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
+                    Vector2 worldGroundVel = base.PointVel(worldWheelOffset);
+                    Vector2 relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
+                    Vector2 relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
+                    Vector2 worldResponseForce = base.RelativeToWorld(relativeResponseForce);
 
                     base.AddForce(worldResponseForce, worldWheelOffset);
                 }
@@ -526,9 +524,9 @@ namespace WindowsFormsApplication1
         class RigidBody
         {
             //linear properties
-            private Vector m_position = new Vector();
-            private Vector m_velocity = new Vector();
-            private Vector m_forces = new Vector();
+            private Vector2 m_position = new Vector2();
+            private Vector2 m_velocity = new Vector2();
+            private Vector2 m_forces = new Vector2();
             private float m_mass;
 
             //angular properties
@@ -538,7 +536,7 @@ namespace WindowsFormsApplication1
             private float m_inertia;
 
             //graphical properties
-            private Vector m_halfSize = new Vector();
+            private Vector2 m_halfSize = new Vector2();
             Rectangle rect = new Rectangle();
             //private Color m_color;
             private Bitmap m_bitmap = new Bitmap(Properties.Resources.Z_Type_GTA2);
@@ -551,7 +549,7 @@ namespace WindowsFormsApplication1
             }
 
             //intialize out parameters
-            public void Setup(Vector halfSize, float mass, Bitmap color)
+            public void Setup(Vector2 halfSize, float mass, Bitmap color)
             {
                 //store physical parameters
                 m_halfSize = halfSize;
@@ -566,13 +564,13 @@ namespace WindowsFormsApplication1
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
 
-            public void SetLocation(Vector position, float angle)
+            public void SetLocation(Vector2 position, float angle)
             {
                 m_position = position;
                 m_angle = angle;
             }
 
-            public Vector GetPosition()
+            public Vector2 GetPosition()
             {
                 return m_position;
             }
@@ -581,10 +579,10 @@ namespace WindowsFormsApplication1
             {
                 //integrate physics
                 //linear
-                Vector acceleration = m_forces / m_mass;
+                Vector2 acceleration = m_forces / m_mass;
                 m_velocity += acceleration * timeStep;
                 m_position += m_velocity * timeStep;
-                m_forces = new Vector(0, 0); //clear forces
+                m_forces = new Vector2(0, 0); //clear forces
 
                 //angular
                 float angAcc = m_torque / m_inertia;
@@ -620,7 +618,7 @@ namespace WindowsFormsApplication1
             }
 
             //take a relative vector and make it a world vector
-            public Vector RelativeToWorld(Vector relative)
+            public Vector2 RelativeToWorld(Vector2 relative)
             {
                 Matrix mat = new Matrix();
                 PointF[] vectors = new PointF[1];
@@ -631,11 +629,11 @@ namespace WindowsFormsApplication1
                 mat.Rotate(m_angle / (float)Math.PI * 180.0f);
                 mat.TransformVectors(vectors);
 
-                return new Vector(vectors[0].X, vectors[0].Y);
+                return new Vector2(vectors[0].X, vectors[0].Y);
             }
 
             //take a world vector and make it a relative vector
-            public Vector WorldToRelative(Vector world)
+            public Vector2 WorldToRelative(Vector2 world)
             {
                 Matrix mat = new Matrix();
                 PointF[] vectors = new PointF[1];
@@ -646,17 +644,17 @@ namespace WindowsFormsApplication1
                 mat.Rotate(-m_angle / (float)Math.PI * 180.0f);
                 mat.TransformVectors(vectors);
 
-                return new Vector(vectors[0].X, vectors[0].Y);
+                return new Vector2(vectors[0].X, vectors[0].Y);
             }
 
             //velocity of a point on body
-            public Vector PointVel(Vector worldOffset)
+            public Vector2 PointVel(Vector2 worldOffset)
             {
-                Vector tangent = new Vector(-worldOffset.Y, worldOffset.X);
+                Vector2 tangent = new Vector2(-worldOffset.Y, worldOffset.X);
                 return tangent * m_angularVelocity + m_velocity;
             }
 
-            public void AddForce(Vector worldForce, Vector worldOffset)
+            public void AddForce(Vector2 worldForce, Vector2 worldOffset)
             {
                 //add linar force
                 m_forces += worldForce;
@@ -666,12 +664,12 @@ namespace WindowsFormsApplication1
         }
 
         //mini 2d vector :)
-        class Vector
+        class Vector2
         {
             public float X, Y;
 
-            public Vector() { X = 0; Y = 0; }
-            public Vector(float x, float y) { X = x; Y = y; }
+            public Vector2() { X = 0; Y = 0; }
+            public Vector2(float x, float y) { X = x; Y = y; }
 
             //length property        
             public float Length
@@ -683,44 +681,44 @@ namespace WindowsFormsApplication1
             }
 
             //addition
-            public static Vector operator +(Vector L, Vector R)
+            public static Vector2 operator +(Vector2 L, Vector2 R)
             {
-                return new Vector(L.X + R.X, L.Y + R.Y);
+                return new Vector2(L.X + R.X, L.Y + R.Y);
             }
 
             //subtraction
-            public static Vector operator -(Vector L, Vector R)
+            public static Vector2 operator -(Vector2 L, Vector2 R)
             {
-                return new Vector(L.X - R.X, L.Y - R.Y);
+                return new Vector2(L.X - R.X, L.Y - R.Y);
             }
 
             //negative
-            public static Vector operator -(Vector R)
+            public static Vector2 operator -(Vector2 R)
             {
-                Vector temp = new Vector(-R.X, -R.Y);
+                Vector2 temp = new Vector2(-R.X, -R.Y);
                 return temp;
             }
 
             //scalar multiply
-            public static Vector operator *(Vector L, float R)
+            public static Vector2 operator *(Vector2 L, float R)
             {
-                return new Vector(L.X * R, L.Y * R);
+                return new Vector2(L.X * R, L.Y * R);
             }
 
             //divide multiply
-            public static Vector operator /(Vector L, float R)
+            public static Vector2 operator /(Vector2 L, float R)
             {
-                return new Vector(L.X / R, L.Y / R);
+                return new Vector2(L.X / R, L.Y / R);
             }
 
             //dot product
-            public static float operator *(Vector L, Vector R)
+            public static float operator *(Vector2 L, Vector2 R)
             {
                 return (L.X * R.X + L.Y * R.Y);
             }
 
             //cross product, in 2d this is a scalar since we know it points in the Z direction
-            public static float operator %(Vector L, Vector R)
+            public static float operator %(Vector2 L, Vector2 R)
             {
                 return (L.X * R.Y - L.Y * R.X);
             }
@@ -735,7 +733,7 @@ namespace WindowsFormsApplication1
             }
 
             //project this vector on to v
-            public Vector Project(Vector v)
+            public Vector2 Project(Vector2 v)
             {
                 //projected vector = (this dot v) * v;
                 float thisDotV = this * v;
@@ -743,7 +741,7 @@ namespace WindowsFormsApplication1
             }
 
             //project this vector on to v, return signed magnatude
-            public Vector Project(Vector v, out float mag)
+            public Vector2 Project(Vector2 v, out float mag)
             {
                 //projected vector = (this dot v) * v;
                 float thisDotV = this * v;
@@ -756,11 +754,11 @@ namespace WindowsFormsApplication1
         {
             private class Wheel
             {
-                private Vector m_forwardAxis, m_sideAxis;
+                private Vector2 m_forwardAxis, m_sideAxis;
                 private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
-                private Vector m_Position = new Vector();
+                private Vector2 m_Position = new Vector2();
 
-                public Wheel(Vector position, float radius)
+                public Wheel(Vector2 position, float radius)
                 {
                     m_Position = position;
                     SetSteeringAngle(0);
@@ -784,8 +782,8 @@ namespace WindowsFormsApplication1
                     mat.Rotate(newAngle / (float)Math.PI * 180.0f);
                     mat.TransformVectors(vectors);
 
-                    m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
-                    m_sideAxis = new Vector(vectors[1].X, vectors[1].Y);
+                    m_forwardAxis = new Vector2(vectors[0].X, vectors[0].Y);
+                    m_sideAxis = new Vector2(vectors[1].X, vectors[1].Y);
                 }
 
                 public void AddTransmissionTorque(float newValue)
@@ -798,27 +796,27 @@ namespace WindowsFormsApplication1
                     return m_wheelSpeed;
                 }
 
-                public Vector GetAttachPoint()
+                public Vector2 GetAttachPoint()
                 {
                     return m_Position;
                 }
 
-                public Vector CalculateForce(Vector relativeGroundSpeed, float timeStep)
+                public Vector2 CalculateForce(Vector2 relativeGroundSpeed, float timeStep)
                 {
                     //calculate speed of tire patch at ground
-                    Vector patchSpeed = -m_forwardAxis * m_wheelSpeed * m_wheelRadius;
+                    Vector2 patchSpeed = -m_forwardAxis * m_wheelSpeed * m_wheelRadius;
 
                     //get velocity difference between ground and patch
-                    Vector velDifference = relativeGroundSpeed + patchSpeed;
+                    Vector2 velDifference = relativeGroundSpeed + patchSpeed;
 
                     //project ground speed onto side axis
                     float forwardMag = 0;
-                    Vector sideVel = velDifference.Project(m_sideAxis);
-                    Vector forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
+                    Vector2 sideVel = velDifference.Project(m_sideAxis);
+                    Vector2 forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
 
                     //calculate super fake friction forces
                     //calculate response force
-                    Vector responseForce = -sideVel * 2.0f;
+                    Vector2 responseForce = -sideVel * 2.0f;
                     responseForce -= forwardVel;
 
                     //calculate torque on wheel
@@ -836,15 +834,15 @@ namespace WindowsFormsApplication1
             }
             private Wheel[] wheels = new Wheel[4];
 
-            new public void Setup(Vector halfSize, float mass, Bitmap color)
+            new public void Setup(Vector2 halfSize, float mass, Bitmap color)
             {
                 //front wheels
-                wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
-                wheels[1] = new Wheel(new Vector(-halfSize.X, halfSize.Y), 0.5f);
+                wheels[0] = new Wheel(new Vector2(halfSize.X, halfSize.Y), 0.5f);
+                wheels[1] = new Wheel(new Vector2(-halfSize.X, halfSize.Y), 0.5f);
 
                 //rear wheels
-                wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
-                wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
+                wheels[2] = new Wheel(new Vector2(halfSize.X, -halfSize.Y), 0.5f);
+                wheels[3] = new Wheel(new Vector2(-halfSize.X, -halfSize.Y), 0.5f);
 
                 base.Setup(halfSize, mass, color);
             }
@@ -891,11 +889,11 @@ namespace WindowsFormsApplication1
                 foreach (Wheel wheel in wheels)
                 {
                     //wheel.m_wheelSpeed = 30.0f;
-                    Vector worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
-                    Vector worldGroundVel = base.PointVel(worldWheelOffset);
-                    Vector relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
-                    Vector relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
-                    Vector worldResponseForce = base.RelativeToWorld(relativeResponseForce);
+                    Vector2 worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
+                    Vector2 worldGroundVel = base.PointVel(worldWheelOffset);
+                    Vector2 relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
+                    Vector2 relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
+                    Vector2 worldResponseForce = base.RelativeToWorld(relativeResponseForce);
 
                     base.AddForce(worldResponseForce, worldWheelOffset);
                 }
@@ -908,9 +906,9 @@ namespace WindowsFormsApplication1
         class RigidBody2
         {
             //linear properties
-            private Vector m_position = new Vector();
-            private Vector m_velocity = new Vector();
-            private Vector m_forces = new Vector();
+            private Vector2 m_position = new Vector2();
+            private Vector2 m_velocity = new Vector2();
+            private Vector2 m_forces = new Vector2();
             private float m_mass;
 
             //angular properties
@@ -920,7 +918,7 @@ namespace WindowsFormsApplication1
             private float m_inertia;
 
             //graphical properties
-            private Vector m_halfSize = new Vector();
+            private Vector2 m_halfSize = new Vector2();
             Rectangle rect = new Rectangle();
             //private Color m_color;
             private Bitmap m_bitmap; // = new Bitmap(Properties.Resources.Z_Type_GTA2);
@@ -933,7 +931,7 @@ namespace WindowsFormsApplication1
             }
 
             //intialize out parameters
-            public void Setup(Vector halfSize, float mass, Bitmap color)
+            public void Setup(Vector2 halfSize, float mass, Bitmap color)
             {
                 //store physical parameters
                 m_halfSize = halfSize;
@@ -948,13 +946,13 @@ namespace WindowsFormsApplication1
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
 
-            public void SetLocation(Vector position, float angle)
+            public void SetLocation(Vector2 position, float angle)
             {
                 m_position = position;
                 m_angle = angle;
             }
 
-            public Vector GetPosition()
+            public Vector2 GetPosition()
             {
                 return m_position;
             }
@@ -963,10 +961,10 @@ namespace WindowsFormsApplication1
             {
                 //integrate physics
                 //linear
-                Vector acceleration = m_forces / m_mass;
+                Vector2 acceleration = m_forces / m_mass;
                 m_velocity += acceleration * timeStep;
                 m_position += m_velocity * timeStep;
-                m_forces = new Vector(0, 0); //clear forces
+                m_forces = new Vector2(0, 0); //clear forces
 
                 //angular
                 float angAcc = m_torque / m_inertia;
@@ -1002,7 +1000,7 @@ namespace WindowsFormsApplication1
             }
 
             //take a relative vector and make it a world vector
-            public Vector RelativeToWorld(Vector relative)
+            public Vector2 RelativeToWorld(Vector2 relative)
             {
                 Matrix mat = new Matrix();
                 PointF[] vectors = new PointF[1];
@@ -1013,11 +1011,11 @@ namespace WindowsFormsApplication1
                 mat.Rotate(m_angle / (float)Math.PI * 180.0f);
                 mat.TransformVectors(vectors);
 
-                return new Vector(vectors[0].X, vectors[0].Y);
+                return new Vector2(vectors[0].X, vectors[0].Y);
             }
 
             //take a world vector and make it a relative vector
-            public Vector WorldToRelative(Vector world)
+            public Vector2 WorldToRelative(Vector2 world)
             {
                 Matrix mat = new Matrix();
                 PointF[] vectors = new PointF[1];
@@ -1028,17 +1026,17 @@ namespace WindowsFormsApplication1
                 mat.Rotate(-m_angle / (float)Math.PI * 180.0f);
                 mat.TransformVectors(vectors);
 
-                return new Vector(vectors[0].X, vectors[0].Y);
+                return new Vector2(vectors[0].X, vectors[0].Y);
             }
 
             //velocity of a point on body
-            public Vector PointVel(Vector worldOffset)
+            public Vector2 PointVel(Vector2 worldOffset)
             {
-                Vector tangent = new Vector(-worldOffset.Y, worldOffset.X);
+                Vector2 tangent = new Vector2(-worldOffset.Y, worldOffset.X);
                 return tangent * m_angularVelocity + m_velocity;
             }
 
-            public void AddForce(Vector worldForce, Vector worldOffset)
+            public void AddForce(Vector2 worldForce, Vector2 worldOffset)
             {
                 //add linar force
                 m_forces += worldForce;
