@@ -39,10 +39,15 @@ namespace game_try
         private long lasttime;
         private Map gameMap;
         private bool Clicked;
+        Graphics paper;
+        Objects obj;
 
         private void LoadContent()
         {
-            sManager.LoadContent(iManager);
+            paper = pictureBox1.CreateGraphics();
+            obj = new Objects(paper);
+            gameMap = new Map(ClientRectangle.Height / 13);
+            gameMap.setMap(iManager);
             spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
             Thread game = new Thread(GameLoop);
             game.Start(); 
@@ -81,6 +86,10 @@ namespace game_try
             sManager.Update(iManager);
             if(gameTime.ElapsedMilliseconds - upTime > interval)
             {
+                foreach(Sprite s in iManager.inGameSprites)
+                {
+                    s.Update(iManager);
+                }
                 if(gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;
@@ -95,7 +104,10 @@ namespace game_try
         private void Render()
         {
             spriteBatch.Begin();
-            sManager.Draw(spriteBatch);
+            foreach(Sprite s in iManager.inGameSprites)
+            {
+                s.Draw(spriteBatch);
+            }
             spriteBatch.End();
         }
 
