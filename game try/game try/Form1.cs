@@ -19,6 +19,7 @@ namespace game_try
             InitializeComponent();
 
             paper = pictureBox1.CreateGraphics();
+            pictureBox1.BackColor = Color.Black;
         }
 
         private int interval = 1000 / 63;
