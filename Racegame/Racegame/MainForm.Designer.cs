@@ -28,18 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.screen = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.screen)).BeginInit();
+            this.screen = new OpenTK.GLControl();
             this.SuspendLayout();
             // 
             // screen
             // 
-            this.screen.InitialImage = null;
+            this.screen.BackColor = System.Drawing.Color.Black;
             this.screen.Location = new System.Drawing.Point(0, 0);
             this.screen.Name = "screen";
             this.screen.Size = new System.Drawing.Size(1024, 768);
-            this.screen.TabIndex = 0;
-            this.screen.TabStop = false;
+            this.screen.TabIndex = 1;
+            this.screen.VSync = false;
             // 
             // MainForm
             // 
@@ -49,14 +48,14 @@
             this.Controls.Add(this.screen);
             this.Name = "MainForm";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.screen)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox screen;
+        private OpenTK.GLControl screen;
+
 
     }
 }
