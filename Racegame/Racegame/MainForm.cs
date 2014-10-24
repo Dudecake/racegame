@@ -21,6 +21,7 @@ namespace WindowsFormsApplication1
         Collision collision = new Collision();
         //Vector vector = new Vector();
         Vehicle vehicle = new Vehicle();
+        Vehicle vehicle2 = new Vehicle();
         //RigidBody rigidBody = new RigidBody();
         Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
 
@@ -39,6 +40,8 @@ namespace WindowsFormsApplication1
         //keyboard controls
         bool AHeld = false, DHeld = false;
         bool WHeld = false, SHeld = false;
+        bool Upheld = false, Downheld = false;
+        bool Rightheld = false, Leftheld = false;
 
         //vehicle controls
         float steering = 0; //-1 is full left, 0 is center, 1 is full right
@@ -61,7 +64,7 @@ namespace WindowsFormsApplication1
             screen.Paint += new PaintEventHandler(screen_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
-
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown2);
             Init(screen.Size);
     
             this.SetStyle(
@@ -124,6 +127,8 @@ namespace WindowsFormsApplication1
 
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
             vehicle.SetLocation(new Vector(210, -7), 0);
+            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, Color.Red);
+            vehicle2.SetLocation(new Vector(210, -7), 0);
         }
 
         //main rendering function
@@ -147,8 +152,43 @@ namespace WindowsFormsApplication1
         private void DrawScreen()
         {
             vehicle.Draw(graphics, buffersize);
+            vehicle2.Draw(graphics, buffersize);
         }
+        private void DoFrame2()
+        {
+            //get elapsed time since last frame
+            float etime = timer.GetETime();
 
+            //process input
+            ProcessInput2();
+
+            //apply vehicle controls
+            vehicle2.SetSteering(steering);
+            vehicle2.SetThrottle(throttle, true); //menu.Checked
+            vehicle2.SetBrakes(brakes);
+
+            //integrate vehicle physics
+            vehicle2.Update(etime);
+
+            //keep the vehicle on the screen
+            ConstrainVehicle();
+
+            //CheckFps();
+
+            //redraw our screen
+            screen.Invalidate();
+
+            try
+            {
+                this.Text = String.Format("{0}FPS", fps);
+            }
+            catch
+            {
+                Console.Write("i");
+            }
+
+        }
+        
         //process game logic
         private void DoFrame()
         {
@@ -196,7 +236,50 @@ namespace WindowsFormsApplication1
             while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
             while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
         }
-        
+        private void ProcessInput2()
+        {
+            if (Rightheld)
+                steering = -1;
+            else if (Leftheld)
+                steering = 1;
+            else
+                steering = 0;
+
+            if (Upheld)
+                throttle = 1;
+            else
+                throttle = 0;
+
+            if (Downheld)
+                brakes = 12;
+            else
+                brakes = 0.4f;
+        }
+
+        private void onKeyDown2(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    Leftheld = true;
+                    break;
+                case Keys.Right:
+                    Rightheld = true;
+                    break;
+                case Keys.Up:
+                    Upheld = true;
+                    break;
+                case Keys.Down:
+                    Downheld = true;
+                    break;
+                default: //no match found
+                    return; //return so handled dosnt get set
+            }
+
+            //match found
+            e.Handled = true;
+        }
+
         //process keyboard input
         private void ProcessInput()
         {
@@ -316,6 +399,7 @@ namespace WindowsFormsApplication1
         {
             // While the application is still idle, run frame routine.
             DoFrame();
+            DoFrame2();
             CheckFps();
         }
         
