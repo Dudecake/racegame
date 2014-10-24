@@ -130,9 +130,10 @@ namespace WindowsFormsApplication1
             gameTime.Start();
             timer.GetETime(); //reset timer
             Bitmap auto = new Bitmap(Properties.Resources.Z_Type_GTA2);
+            Bitmap SMiley = new Bitmap(Properties.Resources.Dementia_GTA2);
             vehicle.Setup(new Vector(7, 13) / 2.0f, 5, auto);
             vehicle.SetLocation(new Vector(210, -7), 0);
-            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, auto);
+            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, SMiley);
             vehicle2.SetLocation(new Vector(190, -7), 0);
         }
 
