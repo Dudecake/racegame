@@ -93,7 +93,7 @@ namespace WindowsFormsApplication1
 
             //setup rendering device
             buffersize = size;
-            backbuffer = new Bitmap(m_map, -171, -128);
+            backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
             gameTime.Start();
             timer.GetETime(); //reset timer
