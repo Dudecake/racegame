@@ -12,7 +12,7 @@ namespace Game_Try_2nd
         public float X, Y;
         public int Width, Height;
         public Bitmap Texture;
-        public float Friction;
+        //public float Friction;
         public PointF Velocity;
         public const float Gragh = 9.81f;
         public SpriteType type;
