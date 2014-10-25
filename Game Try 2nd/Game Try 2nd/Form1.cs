@@ -22,13 +22,12 @@ namespace Game_Try_2nd
         private bool allowInput;
         private int fps;
         private int fpsCounter;
-        /*
+        private long fpsTime;
         private int interval = 1000 / 63;
         private long upTime;
         private int upCounter;
         private int Ups;
         private int previousSecond;
-        */
         private List<Keys> keysPressed = new List<Keys>();
         private List<Keys> keysHeld = new List<Keys>();
         private InputManager iManager = new InputManager();
@@ -42,7 +41,7 @@ namespace Game_Try_2nd
 
         private void LoadContent()
         {
-            gameMap = new Map(ClientRectangle.Height / 12.7);
+            gameMap = new Map(ClientRectangle.Height / 18);
             gameMap.setMap(iManager);
             //s = new Sprite(Properties.Resources.Dementia_GTA2, 50, 50, 50, 30);
             spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
@@ -110,11 +109,11 @@ namespace Game_Try_2nd
 
         private void CheckFps()
         {
-            if (gameTime.ElapsedMilliseconds > 1000)
+            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
             {
+                fpsTime = gameTime.ElapsedMilliseconds;
                 fps = fpsCounter;
                 fpsCounter = 0;
-                gameTime.Reset();
             }
             else
             {
@@ -146,11 +145,6 @@ namespace Game_Try_2nd
             base.OnKeyPress(e);
             if (allowInput)
                 keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
         }
     }
 }
