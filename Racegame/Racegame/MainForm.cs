@@ -374,15 +374,20 @@ namespace WindowsFormsApplication1
             {
                 fps = fpsCounter;
                 fpsCounter = 0;
-                string i = vehicle2.GetRect().ToString();
-                string j = vehicle2.GetAngle().ToString();
+                Vector y1 = vehicle2.GetPosition();
+                Rectangle x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
+                Vector y2 = vehicle1.GetPosition();
+                Rectangle x2 = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
+                string h = Convert.ToString(x1.IntersectsWith(x2));
+                float i = vehicle2.GetAngle(); // in degrees from beginning
                 Vector k = vehicle2.GetPosition();
                 string l = k.X.ToString();
                 string m = k.Y.ToString();
+                Console.Write(h + " ");
                 Console.Write(i + " ");
-                Console.Write(j + " ");
                 Console.WriteLine(l + " " + m);
                 gameTime.Reset();
+                gameTime.Start();
             }
             else
             {
@@ -588,6 +593,10 @@ namespace WindowsFormsApplication1
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
 
+            public Rectangle GetRect()
+            {
+                return rect;
+            }
             public void SetLocation(Vector position, float angle)
             {
                 m_position = position;
@@ -976,7 +985,7 @@ namespace WindowsFormsApplication1
             }
             public float GetAngle()
             {
-                return m_angle;
+                return m_angle / (float)Math.PI * 180.0f;
             }
 
             public void SetLocation(Vector position, float angle)
