@@ -233,7 +233,7 @@ namespace WindowsFormsApplication1
                 throttle = 0;
 
             if (Downheld)
-                throttle = -0.35f;
+                throttle = -1;
             
             if (ShiftHeld)
                 brakes = 12;
@@ -308,7 +308,7 @@ namespace WindowsFormsApplication1
                 throttle2 = 0;
 
             if (SHeld)
-                throttle2 = -0.35f;
+                throttle2 = -1;
 
             if (EHeld)
                 brakes2 = 12;
