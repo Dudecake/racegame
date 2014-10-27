@@ -10,13 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using OpenTK;
 
 namespace WindowsFormsApplication1
 {
 
     public partial class MainForm : Form
     {
+        #region Variabelen
+
         Polygon polygon = new Polygon();
         Collision collision = new Collision();
         Vehicle1 vehicle1 = new Vehicle1();
@@ -50,6 +51,9 @@ namespace WindowsFormsApplication1
         float brakes2 = 0; //0 is no brakes, 1 is full brakes
 
         Bitmap Backbuffer;
+        #endregion
+
+        #region initilazation
 
         public MainForm()
         {
@@ -127,7 +131,9 @@ namespace WindowsFormsApplication1
             vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, autos[1]);
             vehicle2.SetLocation(new Vector(190, -7), 0);
         }
+#endregion
 
+        #region Frame
         //main rendering function
         private void Render(Graphics g)
         {
@@ -207,6 +213,8 @@ namespace WindowsFormsApplication1
             while (position.X < -screenSize.X / 2.0f) { position.X += screenSize.X; }
             while (position.Y < -screenSize.Y / 2.0f) { position.Y += screenSize.Y; }
         }
+        #endregion
+
         #region Input
         private void ProcessInput2()
         {
