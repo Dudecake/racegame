@@ -40,6 +40,7 @@ namespace WindowsFormsApplication1
         bool WHeld = false, SHeld = false;
         bool Upheld = false, Downheld = false;
         bool Rightheld = false, Leftheld = false;
+        bool EHeld = false, ShiftHeld = false;
 
         //vehicle controls
         float steering = 0; //-1 is full left, 0 is center, 1 is full right
@@ -188,7 +189,7 @@ namespace WindowsFormsApplication1
 
             //redraw our screenconstra
             screen.Invalidate();
-
+            
             this.Text = String.Format("{0}FPS", fps);
         }
 
@@ -231,6 +232,9 @@ namespace WindowsFormsApplication1
                 throttle = 0;
 
             if (Downheld)
+                throttle = -1;
+
+            if (ShiftHeld)
                 brakes = 12;
             else
                 brakes = 0.4f;
@@ -251,6 +255,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Keys.Down:
                     Downheld = true;
+                    break;
+                case Keys.NumPad0:
+                    ShiftHeld = true;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -275,6 +282,9 @@ namespace WindowsFormsApplication1
                 case Keys.Down:
                     Downheld = false;
                     break;
+                case Keys.NumPad0:
+                    ShiftHeld = false;
+                    break;
                 default: //no match found
                     return; //return so handled dosnt get set
             }
@@ -282,7 +292,6 @@ namespace WindowsFormsApplication1
             //match found
             e.Handled = true;
         }
-
 
         //process keyboard input
         private void ProcessInput()
@@ -300,6 +309,9 @@ namespace WindowsFormsApplication1
                 throttle2 = 0;
 
             if (SHeld)
+                throttle2 = -1;
+
+            if (EHeld)
                 brakes2 = 12;
             else
                 brakes2 = 0.4f;
@@ -320,6 +332,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Keys.S:
                     SHeld = true;
+                    break;
+                case Keys.E:
+                    EHeld = true;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -345,6 +360,9 @@ namespace WindowsFormsApplication1
                 case Keys.S:
                     SHeld = false;
                     break;
+                case Keys.E:
+                    EHeld = false;
+                    break;
                 default: //no match found
                     return; //return so handled dosnt get set
             }
@@ -366,7 +384,6 @@ namespace WindowsFormsApplication1
         {
             // While the application is still idle, run frame routine.
             DoFrame();
-            //CheckFps();
         }
 
         void Form1_CreateBackBuffer(object sender, EventArgs e)
@@ -382,6 +399,7 @@ namespace WindowsFormsApplication1
             {
                 fps = fpsCounter;
                 fpsCounter = 0;
+                
                 Vector y1 = vehicle2.GetPosition();
                 Rectangle x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
                 Vector y2 = vehicle1.GetPosition();
@@ -394,6 +412,7 @@ namespace WindowsFormsApplication1
                 Console.Write(h + " ");
                 Console.Write(i + " ");
                 Console.WriteLine(l + " " + m);
+                
                 gameTime.Reset();
                 gameTime.Start();
             }
