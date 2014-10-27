@@ -41,6 +41,7 @@ namespace WindowsFormsApplication1
         bool WHeld = false, SHeld = false;
         bool Upheld = false, Downheld = false;
         bool Rightheld = false, Leftheld = false;
+        bool EHeld = false, ShiftHeld = false;
 
         //vehicle controls
         float steering = 0; //-1 is full left, 0 is center, 1 is full right
@@ -232,6 +233,9 @@ namespace WindowsFormsApplication1
                 throttle = 0;
 
             if (Downheld)
+                throttle = -1;
+            
+            if (ShiftHeld)
                 brakes = 12;
             else
                 brakes = 0.4f;
@@ -252,6 +256,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Keys.Down:
                     Downheld = true;
+                    break;
+                case Keys.Shift:
+                    ShiftHeld = true; 
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -301,6 +308,9 @@ namespace WindowsFormsApplication1
                 throttle2 = 0;
 
             if (SHeld)
+                throttle2 = -1;
+
+            if (EHeld)
                 brakes2 = 12;
             else
                 brakes2 = 0.4f;
@@ -321,6 +331,9 @@ namespace WindowsFormsApplication1
                     break;
                 case Keys.S:
                     SHeld = true;
+                    break;
+                case Keys.E:
+                    EHeld = true;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
