@@ -54,10 +54,8 @@ namespace player_logic
             bool a = true;
             if(a)
             {
-                //int a3 = Convert.ToInt32(stopWatch.Elapsed);
                 Timesp1[2] = stopWatch.Elapsed;
                 textBox1.Text = string.Format("{0}", stopWatch.Elapsed);
-                //Timesp1[2] = Convert.ToInt32(stopWatch.Elapsed);
                 Alpha = true;
             }
         }
@@ -73,10 +71,8 @@ namespace player_logic
             bool b = true;
             if(b)
             {
-                //int b3 = Convert.ToInt32(stopHorloge.Elapsed);
                 Timesp2[2] = stopHorloge.Elapsed;
                 textBox2.Text = string.Format("{0}", stopHorloge.Elapsed);
-                //Timesp2[2] = Convert.ToInt32(stopHorloge.Elapsed);
                 Beta = true;
             }
         }
@@ -89,12 +85,10 @@ namespace player_logic
         private void button6_Click(object sender, EventArgs e)
         {
             bool a = true;
-            //int a1 = Convert.ToInt32(stopWatch.Elapsed);
             if (a == true)
             {
                 label2.Text = string.Format("{0}", stopWatch.Elapsed);
                 Timesp1[0] = stopWatch.Elapsed;
-                //Timesp1[0] = Convert.ToInt32(stopWatch.Elapsed);
                 stopWatch.Restart();
                 Gamma = true;
             }
@@ -103,12 +97,10 @@ namespace player_logic
         private void button7_Click(object sender, EventArgs e)
         {
             bool b = true;
-            //int a2 = Convert.ToInt32(stopWatch.Elapsed);
             if(b == true)
             {
                 label3.Text = string.Format("{0}", stopWatch.Elapsed);
                 Timesp1[1] = stopWatch.Elapsed;
-                //Timesp1[1] = Convert.ToInt32(stopWatch.Elapsed);
                 Delta = true;
                 stopWatch.Restart();
             }
@@ -117,28 +109,24 @@ namespace player_logic
         private void button8_Click(object sender, EventArgs e)
         {
             bool c = true;
-            //int b1 = Convert.ToInt32(stopHorloge.Elapsed);
             if(c == true)
             {
                 label7.Text = string.Format("{0}", stopHorloge.Elapsed);
                 Timesp2[0] = stopHorloge.Elapsed;
-                //Timesp2[0] = Convert.ToInt32(stopHorloge.Elapsed);
                 Phi = true;
-                stopWatch.Restart();
+                stopHorloge.Restart();
             }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             bool d = true;
-            //int b2 = Convert.ToInt32(stopHorloge.Elapsed);
             if(d == true)
             {
                 label8.Text = string.Format("{0}", stopHorloge.Elapsed);
                 Timesp2[1] = stopHorloge.Elapsed;
-                //Timesp2[1] = Convert.ToInt32(stopHorloge.Elapsed);
                 Omega = true;
-                stopWatch.Restart();
+                stopHorloge.Restart();
             }
         }
 
@@ -169,6 +157,21 @@ namespace player_logic
                     label11.Text = "Player 2 has got the best time";
                 }
             }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            stopWatch.Reset();
+            stopHorloge.Reset();
+            textBox1.Clear();
+            textBox2.Clear();
+            label2.ResetText();
+            label3.ResetText();
+            label7.ResetText();
+            label8.ResetText();
+            label9.ResetText();
+            label10.ResetText();
+            label11.ResetText();
         }
     }
 }
