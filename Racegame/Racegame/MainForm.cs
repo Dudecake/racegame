@@ -631,6 +631,11 @@ namespace WindowsFormsApplication1
                 return m_position;
             }
 
+            public void SetVelocity(float i)
+            {
+                m_velocity *= i;
+            }
+
             public void Update(float timeStep)
             {
                 //integrate physics
@@ -1295,12 +1300,14 @@ namespace WindowsFormsApplication1
                     switch (this.type)
                     {
                         case SpriteType.Road:
+                            i = 1;
                             break;
                         case SpriteType.Grass:
                             i = 0.5f;
                             //voertuig1.SetThrottle(30.0f, true);
                             break;
                         case SpriteType.Wall:
+                            vehicle1.SetVelocity(i);
                             break;
                         case SpriteType.CheckPoint:
                             break;
@@ -1324,12 +1331,14 @@ namespace WindowsFormsApplication1
                     switch (this.type)
                     {
                         case SpriteType.Road:
+                            i = 1;
                             break;
                         case SpriteType.Grass:
                             i = 0.5f;
                             //voertuig1.SetThrottle(30.0f, true);
                             break;
                         case SpriteType.Wall:
+                            vehicle1.SetVelocity(i);
                             break;
                         case SpriteType.CheckPoint:
                             break;
