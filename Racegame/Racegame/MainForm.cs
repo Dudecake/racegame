@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -85,7 +86,7 @@ namespace WindowsFormsApplication1
             buffersize = size;
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
-            gameTime.Start();
+            gameTimer.Start();
             timer.GetETime(); //reset timer
             Bitmap[] autos = new Bitmap[2];
             #region Vehicle selection
@@ -378,7 +379,7 @@ namespace WindowsFormsApplication1
         }
         private void CheckFps()
         {
-            if (gameTime.ElapsedMilliseconds > 1000)
+            if (gameTimer.ElapsedMilliseconds > 1000)
             {
                 fps = fpsCounter;
                 fpsCounter = 0;
@@ -394,8 +395,8 @@ namespace WindowsFormsApplication1
                 Console.Write(h + " ");
                 Console.Write(i + " ");
                 Console.WriteLine(l + " " + m);
-                gameTime.Reset();
-                gameTime.Start();
+                gameTimer.Reset();
+                gameTimer.Start();
             }
             else
             {
@@ -1110,7 +1111,102 @@ namespace WindowsFormsApplication1
 
                 return etime;
             }
+
+            
         }
+
+        //private bool allowInput;
+        //private int fps;
+        //private int fpsCounter;
+        //private long fpsTime;
+        //private int interval = 1000 / 63;
+        //private long upTime;
+        //private int upCounter;
+        //private int Ups;
+        //private int previousSecond;
+        private List<Keys> keysPressed = new List<Keys>();
+        private List<Keys> keysHeld = new List<Keys>();
+        private InputManager iManager = new InputManager();
+        private Stopwatch gameTimer = new Stopwatch();
+        private Spritebatch spriteBatch;
+        //private Point mousePoint;
+        private float deltaTime;
+        private long lasttime;
+        //private Sprite s;
+        private Map gameMap;
+
+        private void LoadContent()
+        {
+            gameMap = new Map(ClientRectangle.Height / 18);
+            gameMap.setMap(iManager);
+            //s = new Sprite(Properties.Resources.Dementia_GTA2, 50, 50, 50, 30);
+            spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
+            Thread game = new Thread(GameLoop);
+            game.Start();
+        }
+
+        private void GameLoop()
+        {
+            gameTimer.Start();
+            gameMap.setMap(iManager);
+            while (this.Created)
+            {
+                deltaTime = gameTimer.ElapsedMilliseconds - lasttime;
+                lasttime = gameTimer.ElapsedMilliseconds;
+                //Input();
+                Render();
+            }
+        }
+
+        //private void Input()
+        //{
+        //    allowInput = false;
+        //    this.Invoke(new MethodInvoker(delegate
+        //    {
+        //        mousePoint = this.PointToClient(Cursor.Position);
+        //        this.Text = fps.ToString();
+        //    }));
+        //    iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime);
+        //    keysPressed.Clear();
+        //    keysHeld.Clear();
+        //    allowInput = true;
+        //}
+
+        private void Render()
+        {
+            spriteBatch.Begin();
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                s.Draw(spriteBatch);
+            }
+            spriteBatch.End();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            System.Environment.Exit(0);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            LoadContent();
+        }
+
+        //protected override void OnKeyDown(KeyEventArgs e)
+        //{
+        //    base.OnKeyDown(e);
+        //    if (allowInput)
+        //        keysHeld.Add(e.KeyCode);
+        //}
+
+        //protected override void OnKeyPress(KeyPressEventArgs e)
+        //{
+        //    base.OnKeyPress(e);
+        //    if (allowInput)
+        //        keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
+        //}
     }
 }
 
