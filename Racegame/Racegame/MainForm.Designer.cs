@@ -35,9 +35,9 @@
             // screen
             // 
             this.screen.InitialImage = null;
-            this.screen.Location = new System.Drawing.Point(-3, 0);
+            this.screen.Location = new System.Drawing.Point(0, 0);
             this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size(1027, 768);
+            this.screen.Size = new System.Drawing.Size(1024, 768);
             this.screen.TabIndex = 0;
             this.screen.TabStop = false;
             // 
