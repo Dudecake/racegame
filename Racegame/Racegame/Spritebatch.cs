@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Spritebatch
+    public class Spritebatch
     {
         private Graphics Gfx;
         private BufferedGraphics bfgfx;
@@ -24,12 +24,12 @@ namespace WindowsFormsApplication1
         {
             bfgfx.Graphics.Clear(Color.Purple);
         }
-
+        /*
         public void Draw(Sprite s)
         {
             bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.ToRec);
         }
-
+        */
         public void drawImage(Bitmap b, Rectangle rec)
         {
             bfgfx.Graphics.DrawImageUnscaled(b, rec);

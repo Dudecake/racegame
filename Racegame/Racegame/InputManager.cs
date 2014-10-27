@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    class InputManager
+    public class InputManager
     {
         public Point mousePoint;
         public Keys[] keysPressed;

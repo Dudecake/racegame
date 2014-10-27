@@ -49,8 +49,6 @@
   <ItemGroup>
     <Compile Include="InputManager.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="Polygon.cs" />
-    <Compile Include="Collision.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

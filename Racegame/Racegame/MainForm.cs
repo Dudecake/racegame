@@ -19,11 +19,10 @@ namespace WindowsFormsApplication1
     {
         #region Variabelen
 
-        //Polygon polygon = new Polygon();
-        Collision collision = new Collision();
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
         Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
+        //Sprite sprite = new Sprite();
 
         //graphics
         Graphics graphics; //gdi+
@@ -54,7 +53,8 @@ namespace WindowsFormsApplication1
 
         Bitmap Backbuffer;
         #endregion
-        #region initilazation
+
+        #region initialization
 
         public MainForm()
         {
@@ -219,6 +219,7 @@ namespace WindowsFormsApplication1
         #region Input
         private void ProcessInput2()
         {
+            //float i = sprite.Collider();
             if (Leftheld)
                 steering = -1;
             else if (Rightheld)
@@ -227,7 +228,7 @@ namespace WindowsFormsApplication1
                 steering = 0;
 
             if (Upheld)
-                throttle = 1;
+                throttle = 1;// * i;
             else
                 throttle = 0;
 
@@ -294,6 +295,7 @@ namespace WindowsFormsApplication1
         //process keyboard input
         private void ProcessInput()
         {
+            //float i = sprite.Collider();
             if (AHeld)
                 steering2 = -1;
             else if (DHeld)
@@ -302,7 +304,7 @@ namespace WindowsFormsApplication1
                 steering2 = 0;
 
             if (WHeld)
-                throttle2 = 1;
+                throttle2 = 1;// * i;
             else
                 throttle2 = 0;
 
@@ -418,7 +420,7 @@ namespace WindowsFormsApplication1
         #endregion
 
         //our vehicle object
-        public class Vehicle1 : RigidBody1
+        class Vehicle1 : RigidBody1
         {
             private class Wheel
             {
@@ -804,7 +806,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public class Vehicle2 : RigidBody2
+        class Vehicle2 : RigidBody2
         {
             private class Wheel
             {
@@ -1189,7 +1191,7 @@ namespace WindowsFormsApplication1
             spriteBatch.Begin();
             foreach (Sprite s in iManager.inGameSprites)
             {
-                s.Draw(spriteBatch);
+                //s.Draw(spriteBatch);
             }
             spriteBatch.End();
         }
@@ -1231,7 +1233,8 @@ namespace WindowsFormsApplication1
         public const float Gragh = 9.81f;
         public SpriteType type;
         public bool canCollide;
-        MainForm.Vehicle1 voertuig1 = new MainForm.Vehicle1();
+
+
 
         public enum SpriteType { Road, Grass, Wall, CheckPoint, StartLine, PitStop };
 
@@ -1281,8 +1284,9 @@ namespace WindowsFormsApplication1
             Collider(iManager);
         }
 
-        private void Collider(InputManager iManager)
+        private float Collider(InputManager iManager)
         {
+            float i = 0;
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (this.isCollidingWith(s))
@@ -1292,7 +1296,8 @@ namespace WindowsFormsApplication1
                         case SpriteType.Road:
                             break;
                         case SpriteType.Grass:
-                            voertuig1.SetThrottle(30.0f, true);
+                            i = 0.5f;
+                            //voertuig1.SetThrottle(30.0f, true);
                             break;
                         case SpriteType.Wall:
                             break;
@@ -1305,6 +1310,36 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+            return i;
+        }
+
+        private float Collider2(InputManager iManager)
+        {
+            float i = 0;
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                if (this.isCollidingWith(s))
+                {
+                    switch (this.type)
+                    {
+                        case SpriteType.Road:
+                            break;
+                        case SpriteType.Grass:
+                            i = 0.5f;
+                            //voertuig1.SetThrottle(30.0f, true);
+                            break;
+                        case SpriteType.Wall:
+                            break;
+                        case SpriteType.CheckPoint:
+                            break;
+                        case SpriteType.StartLine:
+                            break;
+                        case SpriteType.PitStop:
+                            break;
+                    }
+                }
+            }
+            return i;
         }
 
         public Rectangle ToRec
@@ -1331,10 +1366,12 @@ namespace WindowsFormsApplication1
         {
             get { return new Rectangle((int)X + Width / 2 + Width / 4, (int)Y, Width / 4, Height); }
         }
+        /*
         public void Draw(Spritebatch sb)
         {
             sb.Draw(this);
         }
+        */
     }
 
     static class SpriteHelper
