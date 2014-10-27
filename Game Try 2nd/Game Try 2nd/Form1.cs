@@ -19,24 +19,24 @@ namespace Game_Try_2nd
             InitializeComponent();
         }
 
-        private bool allowInput;
-        private int fps;
-        private int fpsCounter;
-        private long fpsTime;
-        private int interval = 1000 / 63;
-        private long upTime;
-        private int upCounter;
-        private int Ups;
-        private int previousSecond;
+        //private bool allowInput;
+        //private int fps;
+        //private int fpsCounter;
+        //private long fpsTime;
+        //private int interval = 1000 / 63;
+        //private long upTime;
+        //private int upCounter;
+        //private int Ups;
+        //private int previousSecond;
         private List<Keys> keysPressed = new List<Keys>();
         private List<Keys> keysHeld = new List<Keys>();
         private InputManager iManager = new InputManager();
         private Stopwatch gameTime = new Stopwatch();
         private Spritebatch spriteBatch;
-        private Point mousePoint;
+        //private Point mousePoint;
         private float deltaTime;
         private long lasttime;
-        private Sprite s;
+        //private Sprite s;
         private Map gameMap;
 
         private void LoadContent()
@@ -55,47 +55,26 @@ namespace Game_Try_2nd
             //gameMap.setMap(iManager);
             while (this.Created)
             {
-                CheckFps();
                 deltaTime = gameTime.ElapsedMilliseconds - lasttime;
                 lasttime = gameTime.ElapsedMilliseconds;
-                Input();
-                Logic();
+                //Input();
                 Render();
             }
         }
 
-        private void Input()
-        {
-            allowInput = false;
-            this.Invoke(new MethodInvoker(delegate
-            {
-                mousePoint = this.PointToClient(Cursor.Position);
-                this.Text = fps.ToString();
-            }));
-            iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime);
-            keysPressed.Clear();
-            keysHeld.Clear();
-            allowInput = true;
-        }
-
-        private void Logic()
-        {
-            //if(gameTime.ElapsedMilliseconds - upTime > interval)
-            //{
-            //    foreach(Sprite s in iManager.inGameSprites)
-            //    {
-            //        s.Update(iManager);
-            //    }
-            //    if(gameTime.Elapsed.Seconds != previousSecond)
-            //    {
-            //        previousSecond = gameTime.Elapsed.Seconds;
-            //        Ups = upCounter;
-            //        upCounter = 0;
-            //    }
-            //    upTime = gameTime.ElapsedMilliseconds;
-            //    upCounter++;
-            //}
-        }
+        //private void Input()
+        //{
+        //    allowInput = false;
+        //    this.Invoke(new MethodInvoker(delegate
+        //    {
+        //        mousePoint = this.PointToClient(Cursor.Position);
+        //        this.Text = fps.ToString();
+        //    }));
+        //    iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime);
+        //    keysPressed.Clear();
+        //    keysHeld.Clear();
+        //    allowInput = true;
+        //}
 
         private void Render()
         {
@@ -105,20 +84,6 @@ namespace Game_Try_2nd
                 s.Draw(spriteBatch);
             }
             spriteBatch.End();
-        }
-
-        private void CheckFps()
-        {
-            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
-            {
-                fpsTime = gameTime.ElapsedMilliseconds;
-                fps = fpsCounter;
-                fpsCounter = 0;
-            }
-            else
-            {
-                fpsCounter++;
-            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -133,18 +98,18 @@ namespace Game_Try_2nd
             LoadContent();
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (allowInput)
-                keysHeld.Add(e.KeyCode);
-        }
+        //protected override void OnKeyDown(KeyEventArgs e)
+        //{
+        //    base.OnKeyDown(e);
+        //    if (allowInput)
+        //        keysHeld.Add(e.KeyCode);
+        //}
 
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-            if (allowInput)
-                keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
-        }
+        //protected override void OnKeyPress(KeyPressEventArgs e)
+        //{
+        //    base.OnKeyPress(e);
+        //    if (allowInput)
+        //        keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
+        //}
     }
 }
