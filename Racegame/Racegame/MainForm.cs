@@ -419,6 +419,40 @@ namespace WindowsFormsApplication1
         }
         #endregion
 
+        #region Prutsterdepruts
+        public static bool LineIntersectsRect(Point p1, Point p2, Rectangle r)
+        {
+            return LineIntersectsLine(p1, p2, new Point(r.X, r.Y), new Point(r.X + r.Width, r.Y)) ||
+                   LineIntersectsLine(p1, p2, new Point(r.X + r.Width, r.Y), new Point(r.X + r.Width, r.Y + r.Height)) ||
+                   LineIntersectsLine(p1, p2, new Point(r.X + r.Width, r.Y + r.Height), new Point(r.X, r.Y + r.Height)) ||
+                   LineIntersectsLine(p1, p2, new Point(r.X, r.Y + r.Height), new Point(r.X, r.Y)) ||
+                   (r.Contains(p1) && r.Contains(p2));
+        }
+
+        private static bool LineIntersectsLine(Point l1p1, Point l1p2, Point l2p1, Point l2p2)
+        {
+            float q = (l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y);
+            float d = (l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X);
+
+            if (d == 0)
+            {
+                return false;
+            }
+
+            float r = q / d;
+
+            q = (l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y);
+            float s = q / d;
+
+            if (r < 0 || r > 1 || s < 0 || s > 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
         //our vehicle object
         public class Vehicle1 : RigidBody1
         {
@@ -575,6 +609,7 @@ namespace WindowsFormsApplication1
         //our simulation object
         public class RigidBody1
         {
+            #region Setup
             //linear properties
             private Vector m_position = new Vector();
             private Vector m_velocity = new Vector();
@@ -615,6 +650,7 @@ namespace WindowsFormsApplication1
                 rect.Width = (int)(m_halfSize.X * 2.0f);
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
+            #endregion
 
             public Rectangle GetRect()
             {
@@ -636,6 +672,8 @@ namespace WindowsFormsApplication1
                 m_velocity *= i;
             }
 
+
+            #region Update
             public void Update(float timeStep)
             {
                 //integrate physics
@@ -677,7 +715,9 @@ namespace WindowsFormsApplication1
                 //restore transform
                 graphics.Transform = mat1;
             }
+            #endregion
 
+            #region Forces
             //take a relative vector and make it a world vector
             public Vector RelativeToWorld(Vector relative)
             {
@@ -722,94 +762,10 @@ namespace WindowsFormsApplication1
                 //and it's associated torque
                 m_torque += worldOffset % worldForce;
             }
+            #endregion
         }
 
-        //mini 2d vector :)
-        public class Vector
-        {
-            public float X, Y;
-
-            public Vector() { X = 0; Y = 0; }
-            public Vector(float x, float y) { X = x; Y = y; }
-
-            //length property        
-            public float Length
-            {
-                get
-                {
-                    return (float)Math.Sqrt((double)(X * X + Y * Y));
-                }
-            }
-
-            //addition
-            public static Vector operator +(Vector L, Vector R)
-            {
-                return new Vector(L.X + R.X, L.Y + R.Y);
-            }
-
-            //subtraction
-            public static Vector operator -(Vector L, Vector R)
-            {
-                return new Vector(L.X - R.X, L.Y - R.Y);
-            }
-
-            //negative
-            public static Vector operator -(Vector R)
-            {
-                Vector temp = new Vector(-R.X, -R.Y);
-                return temp;
-            }
-
-            //scalar multiply
-            public static Vector operator *(Vector L, float R)
-            {
-                return new Vector(L.X * R, L.Y * R);
-            }
-
-            //divide multiply
-            public static Vector operator /(Vector L, float R)
-            {
-                return new Vector(L.X / R, L.Y / R);
-            }
-
-            //dot product
-            public static float operator *(Vector L, Vector R)
-            {
-                return (L.X * R.X + L.Y * R.Y);
-            }
-
-            //cross product, in 2d this is a scalar since we know it points in the Z direction
-            public static float operator %(Vector L, Vector R)
-            {
-                return (L.X * R.Y - L.Y * R.X);
-            }
-
-            //normalize the vector
-            public void normalize()
-            {
-                float mag = Length;
-
-                X /= mag;
-                Y /= mag;
-            }
-
-            //project this vector on to v
-            public Vector Project(Vector v)
-            {
-                //projected vector = (this dot v) * v;
-                float thisDotV = this * v;
-                return v * thisDotV;
-            }
-
-            //project this vector on to v, return signed magnatude
-            public Vector Project(Vector v, out float mag)
-            {
-                //projected vector = (this dot v) * v;
-                float thisDotV = this * v;
-                mag = thisDotV;
-                return v * thisDotV;
-            }
-        }
+        
 
         public class Vehicle2 : RigidBody2
         {
@@ -966,6 +922,7 @@ namespace WindowsFormsApplication1
         //our simulation object
         public class RigidBody2
         {
+            #region Setup
             //linear properties
             private Vector m_position = new Vector();
             private Vector m_velocity = new Vector();
@@ -1006,6 +963,7 @@ namespace WindowsFormsApplication1
                 rect.Width = (int)(m_halfSize.X * 2.0f);
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
+            #endregion
 
             public Rectangle GetRect()
             {
@@ -1027,6 +985,7 @@ namespace WindowsFormsApplication1
                 return m_position;
             }
 
+            #region Update
             public void Update(float timeStep)
             {
                 //integrate physics
@@ -1068,7 +1027,9 @@ namespace WindowsFormsApplication1
                 //restore transform
                 graphics.Transform = mat1;
             }
+            #endregion
 
+            #region Forces
             //take a relative vector and make it a world vector
             public Vector RelativeToWorld(Vector relative)
             {
@@ -1113,6 +1074,94 @@ namespace WindowsFormsApplication1
                 //and it's associated torque
                 m_torque += worldOffset % worldForce;
             }
+            #endregion
+        }
+        #region Vector and Timer
+        //mini 2d vector :)
+        public class Vector
+        {
+            public float X, Y;
+
+            public Vector() { X = 0; Y = 0; }
+            public Vector(float x, float y) { X = x; Y = y; }
+
+            //length property        
+            public float Length
+            {
+                get
+                {
+                    return (float)Math.Sqrt((double)(X * X + Y * Y));
+                }
+            }
+
+            //addition
+            public static Vector operator +(Vector L, Vector R)
+            {
+                return new Vector(L.X + R.X, L.Y + R.Y);
+            }
+
+            //subtraction
+            public static Vector operator -(Vector L, Vector R)
+            {
+                return new Vector(L.X - R.X, L.Y - R.Y);
+            }
+
+            //negative
+            public static Vector operator -(Vector R)
+            {
+                Vector temp = new Vector(-R.X, -R.Y);
+                return temp;
+            }
+
+            //scalar multiply
+            public static Vector operator *(Vector L, float R)
+            {
+                return new Vector(L.X * R, L.Y * R);
+            }
+
+            //divide multiply
+            public static Vector operator /(Vector L, float R)
+            {
+                return new Vector(L.X / R, L.Y / R);
+            }
+
+            //dot product
+            public static float operator *(Vector L, Vector R)
+            {
+                return (L.X * R.X + L.Y * R.Y);
+            }
+
+            //cross product, in 2d this is a scalar since we know it points in the Z direction
+            public static float operator %(Vector L, Vector R)
+            {
+                return (L.X * R.Y - L.Y * R.X);
+            }
+
+            //normalize the vector
+            public void normalize()
+            {
+                float mag = Length;
+
+                X /= mag;
+                Y /= mag;
+            }
+
+            //project this vector on to v
+            public Vector Project(Vector v)
+            {
+                //projected vector = (this dot v) * v;
+                float thisDotV = this * v;
+                return v * thisDotV;
+            }
+
+            //project this vector on to v, return signed magnatude
+            public Vector Project(Vector v, out float mag)
+            {
+                //projected vector = (this dot v) * v;
+                float thisDotV = this * v;
+                mag = thisDotV;
+                return v * thisDotV;
+            }
         }
 
         //keep track of time between frames
@@ -1130,9 +1179,8 @@ namespace WindowsFormsApplication1
 
                 return etime;
             }
-
-            
         }
+        #endregion
 
         //private bool allowInput;
         //private int fps;
