@@ -21,7 +21,6 @@ namespace WindowsFormsApplication1
 
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
-        Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
         //Sprite sprite = new Sprite();
 
         //graphics
@@ -138,6 +137,7 @@ namespace WindowsFormsApplication1
         //main rendering function
         private void Render(Graphics g)
         {
+            Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
             //clear back buffer
             graphics.Clear(Color.Black);
             graphics.DrawImage(m_map, -171, -128);
@@ -420,7 +420,7 @@ namespace WindowsFormsApplication1
         #endregion
 
         //our vehicle object
-        class Vehicle1 : RigidBody1
+        public class Vehicle1 : RigidBody1
         {
             private class Wheel
             {
@@ -573,7 +573,7 @@ namespace WindowsFormsApplication1
         }
 
         //our simulation object
-        class RigidBody1
+        public class RigidBody1
         {
             //linear properties
             private Vector m_position = new Vector();
@@ -720,7 +720,7 @@ namespace WindowsFormsApplication1
         }
 
         //mini 2d vector :)
-        class Vector
+        public class Vector
         {
             public float X, Y;
 
@@ -806,7 +806,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        class Vehicle2 : RigidBody2
+        public class Vehicle2 : RigidBody2
         {
             private class Wheel
             {
@@ -959,7 +959,7 @@ namespace WindowsFormsApplication1
         }
 
         //our simulation object
-        class RigidBody2
+        public class RigidBody2
         {
             //linear properties
             private Vector m_position = new Vector();
@@ -1233,7 +1233,8 @@ namespace WindowsFormsApplication1
         public const float Gragh = 9.81f;
         public SpriteType type;
         public bool canCollide;
-
+        MainForm.Vehicle1 vehicle1 = new MainForm.Vehicle1();
+        //MainForm i = new MainForm();
 
 
         public enum SpriteType { Road, Grass, Wall, CheckPoint, StartLine, PitStop };
