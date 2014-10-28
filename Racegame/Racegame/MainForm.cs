@@ -56,13 +56,10 @@ namespace WindowsFormsApplication1
 
         Bitmap Backbuffer;
 
-        Vector y1;// = vehicle2.GetPosition();
-        Rectangle x1;// = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
-        Vector y2;// = vehicle1.GetPosition();
-        Rectangle x2;// = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
-        //x1.IntersectsWith(x2);
-        //LineIntersectsRect(outerPerimeter[0], outerPerimeter[1], x1).ToString();
-        float modifier; 
+        Vector y1;
+        Rectangle x1;
+        Vector y2;
+        Rectangle x2;
         #endregion
 
         #region initialization
@@ -202,7 +199,6 @@ namespace WindowsFormsApplication1
         {
             //get elapsed time since last frame
             float etime = timer.GetETime();
-            modifier = 1;
 
             //process input
             ProcessInput();
@@ -218,7 +214,7 @@ namespace WindowsFormsApplication1
 
             //apply vehicle controls
             vehicle1.SetSteering(steering);
-            vehicle1.SetThrottle(throttle * modifier, true); //menu.Checked
+            vehicle1.SetThrottle(throttle, true); //menu.Checked
             vehicle1.SetBrakes(brakes);
             vehicle2.SetSteering(steering2);
             vehicle2.SetThrottle(throttle2, true); //menu.Checked
@@ -504,8 +500,14 @@ namespace WindowsFormsApplication1
             }
             for (int i = 0; i < innerPerimeterUpper.Length - 2; i++)
             {
-                Console.Write("i");
                 if (LineIntersectsRect(innerPerimeterUpper[i], innerPerimeterUpper[i + 1], x2))
+                {
+                    brakes = 4;
+                }
+            }
+            for (int i = 0; i < innerPerimeterLower.Length - 2; i++)
+            {
+                if (LineIntersectsRect(innerPerimeterLower[i], innerPerimeterLower[i + 1], x2))
                 {
                     brakes = 4;
                 }
