@@ -17,16 +17,15 @@ namespace WindowsFormsApplication1
 
     public partial class MainForm : Form
     {
-
-        Point[] o = new Point[6];
-        Point[] p = new Point[8];
-        Point[] q = new Point[5];
-        
         #region Variabelen
+
+        Point[] outerPerimeter = new Point[6];
+        Point[] innerPerimeterUpper = new Point[8];
+        Point[] innerPerimeterLower = new Point[5];
+        Rectangle r = new Rectangle(-53, -18, 90, 35);
 
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
-        //Sprite sprite = new Sprite();
 
         //graphics
         Graphics graphics; //gdi+
@@ -56,6 +55,14 @@ namespace WindowsFormsApplication1
         float brakes2 = 0; //0 is no brakes, 1 is full brakes
 
         Bitmap Backbuffer;
+
+        Vector y1;// = vehicle2.GetPosition();
+        Rectangle x1;// = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
+        Vector y2;// = vehicle1.GetPosition();
+        Rectangle x2;// = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
+        //x1.IntersectsWith(x2);
+        //LineIntersectsRect(outerPerimeter[0], outerPerimeter[1], x1).ToString();
+        float modifier; 
         #endregion
 
         #region initialization
@@ -76,43 +83,33 @@ namespace WindowsFormsApplication1
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.DoubleBuffer, true);
-            
+
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
 
-            o[0] = new Point(-157, 63);
-            o[1] = new Point(1, 123);
-            o[2] = new Point(162, 61);
-            o[3] = new Point(162, -60);
-            o[4] = new Point(6, -121);
-            o[5] = new Point(-155, -61);
+            #region Gras
+            outerPerimeter[0] = new Point(-157, 63);
+            outerPerimeter[1] = new Point(1, 123);
+            outerPerimeter[2] = new Point(162, 61);
+            outerPerimeter[3] = new Point(162, -60);
+            outerPerimeter[4] = new Point(6, -121);
+            outerPerimeter[5] = new Point(-155, -61);
 
-            p[0] = new Point(-118, 37);
-            p[1] = new Point(3, 77);
-            p[2] = new Point(123, 40);
-            p[3] = new Point(123, -41);
-            p[4] = new Point(108, -44);
-            p[5] = new Point(34, 16);
-            p[6] = new Point(-53, -18);
-            p[7] = new Point(-120, -36);
+            innerPerimeterUpper[0] = new Point(-118, 37);
+            innerPerimeterUpper[1] = new Point(3, 77);
+            innerPerimeterUpper[2] = new Point(123, 40);
+            innerPerimeterUpper[3] = new Point(123, -41);
+            innerPerimeterUpper[4] = new Point(108, -44);
+            innerPerimeterUpper[5] = new Point(34, 16);
+            innerPerimeterUpper[6] = new Point(-53, -18);
+            innerPerimeterUpper[7] = new Point(-120, -36);
 
-            q[0] = new Point(2, -83);
-            q[1] = new Point(-95, -47);
-            q[2] = new Point(-53, -34);
-            q[3] = new Point(32, -34);
-            q[4] = new Point(82, -53);
-        /*
-        39, 196
-        525, 12
-        525, 12
-        1009, 196
-        1011, 202
-        1011, 571
-        1011, 571
-        523, 757
-        523, 575
-        39, 169
-        */
+            innerPerimeterLower[0] = new Point(2, -83);
+            innerPerimeterLower[1] = new Point(-95, -47);
+            innerPerimeterLower[2] = new Point(-53, -34);
+            innerPerimeterLower[3] = new Point(32, -34);
+            innerPerimeterLower[4] = new Point(82, -53);
+            #endregion
         }
 
         //intialize rendering
@@ -123,13 +120,13 @@ namespace WindowsFormsApplication1
             buffersize = size;
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
-            gameTimer.Start();
+            gameTime.Start();
             timer.GetETime(); //reset timer
             Bitmap[] autos = new Bitmap[2];
             #region Vehicle selection
             for (byte i = 0; i < 2; i++)
             {
-                switch(rand.Next(10))
+                switch (rand.Next(10))
                 {
                     case 0:
                         autos[i] = Properties.Resources._61px_Jefferson_GTA2;
@@ -169,7 +166,7 @@ namespace WindowsFormsApplication1
             vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, autos[1]);
             vehicle2.SetLocation(new Vector(190, -7), 0);
         }
-#endregion
+        #endregion
 
         #region Frame
         //main rendering function
@@ -202,14 +199,23 @@ namespace WindowsFormsApplication1
         {
             //get elapsed time since last frame
             float etime = timer.GetETime();
+            modifier = 1;
 
             //process input
             ProcessInput();
             ProcessInput2();
 
+            y1 = vehicle2.GetPosition();
+            x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
+            y2 = vehicle1.GetPosition();
+            x2 = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
+            //x1.IntersectsWith(x2);
+
+            CheckCollision();
+
             //apply vehicle controls
             vehicle1.SetSteering(steering);
-            vehicle1.SetThrottle(throttle, true); //menu.Checked
+            vehicle1.SetThrottle(throttle * modifier, true); //menu.Checked
             vehicle1.SetBrakes(brakes);
             vehicle2.SetSteering(steering2);
             vehicle2.SetThrottle(throttle2, true); //menu.Checked
@@ -296,7 +302,7 @@ namespace WindowsFormsApplication1
                     Downheld = true;
                     break;
                 case Keys.Shift:
-                    ShiftHeld = true; 
+                    ShiftHeld = true;
                     break;
                 default: //no match found
                     return; //return so handled dosnt get set
@@ -398,6 +404,9 @@ namespace WindowsFormsApplication1
                 case Keys.S:
                     SHeld = false;
                     break;
+                case Keys.E:
+                    EHeld = false;
+                    break;
                 default: //no match found
                     return; //return so handled dosnt get set
             }
@@ -430,27 +439,12 @@ namespace WindowsFormsApplication1
         }
         private void CheckFps()
         {
-            if (gameTimer.ElapsedMilliseconds > 1000)
+            if (gameTime.ElapsedMilliseconds > 1000)
             {
                 fps = fpsCounter;
                 fpsCounter = 0;
-                Vector y1 = vehicle2.GetPosition();
-                Rectangle x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
-                Vector y2 = vehicle1.GetPosition();
-                Rectangle x2 = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
-                string h = Convert.ToString(x1.IntersectsWith(x2));
-                float i = vehicle2.GetAngle(); // in degrees from beginning
-                Vector k = vehicle2.GetPosition();
-                string l = k.X.ToString();
-                string m = k.Y.ToString();
-                Console.Write(h + " ");
-                //Console.Write(i + " ");
-                Console.WriteLine(l + " " + m);
-                Console.Write(o[0]);
-                string t = LineIntersectsRect(o[0], o[1], x1).ToString();
-                Console.WriteLine(t);
-                gameTimer.Reset();
-                gameTimer.Start();
+                gameTime.Reset();
+                gameTime.Start();
             }
             else
             {
@@ -458,18 +452,7 @@ namespace WindowsFormsApplication1
             }
         }
         #endregion
-        /*
-        39, 196
-        525, 12
-        525, 12
-        1009, 196
-        1011, 202
-        1011, 571
-        1011, 571
-        523, 757
-        523, 575
-        39, 169
-        */
+        
         #region Prutsterdepruts
         public static bool LineIntersectsRect(Point p1, Point p2, Rectangle r)
         {
@@ -502,6 +485,22 @@ namespace WindowsFormsApplication1
 
             return true;
         }
+
+        private void CheckCollision()
+        {
+            for (int i = 0; i < outerPerimeter.Length - 2; i++)
+            {
+                if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x1))
+                {
+                    brakes = 4;
+                }
+            }
+            if (x1.IntersectsWith(x2))
+            {
+                vehicle1.SetVelocity(-0.5f);
+            }
+        }
+
         #endregion
 
         //our vehicle object
@@ -816,7 +815,7 @@ namespace WindowsFormsApplication1
             #endregion
         }
 
-        
+
 
         public class Vehicle2 : RigidBody2
         {
@@ -1232,330 +1231,6 @@ namespace WindowsFormsApplication1
             }
         }
         #endregion
-        /*
-        //private bool allowInput;
-        //private int fps;
-        //private int fpsCounter;
-        //private long fpsTime;
-        //private int interval = 1000 / 63;
-        //private long upTime;
-        //private int upCounter;
-        //private int Ups;
-        //private int previousSecond;
-        private List<Keys> keysPressed = new List<Keys>();
-        private List<Keys> keysHeld = new List<Keys>();
-        private InputManager iManager = new InputManager();
-        */
-        private Stopwatch gameTimer = new Stopwatch();
-        /*
-        private Spritebatch spriteBatch;
-        //private Point mousePoint;
-        private float deltaTime;
-        private long lasttime;
-        //private Sprite s;
-        private Map gameMap;
-
-        private void LoadContent()
-        {
-            gameMap = new Map(ClientRectangle.Height / 18);
-            gameMap.setMap(iManager);
-            //s = new Sprite(Properties.Resources.Dementia_GTA2, 50, 50, 50, 30);
-            spriteBatch = new Spritebatch(this.ClientSize, this.CreateGraphics());
-            Thread game = new Thread(GameLoop);
-            game.Start();
-        }
-
-        private void GameLoop()
-        {
-            gameTimer.Start();
-            gameMap.setMap(iManager);
-            while (this.Created)
-            {
-                deltaTime = gameTimer.ElapsedMilliseconds - lasttime;
-                lasttime = gameTimer.ElapsedMilliseconds;
-                //Input();
-                Render();
-            }
-        }
-
-        //private void Input()
-        //{
-        //    allowInput = false;
-        //    this.Invoke(new MethodInvoker(delegate
-        //    {
-        //        mousePoint = this.PointToClient(Cursor.Position);
-        //        this.Text = fps.ToString();
-        //    }));
-        //    iManager.Update(mousePoint, keysPressed.ToArray(), keysHeld.ToArray(), gameTime, deltaTime);
-        //    keysPressed.Clear();
-        //    keysHeld.Clear();
-        //    allowInput = true;
-        //}
-
-        private void Render()
-        {
-            spriteBatch.Begin();
-            foreach (Sprite s in iManager.inGameSprites)
-            {
-                //s.Draw(spriteBatch);
-            }
-            spriteBatch.End();
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            System.Environment.Exit(0);
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            LoadContent();
-        }
-
-        //protected override void OnKeyDown(KeyEventArgs e)
-        //{
-        //    base.OnKeyDown(e);
-        //    if (allowInput)
-        //        keysHeld.Add(e.KeyCode);
-        //}
-
-        //protected override void OnKeyPress(KeyPressEventArgs e)
-        //{
-        //    base.OnKeyPress(e);
-        //    if (allowInput)
-        //        keysPressed.Add((Keys)e.KeyChar.ToString().ToCharArray()[0]);
-        //}
     }
-
-    public partial class Sprite
-    {
-        public float X, Y;
-        public int Width, Height;
-        public Bitmap Texture;
-        public float Friction;
-        public PointF Velocity;
-        public const float Gragh = 9.81f;
-        public SpriteType type;
-        public bool canCollide;
-        MainForm.Vehicle1 vehicle1 = new MainForm.Vehicle1();
-        //MainForm i = new MainForm();
-
-
-        public enum SpriteType { Road, Grass, Wall, CheckPoint, StartLine, PitStop };
-
-        public Sprite(Bitmap texture, double x, double y, double width, double height, SpriteType thisType)
-        {
-            Bitmap b = new Bitmap((int)width, (int)height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                g.DrawImage(texture, 0, 0, (int)width, (int)height);
-            }
-            X = (int)x;
-            Y = (int)y;
-            Width = (int)width;
-            Height = (int)height;
-            Texture = b;
-            type = thisType;
-
-            switch (thisType)
-            {
-                case SpriteType.Road:
-                    canCollide = true;
-                    break;
-                case SpriteType.Grass:
-                    canCollide = true;
-                    break;
-                case SpriteType.Wall:
-                    canCollide = true;
-                    break;
-                case SpriteType.CheckPoint:
-                    canCollide = true;
-                    break;
-                case SpriteType.StartLine:
-                    canCollide = true;
-                    break;
-                case SpriteType.PitStop:
-                    canCollide = true;
-                    break;
-            }
-        }
-
-        public void Update(InputManager iManager)
-        {
-            Velocity.Y += Gragh;
-            this.X += Velocity.X * iManager.deltaTime;
-            this.Y += Velocity.Y * iManager.deltaTime;
-
-            Collider(iManager);
-        }
-
-        private float Collider(InputManager iManager)
-        {
-            float i = 0;
-            foreach (Sprite s in iManager.inGameSprites)
-            {
-                if (this.isCollidingWith(s))
-                {
-                    switch (this.type)
-                    {
-                        case SpriteType.Road:
-                            i = 1;
-                            break;
-                        case SpriteType.Grass:
-                            i = 0.5f;
-                            //voertuig1.SetThrottle(30.0f, true);
-                            break;
-                        case SpriteType.Wall:
-                            vehicle1.SetVelocity(i);
-                            break;
-                        case SpriteType.CheckPoint:
-                            break;
-                        case SpriteType.StartLine:
-                            break;
-                        case SpriteType.PitStop:
-                            break;
-                    }
-                }
-            }
-            return i;
-        }
-
-        private float Collider2(InputManager iManager)
-        {
-            float i = 0;
-            foreach (Sprite s in iManager.inGameSprites)
-            {
-                if (this.isCollidingWith(s))
-                {
-                    switch (this.type)
-                    {
-                        case SpriteType.Road:
-                            i = 1;
-                            break;
-                        case SpriteType.Grass:
-                            i = 0.5f;
-                            //voertuig1.SetThrottle(30.0f, true);
-                            break;
-                        case SpriteType.Wall:
-                            vehicle1.SetVelocity(i);
-                            break;
-                        case SpriteType.CheckPoint:
-                            break;
-                        case SpriteType.StartLine:
-                            break;
-                        case SpriteType.PitStop:
-                            break;
-                    }
-                }
-            }
-            return i;
-        }
-
-        public Rectangle ToRec
-        {
-            get { return new Rectangle((int)X, (int)Y, Width, Height); }
-        }
-
-        public Rectangle Top
-        {
-            get { return new Rectangle((int)X, (int)Y, Width, Height / 4); }
-        }
-
-        public Rectangle Bottom
-        {
-            get { return new Rectangle((int)X, (int)Y + this.Height / 2 + this.Height / 4, Width, Height); }
-        }
-
-        public Rectangle Left
-        {
-            get { return new Rectangle((int)X, (int)Y, Width / 4, Height); }
-        }
-
-        public Rectangle Right
-        {
-            get { return new Rectangle((int)X + Width / 2 + Width / 4, (int)Y, Width / 4, Height); }
-        }
-        /*
-        public void Draw(Spritebatch sb)
-        {
-            sb.Draw(this);
-        }
-        */
-    }
-    /*
-    static class SpriteHelper
-    {
-        public static bool isCollidingWith(this Sprite s1, Sprite s2)
-        {
-            if (s1.ToRec.IntersectsWith(s2.ToRec))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool isTouchingLeft(Sprite s1, Sprite s2)
-        {
-            if (s1.Right.IntersectsWith(s2.Left))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool isTouchingRight(Sprite s1, Sprite s2)
-        {
-            if (s1.Left.IntersectsWith(s2.Right))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool isTouchingTop(Sprite s1, Sprite s2)
-        {
-            if (s1.Bottom.IntersectsWith(s2.Top))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool isTouchingBottom(Sprite s1, Sprite s2)
-        {
-            if (s1.Top.IntersectsWith(s2.Bottom))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool isOnStage(Sprite s1, Rectangle clientRect)
-        {
-            if (s1.ToRec.IntersectsWith(clientRect))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }*/
 }
 
