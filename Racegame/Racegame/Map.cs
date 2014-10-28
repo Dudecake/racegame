@@ -8,6 +8,7 @@ namespace WindowsFormsApplication1
 {
     class Map
     {
+        /*
         private List<int[,]> Maps = new List<int[,]>();
         public double tileSqr;
         private int mapCounter;
@@ -88,6 +89,6 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
-        }
+        }*/
     }
 }

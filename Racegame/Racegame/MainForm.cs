@@ -17,6 +17,10 @@ namespace WindowsFormsApplication1
 
     public partial class MainForm : Form
     {
+
+        Point[] o = new Point[6];
+        Point[] p = new Point[6];
+        
         #region Variabelen
 
         Vehicle1 vehicle1 = new Vehicle1();
@@ -74,7 +78,32 @@ namespace WindowsFormsApplication1
             
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
-            //this.Paint += new PaintEventHandler(Form1_Paint);
+
+            o[0] = new Point(-157, 63);
+            o[1] = new Point(1, 123);
+            o[2] = new Point(162, 61);
+            o[3] = new Point(162, -60);
+            o[4] = new Point(6, -121);
+            o[5] = new Point(-155, -61);
+
+            p[0] = new Point(-118, 37);
+            p[1] = new Point(3, 77);
+            p[2] = new Point(123, 40);
+            p[3] = new Point(123, -41);
+            p[4] = new Point(2, -83);
+            p[5] = new Point(-120, -36);
+        /*
+        39, 196
+        525, 12
+        525, 12
+        1009, 196
+        1011, 202
+        1011, 571
+        1011, 571
+        523, 757
+        523, 575
+        39, 169
+        */
         }
 
         //intialize rendering
@@ -234,7 +263,7 @@ namespace WindowsFormsApplication1
 
             if (Downheld)
                 throttle = -0.35f;
-            
+
             if (ShiftHeld)
                 brakes = 12;
             else
@@ -381,7 +410,6 @@ namespace WindowsFormsApplication1
         {
             // While the application is still idle, run frame routine.
             DoFrame();
-            //CheckFps();
         }
 
         void Form1_CreateBackBuffer(object sender, EventArgs e)
@@ -407,8 +435,11 @@ namespace WindowsFormsApplication1
                 string l = k.X.ToString();
                 string m = k.Y.ToString();
                 Console.Write(h + " ");
-                Console.Write(i + " ");
+                //Console.Write(i + " ");
                 Console.WriteLine(l + " " + m);
+                Console.Write(o[0]);
+                string t = LineIntersectsRect(o[0], o[1], x1).ToString();
+                Console.WriteLine(t);
                 gameTimer.Reset();
                 gameTimer.Start();
             }
@@ -418,7 +449,18 @@ namespace WindowsFormsApplication1
             }
         }
         #endregion
-
+        /*
+        39, 196
+        525, 12
+        525, 12
+        1009, 196
+        1011, 202
+        1011, 571
+        1011, 571
+        523, 757
+        523, 575
+        39, 169
+        */
         #region Prutsterdepruts
         public static bool LineIntersectsRect(Point p1, Point p2, Rectangle r)
         {
@@ -1181,7 +1223,7 @@ namespace WindowsFormsApplication1
             }
         }
         #endregion
-
+        /*
         //private bool allowInput;
         //private int fps;
         //private int fpsCounter;
@@ -1194,7 +1236,9 @@ namespace WindowsFormsApplication1
         private List<Keys> keysPressed = new List<Keys>();
         private List<Keys> keysHeld = new List<Keys>();
         private InputManager iManager = new InputManager();
+        */
         private Stopwatch gameTimer = new Stopwatch();
+        /*
         private Spritebatch spriteBatch;
         //private Point mousePoint;
         private float deltaTime;
@@ -1431,7 +1475,7 @@ namespace WindowsFormsApplication1
         }
         */
     }
-
+    /*
     static class SpriteHelper
     {
         public static bool isCollidingWith(this Sprite s1, Sprite s2)
@@ -1503,6 +1547,6 @@ namespace WindowsFormsApplication1
                 return false;
             }
         }
-    }
+    }*/
 }
 

@@ -11,6 +11,7 @@ namespace WindowsFormsApplication1
 {
     public class InputManager
     {
+        /*
         public Point mousePoint;
         public Keys[] keysPressed;
         public Keys[] keysHeld;
@@ -26,5 +27,6 @@ namespace WindowsFormsApplication1
             gameTime = gt;
             deltaTime = dt / 1000;
         }
+        */
     }
 }
