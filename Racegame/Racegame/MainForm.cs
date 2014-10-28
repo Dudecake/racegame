@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1
         bool running = true;
 
         Point[] outerPerimeter = new Point[7];
+        Point[] outerPerimeter2 = new Point[50];
         Point[] innerPerimeterUpper = new Point[9];
         Point[] innerPerimeterLower = new Point[6];
         Point[] outerWall = new Point[5];
@@ -105,6 +106,51 @@ namespace WindowsFormsApplication1
             outerPerimeter[5] = new Point(-155, -61);
             outerPerimeter[6] = new Point(-157, 63);
 
+            outerPerimeter2[0] = new Point(-156, 128);
+            outerPerimeter2[1] = new Point(-171, 113);
+            outerPerimeter2[2] = new Point(-171, 98);
+            outerPerimeter2[3] = new Point(-136, 128);
+            outerPerimeter2[4] = new Point(-121, 128);
+            outerPerimeter2[5] = new Point(-171, 83);
+            outerPerimeter2[6] = new Point(-171, 68);
+            outerPerimeter2[7] = new Point(-100, 128);
+            outerPerimeter2[8] = new Point(-80, 128);
+            outerPerimeter2[9] = new Point(-171, 53);
+            outerPerimeter2[10] = new Point(-171, 43);
+            outerPerimeter2[11] = new Point(-55, 128);
+            outerPerimeter2[12] = new Point(-30, 128);
+            outerPerimeter2[13] = new Point(-171, 35);
+            outerPerimeter2[14] = new Point(-10, 128);
+
+            outerPerimeter2[15] = new Point(156, 128);
+            outerPerimeter2[16] = new Point(171, 113);
+            outerPerimeter2[17] = new Point(171, 98);
+            outerPerimeter2[18] = new Point(136, 128);
+            outerPerimeter2[19] = new Point(121, 128);
+            outerPerimeter2[20] = new Point(171, 83);
+            outerPerimeter2[21] = new Point(171, 68);
+            outerPerimeter2[22] = new Point(100, 128);
+            outerPerimeter2[23] = new Point(80, 128);
+            outerPerimeter2[24] = new Point(171, 60);
+            outerPerimeter2[25] = new Point(50, 128);
+            outerPerimeter2[26] = new Point(25, 128);
+            outerPerimeter2[27] = new Point(171, 60);
+
+            outerPerimeter2[28] = new Point(171, -113);
+            outerPerimeter2[29] = new Point(136, -128);
+            outerPerimeter2[30] = new Point(121, -128);
+            outerPerimeter2[31] = new Point(171, -98);
+            outerPerimeter2[32] = new Point(171, -83);
+            outerPerimeter2[33] = new Point(100, -128);
+            outerPerimeter2[34] = new Point(80, -128);
+            outerPerimeter2[35] = new Point(171, -75);
+            outerPerimeter2[36] = new Point(171, -65);
+            outerPerimeter2[37] = new Point(50, -128);
+            outerPerimeter2[38] = new Point(25, -128);
+
+            outerPerimeter2[39] = new Point(25, -128);
+            outerPerimeter2[40] = new Point(171, -60);
+
             innerPerimeterUpper[0] = new Point(-118, 37);
             innerPerimeterUpper[1] = new Point(3, 77);
             innerPerimeterUpper[2] = new Point(123, 40);
@@ -128,7 +174,6 @@ namespace WindowsFormsApplication1
             outerWall[3] = new Point(171, -128);
             outerWall[4] = new Point(-171, -128);
 
-            //Rectangle outerWall1 = new Rectangle(-171, -128, 341, 256);
             #endregion
         }
 
@@ -261,9 +306,8 @@ namespace WindowsFormsApplication1
             {
                 ConstrainVehicle();
                 ConstrainVehicle2();
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
-
         }
 
         //keep the vehicle on the screen
@@ -313,7 +357,7 @@ namespace WindowsFormsApplication1
                     brakes = 12;
                 else
                     brakes = 0.4f;
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
         }
 
@@ -392,7 +436,7 @@ namespace WindowsFormsApplication1
                     brakes2 = 12;
                 else
                     brakes2 = 0.4f;
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
         }
 
@@ -523,9 +567,18 @@ namespace WindowsFormsApplication1
 
         private void CheckCollision()
         {
+            /*
             for (int i = 0; i < outerPerimeter.Length - 1; i++)
             {
                 if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x2))
+                {
+                    brakes = 4;
+                }
+            }
+            */
+            for (int i = 0; i < 39 /*outerPerimeter2.Length*/ - 1; i++)
+            {
+                if (LineIntersectsRect(outerPerimeter2[i], outerPerimeter2[i + 1], x2))
                 {
                     brakes = 4;
                 }
