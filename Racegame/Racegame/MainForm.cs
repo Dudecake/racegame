@@ -19,7 +19,8 @@ namespace WindowsFormsApplication1
     {
 
         Point[] o = new Point[6];
-        Point[] p = new Point[6];
+        Point[] p = new Point[8];
+        Point[] q = new Point[5];
         
         #region Variabelen
 
@@ -90,8 +91,16 @@ namespace WindowsFormsApplication1
             p[1] = new Point(3, 77);
             p[2] = new Point(123, 40);
             p[3] = new Point(123, -41);
-            p[4] = new Point(2, -83);
-            p[5] = new Point(-120, -36);
+            p[4] = new Point(108, -44);
+            p[5] = new Point(34, 16);
+            p[6] = new Point(-53, -18);
+            p[7] = new Point(-120, -36);
+
+            q[0] = new Point(2, -83);
+            q[1] = new Point(-95, -47);
+            q[2] = new Point(-53, -34);
+            q[3] = new Point(32, -34);
+            q[4] = new Point(82, -53);
         /*
         39, 196
         525, 12
