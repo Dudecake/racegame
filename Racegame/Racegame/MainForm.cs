@@ -223,7 +223,11 @@ namespace WindowsFormsApplication1
             vehicle2.SetSteering(steering2);
             vehicle2.SetThrottle(throttle2, true); //menu.Checked
             vehicle2.SetBrakes(brakes2);
-
+            Pen b = new Pen(Color.White);
+            for (int i = 0; i < outerPerimeter.Length - 2; i++)
+            {
+                graphics.DrawLine(b, outerPerimeter[i], outerPerimeter[i++]);
+            }
             //integrate vehicle physics
             vehicle1.Update(etime);
             vehicle2.Update(etime);
@@ -493,7 +497,7 @@ namespace WindowsFormsApplication1
         {
             for (int i = 0; i < outerPerimeter.Length - 2; i++)
             {
-                if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x1))
+                if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x2))
                 {
                     brakes = 4;
                 }
@@ -512,7 +516,7 @@ namespace WindowsFormsApplication1
             }
             if (x2.IntersectsWith(r))
             {
-                vehicle1.SetVelocity(-0.75f);
+                vehicle1.SetVelocity(-0.5f);
             }
         }
 
