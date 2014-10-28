@@ -19,10 +19,13 @@ namespace WindowsFormsApplication1
     {
         #region Variabelen
 
+        bool running = true;
+
         Point[] outerPerimeter = new Point[7];
         Point[] innerPerimeterUpper = new Point[9];
         Point[] innerPerimeterLower = new Point[6];
-        Rectangle r = new Rectangle(-53, -18, 90, 35);
+        Point[] outerWall = new Point[5];
+        Rectangle garage = new Rectangle(-47, -18, 85, 35);
 
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
@@ -55,6 +58,7 @@ namespace WindowsFormsApplication1
         float brakes2 = 0; //0 is no brakes, 1 is full brakes
 
         Bitmap Backbuffer;
+        Bitmap m_map = new Bitmap(Properties.Resources.design_1, 342, 257);
 
         Vector y1;
         Rectangle x1;
@@ -76,6 +80,14 @@ namespace WindowsFormsApplication1
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
             Init(screen.Size);
 
+            Thread input = new Thread(new ThreadStart(ProcessInput));
+            Thread input2 = new Thread(new ThreadStart(ProcessInput2));
+            Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
+
+            input.Start();
+            input2.Start();
+            constrain.Start();
+
             this.SetStyle(
             ControlStyles.UserPaint |
             ControlStyles.AllPaintingInWmPaint |
@@ -84,7 +96,7 @@ namespace WindowsFormsApplication1
             this.ResizeEnd += new EventHandler(Form1_CreateBackBuffer);
             this.Load += new EventHandler(Form1_CreateBackBuffer);
 
-            #region Gras
+            #region Lijnen
             outerPerimeter[0] = new Point(-157, 63);
             outerPerimeter[1] = new Point(1, 123);
             outerPerimeter[2] = new Point(162, 61);
@@ -109,6 +121,14 @@ namespace WindowsFormsApplication1
             innerPerimeterLower[3] = new Point(32, -34);
             innerPerimeterLower[4] = new Point(82, -53);
             innerPerimeterLower[5] = new Point(2, -83);
+
+            outerWall[0] = new Point(-171, -128);
+            outerWall[1] = new Point(-171, 128);
+            outerWall[2] = new Point(171, 128);
+            outerWall[3] = new Point(171, -128);
+            outerWall[4] = new Point(-171, -128);
+
+            //Rectangle outerWall1 = new Rectangle(-171, -128, 341, 256);
             #endregion
         }
 
@@ -172,7 +192,6 @@ namespace WindowsFormsApplication1
         //main rendering function
         private void Render(Graphics g)
         {
-            Bitmap m_map = new Bitmap(Properties.Resources.design_1, 341, 256);
             //clear back buffer
             graphics.Clear(Color.Black);
             graphics.DrawImage(m_map, -171, -128);
@@ -192,6 +211,7 @@ namespace WindowsFormsApplication1
         {
             vehicle1.Draw(graphics, buffersize);
             vehicle2.Draw(graphics, buffersize);
+            Thread.Sleep(1);
         }
 
         //process game logic
@@ -201,36 +221,31 @@ namespace WindowsFormsApplication1
             float etime = timer.GetETime();
 
             //process input
-            ProcessInput();
-            ProcessInput2();
+            //ProcessInput();
+            //ProcessInput2();
 
             y1 = vehicle2.GetPosition();
             x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
             y2 = vehicle1.GetPosition();
             x2 = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
-            //x1.IntersectsWith(x2);
 
             CheckCollision();
 
             //apply vehicle controls
             vehicle1.SetSteering(steering);
-            vehicle1.SetThrottle(throttle, true); //menu.Checked
+            vehicle1.SetThrottle(throttle); //menu.Checked
             vehicle1.SetBrakes(brakes);
             vehicle2.SetSteering(steering2);
-            vehicle2.SetThrottle(throttle2, true); //menu.Checked
+            vehicle2.SetThrottle(throttle2); //menu.Checked
             vehicle2.SetBrakes(brakes2);
-            Pen b = new Pen(Color.White);
-            for (int i = 0; i < outerPerimeter.Length - 2; i++)
-            {
-                graphics.DrawLine(b, outerPerimeter[i], outerPerimeter[i++]);
-            }
+
             //integrate vehicle physics
             vehicle1.Update(etime);
             vehicle2.Update(etime);
 
             //keep the vehicle on the screen
-            ConstrainVehicle();
-            ConstrainVehicle2();
+            //ConstrainVehicle();
+            //ConstrainVehicle2();
 
             CheckFps();
 
@@ -238,6 +253,17 @@ namespace WindowsFormsApplication1
             screen.Invalidate();
 
             this.Text = String.Format("{0}FPS", fps);
+        }
+
+        private void ConstrainVehicles()
+        {
+            while(running)
+            {
+                ConstrainVehicle();
+                ConstrainVehicle2();
+                Thread.Sleep(1);
+            }
+
         }
 
         //keep the vehicle on the screen
@@ -266,26 +292,29 @@ namespace WindowsFormsApplication1
         #region Input
         private void ProcessInput2()
         {
-            //float i = sprite.Collider();
-            if (Leftheld)
-                steering = -1;
-            else if (Rightheld)
-                steering = 1;
-            else
-                steering = 0;
+            while(running)
+            {
+                if (Leftheld)
+                    steering = -1;
+                else if (Rightheld)
+                    steering = 1;
+                else
+                    steering = 0;
 
-            if (Upheld)
-                throttle = 1;// * i;
-            else
-                throttle = 0;
+                if (Upheld)
+                    throttle = 1;// * i;
+                else
+                    throttle = 0;
 
-            if (Downheld)
-                throttle = -0.35f;
+                if (Downheld)
+                    throttle = -0.35f;
 
-            if (ShiftHeld)
-                brakes = 12;
-            else
-                brakes = 0.4f;
+                if (ShiftHeld)
+                    brakes = 12;
+                else
+                    brakes = 0.4f;
+                Thread.Sleep(1);
+            }
         }
 
         private void onKeyDown2(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -342,26 +371,29 @@ namespace WindowsFormsApplication1
         //process keyboard input
         private void ProcessInput()
         {
-            //float i = sprite.Collider();
-            if (AHeld)
-                steering2 = -1;
-            else if (DHeld)
-                steering2 = 1;
-            else
-                steering2 = 0;
+            while(running)
+            {
+                if (AHeld)
+                    steering2 = -1;
+                else if (DHeld)
+                    steering2 = 1;
+                else
+                    steering2 = 0;
 
-            if (WHeld)
-                throttle2 = 1;// * i;
-            else
-                throttle2 = 0;
+                if (WHeld)
+                    throttle2 = 1;// * i;
+                else
+                    throttle2 = 0;
 
-            if (SHeld)
-                throttle2 = -0.35f;
+                if (SHeld)
+                    throttle2 = -0.35f;
 
-            if (EHeld)
-                brakes2 = 12;
-            else
-                brakes2 = 0.4f;
+                if (EHeld)
+                    brakes2 = 12;
+                else
+                    brakes2 = 0.4f;
+                Thread.Sleep(1);
+            }
         }
 
         private void onKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -491,32 +523,39 @@ namespace WindowsFormsApplication1
 
         private void CheckCollision()
         {
-            for (int i = 0; i < outerPerimeter.Length - 2; i++)
+            for (int i = 0; i < outerPerimeter.Length - 1; i++)
             {
                 if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x2))
                 {
                     brakes = 4;
                 }
             }
-            for (int i = 0; i < innerPerimeterUpper.Length - 2; i++)
+            for (int i = 0; i < innerPerimeterUpper.Length - 1; i++)
             {
                 if (LineIntersectsRect(innerPerimeterUpper[i], innerPerimeterUpper[i + 1], x2))
                 {
                     brakes = 4;
                 }
             }
-            for (int i = 0; i < innerPerimeterLower.Length - 2; i++)
+            for (int i = 0; i < innerPerimeterLower.Length - 1; i++)
             {
                 if (LineIntersectsRect(innerPerimeterLower[i], innerPerimeterLower[i + 1], x2))
                 {
                     brakes = 4;
                 }
             }
+            for (int i = 0; i < outerWall.Length - 1; i++)
+            {
+                if (LineIntersectsRect(outerWall[i], outerWall[i + 1], x2))
+                {
+                    vehicle1.SetVelocity(-0.5f);
+                }
+            }
             if (x2.IntersectsWith(x1))
             {
                 vehicle1.SetVelocity(-0.5f);
             }
-            if (x2.IntersectsWith(r))
+            if (x2.IntersectsWith(garage))
             {
                 vehicle1.SetVelocity(-0.5f);
             }
@@ -524,11 +563,18 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            running = false;
+        }
+
+
         //our vehicle object
-        public class Vehicle1 : RigidBody1
+        class Vehicle1 : RigidBody1
         {
             private class Wheel
             {
+                #region Setup
                 private Vector m_forwardAxis, m_sideAxis;
                 private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
                 private Vector m_Position = new Vector();
@@ -541,7 +587,9 @@ namespace WindowsFormsApplication1
                     m_wheelRadius = radius;
                     m_wheelInertia = radius * radius; //fake value
                 }
+                #endregion
 
+                #region Update
                 public void SetSteeringAngle(float newAngle)
                 {
                     Matrix mat = new Matrix();
@@ -606,7 +654,9 @@ namespace WindowsFormsApplication1
                     //return force acting on body
                     return responseForce;
                 }
+                #endregion
             }
+            #region Setup
             private Wheel[] wheels = new Wheel[4];
 
             new public void Setup(Vector halfSize, float mass, Bitmap color)
@@ -621,7 +671,9 @@ namespace WindowsFormsApplication1
 
                 base.Setup(halfSize, mass, color);
             }
+            #endregion
 
+            #region Update
             public void SetSteering(float steering)
             {
                 const float steeringLock = 0.4f;
@@ -631,17 +683,13 @@ namespace WindowsFormsApplication1
                 wheels[1].SetSteeringAngle(-steering * steeringLock);
             }
 
-            public void SetThrottle(float throttle, bool allWheel)
+            public void SetThrottle(float throttle)
             {
                 const float torque = 60.0f;
 
                 //apply transmission torque to back wheels
-                if (allWheel)
-                {
-                    wheels[0].AddTransmissionTorque(throttle * torque / 2);
-                    wheels[1].AddTransmissionTorque(throttle * torque / 2);
-                }
-
+                wheels[0].AddTransmissionTorque(throttle * torque / 2);
+                wheels[1].AddTransmissionTorque(throttle * torque / 2);
                 wheels[2].AddTransmissionTorque(throttle * torque);
                 wheels[3].AddTransmissionTorque(throttle * torque);
             }
@@ -675,10 +723,11 @@ namespace WindowsFormsApplication1
 
                 base.Update(timeStep);
             }
+            #endregion
         }
 
         //our simulation object
-        public class RigidBody1
+        class RigidBody1
         {
             #region Setup
             //linear properties
@@ -838,10 +887,11 @@ namespace WindowsFormsApplication1
 
 
 
-        public class Vehicle2 : RigidBody2
+        class Vehicle2 : RigidBody2
         {
             private class Wheel
             {
+                #region Setup
                 private Vector m_forwardAxis, m_sideAxis;
                 private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
                 private Vector m_Position = new Vector();
@@ -854,7 +904,9 @@ namespace WindowsFormsApplication1
                     m_wheelRadius = radius;
                     m_wheelInertia = radius * radius; //fake value
                 }
+                #endregion
 
+                #region Update
                 public void SetSteeringAngle(float newAngle)
                 {
                     Matrix mat = new Matrix();
@@ -919,7 +971,9 @@ namespace WindowsFormsApplication1
                     //return force acting on body
                     return responseForce;
                 }
+                #endregion
             }
+            #region Update
             private Wheel[] wheels = new Wheel[4];
 
             new public void Setup(Vector halfSize, float mass, Bitmap color)
@@ -934,7 +988,9 @@ namespace WindowsFormsApplication1
 
                 base.Setup(halfSize, mass, color);
             }
+            #endregion
 
+            #region Update
             public void SetSteering(float steering)
             {
                 const float steeringLock = 0.4f;
@@ -944,17 +1000,13 @@ namespace WindowsFormsApplication1
                 wheels[1].SetSteeringAngle(-steering * steeringLock);
             }
 
-            public void SetThrottle(float throttle, bool allWheel)
+            public void SetThrottle(float throttle)
             {
                 const float torque = 60.0f;
 
                 //apply transmission torque to back wheels
-                if (allWheel)
-                {
-                    wheels[0].AddTransmissionTorque(throttle * torque / 2);
-                    wheels[1].AddTransmissionTorque(throttle * torque / 2);
-                }
-
+                wheels[0].AddTransmissionTorque(throttle * torque / 2);
+                wheels[1].AddTransmissionTorque(throttle * torque / 2);
                 wheels[2].AddTransmissionTorque(throttle * torque);
                 wheels[3].AddTransmissionTorque(throttle * torque);
             }
@@ -988,10 +1040,11 @@ namespace WindowsFormsApplication1
 
                 base.Update(timeStep);
             }
+            #endregion
         }
 
         //our simulation object
-        public class RigidBody2
+        class RigidBody2
         {
             #region Setup
             //linear properties
@@ -1040,10 +1093,6 @@ namespace WindowsFormsApplication1
             {
                 return rect;
             }
-            public float GetAngle()
-            {
-                return m_angle / (float)Math.PI * 180.0f;
-            }
 
             public void SetLocation(Vector position, float angle)
             {
@@ -1054,6 +1103,11 @@ namespace WindowsFormsApplication1
             public Vector GetPosition()
             {
                 return m_position;
+            }
+
+            public void SetVelocity(float i)
+            {
+                m_velocity *= i;
             }
 
             #region Update
@@ -1149,7 +1203,7 @@ namespace WindowsFormsApplication1
         }
         #region Vector and Timer
         //mini 2d vector :)
-        public class Vector
+        class Vector
         {
             public float X, Y;
 
@@ -1254,4 +1308,3 @@ namespace WindowsFormsApplication1
         #endregion
     }
 }
-
