@@ -19,9 +19,9 @@ namespace WindowsFormsApplication1
     {
         #region Variabelen
 
-        Point[] outerPerimeter = new Point[6];
-        Point[] innerPerimeterUpper = new Point[8];
-        Point[] innerPerimeterLower = new Point[5];
+        Point[] outerPerimeter = new Point[7];
+        Point[] innerPerimeterUpper = new Point[9];
+        Point[] innerPerimeterLower = new Point[6];
         Rectangle r = new Rectangle(-53, -18, 90, 35);
 
         Vehicle1 vehicle1 = new Vehicle1();
@@ -94,6 +94,7 @@ namespace WindowsFormsApplication1
             outerPerimeter[3] = new Point(162, -60);
             outerPerimeter[4] = new Point(6, -121);
             outerPerimeter[5] = new Point(-155, -61);
+            outerPerimeter[6] = new Point(-157, 63);
 
             innerPerimeterUpper[0] = new Point(-118, 37);
             innerPerimeterUpper[1] = new Point(3, 77);
@@ -103,12 +104,14 @@ namespace WindowsFormsApplication1
             innerPerimeterUpper[5] = new Point(34, 16);
             innerPerimeterUpper[6] = new Point(-53, -18);
             innerPerimeterUpper[7] = new Point(-120, -36);
+            innerPerimeterUpper[8] = new Point(-118, 37);
 
             innerPerimeterLower[0] = new Point(2, -83);
             innerPerimeterLower[1] = new Point(-95, -47);
             innerPerimeterLower[2] = new Point(-53, -34);
             innerPerimeterLower[3] = new Point(32, -34);
             innerPerimeterLower[4] = new Point(82, -53);
+            innerPerimeterLower[5] = new Point(2, -83);
             #endregion
         }
 
@@ -495,9 +498,21 @@ namespace WindowsFormsApplication1
                     brakes = 4;
                 }
             }
-            if (x1.IntersectsWith(x2))
+            for (int i = 0; i < innerPerimeterUpper.Length - 2; i++)
+            {
+                Console.Write("i");
+                if (LineIntersectsRect(innerPerimeterUpper[i], innerPerimeterUpper[i + 1], x2))
+                {
+                    brakes = 4;
+                }
+            }
+            if (x2.IntersectsWith(x1))
             {
                 vehicle1.SetVelocity(-0.5f);
+            }
+            if (x2.IntersectsWith(r))
+            {
+                vehicle1.SetVelocity(-0.75f);
             }
         }
 
