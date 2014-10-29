@@ -58,6 +58,7 @@ namespace WindowsFormsApplication1
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
 
+
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
@@ -381,10 +382,8 @@ namespace WindowsFormsApplication1
             
             progressBar1.Value = Convert.ToInt32(P);
             progressBar2.Value = Convert.ToInt32(Q);
-            label1.Text = vehicle1.GetVelocity().ToString();
-            Vector lepra = vehicle1.GetVelocity1();
-
-            label2.Text = String.Format("{0} {1}", lepra.X, lepra.Y);
+            label1.Text = Math.Abs(vehicle1.GetWheelVelocity()).ToString();
+            label2.Text = Math.Abs(vehicle2.GetWheelVelocity()).ToString();
         }
 
         private void ConstrainVehicles()
@@ -1071,6 +1070,17 @@ namespace WindowsFormsApplication1
                 }
             }
 
+            public float GetWheelVelocity()
+            {
+                float i = 0;
+                foreach (Wheel wheel in wheels)
+                {
+                    i += wheel.GetWheelSpeed();
+                }
+                i /= 4;
+                return i;
+            }
+
             new public void Update(float timeStep)
             {
                 foreach (Wheel wheel in wheels)
@@ -1163,10 +1173,6 @@ namespace WindowsFormsApplication1
                 return m_angularVelocity;
             }
 
-            public Vector GetVelocity1()
-            {
-                return m_velocity;
-            }
 
             public void UpdateFuel(float timestep, float throttle, out double fuel)
             {
@@ -1405,6 +1411,17 @@ namespace WindowsFormsApplication1
                     float wheelVel = wheel.GetWheelSpeed();
                     wheel.AddTransmissionTorque(-wheelVel * brakeTorque * brakes);
                 }
+            }
+
+            public float GetWheelVelocity()
+            {
+                float i = 0;
+                foreach (Wheel wheel in wheels)
+                {
+                    i += wheel.GetWheelSpeed();
+                }
+                i /= 4;
+                return i;
             }
 
             new public void Update(float timeStep)
