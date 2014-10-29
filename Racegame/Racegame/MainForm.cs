@@ -812,6 +812,7 @@ namespace WindowsFormsApplication1
                 if (x2.IntersectsWith(pitsStop))
                 {
                     vehicle1.SetFuel();
+                    mod1 = 1;
                 }
                 Thread.Sleep(100);
             }
@@ -860,6 +861,7 @@ namespace WindowsFormsApplication1
                 if (x1.IntersectsWith(pitsStop))
                 {
                     vehicle2.SetFuel();
+                    mod2 = 1;
                 }
                 Thread.Sleep(100);
             }
