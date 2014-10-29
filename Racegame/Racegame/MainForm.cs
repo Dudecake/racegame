@@ -14,7 +14,6 @@ using System.Windows.Input;
 
 namespace WindowsFormsApplication1
 {
-
     public partial class MainForm : Form
     {
         #region Variabelen
@@ -59,9 +58,10 @@ namespace WindowsFormsApplication1
         Rectangle garage = new Rectangle(-50, -12, 85, 30);
         Rectangle pitsStop = new Rectangle(0, -35, 5, 5);
 
-        Vehicle1 vehicle1 = new Vehicle1();
-        Vehicle2 vehicle2 = new Vehicle2();
+        Vehicle vehicle1 = new Vehicle();
+        Vehicle vehicle2 = new Vehicle();
 
+        Autos auto = new Autos();
 
         //graphics
         Graphics graphics; //gdi+
@@ -262,7 +262,7 @@ namespace WindowsFormsApplication1
             gameTime.Start();
             raceTime.Start();
             timer.GetETime(); //reset timer
-            Bitmap[] autos = new Bitmap[2];
+            Bitmap[] autos = auto.GetAutos();
             #region Vehicle selection
             for (byte i = 0; i < 2; i++)
             {
@@ -756,7 +756,7 @@ namespace WindowsFormsApplication1
                     vehicle2.SetVelocity(-0.5f);
                 }
             }
-            if (x2.IntersectsWith(x1))
+            if (x1.IntersectsWith(x2))
             {
                 vehicle2.SetVelocity(-0.5f);
             }
@@ -948,7 +948,7 @@ namespace WindowsFormsApplication1
         #endregion
 
         //our vehicle object
-        class Vehicle1 : RigidBody1
+        class Vehicle : RigidBody
         {
             private class Wheel
             {
@@ -1116,7 +1116,7 @@ namespace WindowsFormsApplication1
         }
 
         //our simulation object
-        class RigidBody1
+        class RigidBody
         {
             #region Setup
             //linear properties
@@ -1138,7 +1138,7 @@ namespace WindowsFormsApplication1
             private Bitmap m_bitmap;// = new Bitmap(Properties.Resources.Z_Type_GTA2);
             private double m_fuel; 
 
-            public RigidBody1()
+            public RigidBody()
             {
                 //set these defaults so we dont get divide by zeros
                 m_mass = 1.0f;
@@ -1184,344 +1184,6 @@ namespace WindowsFormsApplication1
                 return m_angularVelocity;
             }
 
-
-            public void UpdateFuel(float timestep, float throttle, out double fuel)
-            {
-                m_fuel -= 3 * timestep * Math.Abs(throttle);
-                fuel = m_fuel;
-            }
-
-            public void SetFuel()
-            {
-                m_fuel = 100;
-            }
-
-            #region Update
-            public void Update(float timeStep)
-            {
-                //integrate physics
-                //linear
-                Vector acceleration = m_forces / m_mass;
-                m_velocity += acceleration * timeStep;
-                m_position += m_velocity * timeStep;
-                m_forces = new Vector(0, 0); //clear forces
-
-                //angular
-                float angAcc = m_torque / m_inertia;
-                m_angularVelocity += angAcc * timeStep;
-                m_angle += m_angularVelocity * timeStep;
-                m_torque = 0; //clear torque
-            }
-
-            public void Draw(Graphics graphics, Size buffersize)
-            {
-                //store transform, (like opengl's glPushMatrix())
-                Matrix mat1 = graphics.Transform;
-
-                //transform into position
-                graphics.TranslateTransform(m_position.X, m_position.Y);
-                graphics.RotateTransform(m_angle / (float)Math.PI * 180.0f);
-
-                try
-                {
-                    //draw body
-                    //graphics.DrawRectangle(new Pen(m_color), rect);
-                    graphics.DrawImage(m_bitmap, rect);
-                    //draw line in the "forward direction"
-                    //graphics.DrawLine(new Pen(Color.Yellow), 1, 0, 1, 5);
-                }
-                catch (OverflowException exc)
-                {
-                    //physics overflow :(
-                }
-
-                //restore transform
-                graphics.Transform = mat1;
-            }
-            #endregion
-
-            #region Forces
-            //take a relative vector and make it a world vector
-            public Vector RelativeToWorld(Vector relative)
-            {
-                Matrix mat = new Matrix();
-                PointF[] vectors = new PointF[1];
-
-                vectors[0].X = relative.X;
-                vectors[0].Y = relative.Y;
-
-                mat.Rotate(m_angle / (float)Math.PI * 180.0f);
-                mat.TransformVectors(vectors);
-
-                return new Vector(vectors[0].X, vectors[0].Y);
-            }
-
-            //take a world vector and make it a relative vector
-            public Vector WorldToRelative(Vector world)
-            {
-                Matrix mat = new Matrix();
-                PointF[] vectors = new PointF[1];
-
-                vectors[0].X = world.X;
-                vectors[0].Y = world.Y;
-
-                mat.Rotate(-m_angle / (float)Math.PI * 180.0f);
-                mat.TransformVectors(vectors);
-
-                return new Vector(vectors[0].X, vectors[0].Y);
-            }
-
-            //velocity of a point on body
-            public Vector PointVel(Vector worldOffset)
-            {
-                Vector tangent = new Vector(-worldOffset.Y, worldOffset.X);
-                return tangent * m_angularVelocity + m_velocity;
-            }
-
-            public void AddForce(Vector worldForce, Vector worldOffset)
-            {
-                //add linar force
-                m_forces += worldForce;
-                //and it's associated torque
-                m_torque += worldOffset % worldForce;
-            }
-            #endregion
-        }
-        class Vehicle2 : RigidBody2
-        {
-            private class Wheel
-            {
-                #region Setup
-                private Vector m_forwardAxis, m_sideAxis;
-                private float m_wheelTorque, m_wheelSpeed, m_wheelInertia, m_wheelRadius;
-                private Vector m_Position = new Vector();
-
-                public Wheel(Vector position, float radius)
-                {
-                    m_Position = position;
-                    SetSteeringAngle(0);
-                    m_wheelSpeed = 0;
-                    m_wheelRadius = radius;
-                    m_wheelInertia = radius * radius; //fake value
-                }
-                #endregion
-
-                #region Update
-                public void SetSteeringAngle(float newAngle)
-                {
-                    Matrix mat = new Matrix();
-                    PointF[] vectors = new PointF[2];
-
-                    //foward vector
-                    vectors[0].X = 0;
-                    vectors[0].Y = 1;
-                    //side vector
-                    vectors[1].X = -1;
-                    vectors[1].Y = 0;
-
-                    mat.Rotate(newAngle / (float)Math.PI * 180.0f);
-                    mat.TransformVectors(vectors);
-
-                    m_forwardAxis = new Vector(vectors[0].X, vectors[0].Y);
-                    m_sideAxis = new Vector(vectors[1].X, vectors[1].Y);
-                }
-
-                public void AddTransmissionTorque(float newValue)
-                {
-                    m_wheelTorque += newValue;
-                }
-
-                public float GetWheelSpeed()
-                {
-                    return m_wheelSpeed;
-                }
-
-                public Vector GetAttachPoint()
-                {
-                    return m_Position;
-                }
-
-                public Vector CalculateForce(Vector relativeGroundSpeed, float timeStep)
-                {
-                    //calculate speed of tire patch at ground
-                    Vector patchSpeed = -m_forwardAxis * m_wheelSpeed * m_wheelRadius;
-
-                    //get velocity difference between ground and patch
-                    Vector velDifference = relativeGroundSpeed + patchSpeed;
-
-                    //project ground speed onto side axis
-                    float forwardMag = 0;
-                    Vector sideVel = velDifference.Project(m_sideAxis);
-                    Vector forwardVel = velDifference.Project(m_forwardAxis, out forwardMag);
-
-                    //calculate super fake friction forces
-                    //calculate response force
-                    Vector responseForce = -sideVel * 3.0f;
-                    responseForce -= forwardVel;
-
-                    //calculate torque on wheel
-                    m_wheelTorque += forwardMag * m_wheelRadius;
-
-                    //integrate total torque into wheel
-                    m_wheelSpeed += m_wheelTorque / m_wheelInertia * timeStep;
-
-                    //clear our transmission torque accumulator
-                    m_wheelTorque = 0;
-
-                    //return force acting on body
-                    return responseForce;
-                }
-                #endregion
-            }
-            #region Update
-            private Wheel[] wheels = new Wheel[4];
-
-            new public void Setup(Vector halfSize, float mass, Bitmap color)
-            {
-                //front wheels
-                wheels[0] = new Wheel(new Vector(halfSize.X, halfSize.Y), 0.5f);
-                wheels[1] = new Wheel(new Vector(-halfSize.X, halfSize.Y), 0.5f);
-
-                //rear wheels
-                wheels[2] = new Wheel(new Vector(halfSize.X, -halfSize.Y), 0.5f);
-                wheels[3] = new Wheel(new Vector(-halfSize.X, -halfSize.Y), 0.5f);
-
-                base.Setup(halfSize, mass, color);
-            }
-            #endregion
-
-            #region Update
-            public void SetSteering(float steering)
-            {
-                const float steeringLock = 0.4f;
-
-                //apply steering angle to front wheels
-                wheels[0].SetSteeringAngle(-steering * steeringLock);
-                wheels[1].SetSteeringAngle(-steering * steeringLock);
-            }
-
-            public void SetThrottle(float throttle)
-            {
-                const float torque = 75.0f;
-
-                //apply transmission torque to back wheels
-                wheels[0].AddTransmissionTorque(throttle * torque / 2);
-                wheels[1].AddTransmissionTorque(throttle * torque / 2);
-                wheels[2].AddTransmissionTorque(throttle * torque);
-                wheels[3].AddTransmissionTorque(throttle * torque);
-            }
-
-            public void SetBrakes(float brakes)
-            {
-                const float brakeTorque = 0.7f;
-
-
-                //apply brake torque apposing wheel vel
-                foreach (Wheel wheel in wheels)
-                {
-                    float wheelVel = wheel.GetWheelSpeed();
-                    wheel.AddTransmissionTorque(-wheelVel * brakeTorque * brakes);
-                }
-            }
-
-            public float GetWheelVelocity()
-            {
-                float i = 0;
-                foreach (Wheel wheel in wheels)
-                {
-                    i += wheel.GetWheelSpeed();
-                }
-                i /= 4;
-                return i;
-            }
-
-            new public void Update(float timeStep)
-            {
-                foreach (Wheel wheel in wheels)
-                {
-                    //wheel.m_wheelSpeed = 30.0f;
-                    Vector worldWheelOffset = base.RelativeToWorld(wheel.GetAttachPoint());
-                    Vector worldGroundVel = base.PointVel(worldWheelOffset);
-                    Vector relativeGroundSpeed = base.WorldToRelative(worldGroundVel);
-                    Vector relativeResponseForce = wheel.CalculateForce(relativeGroundSpeed, timeStep);
-                    Vector worldResponseForce = base.RelativeToWorld(relativeResponseForce);
-
-                    base.AddForce(worldResponseForce, worldWheelOffset);
-                }
-
-                base.Update(timeStep);
-            }
-            #endregion
-        }
-
-        //our simulation object
-        class RigidBody2
-        {
-            #region Setup
-            //linear properties
-            private Vector m_position = new Vector();
-            private Vector m_velocity = new Vector();
-            private Vector m_forces = new Vector();
-            private float m_mass;
-
-            //angular properties
-            private float m_angle;
-            private float m_angularVelocity;
-            private float m_torque;
-            private float m_inertia;
-            private double m_fuel;
-
-            //graphical properties
-            private Vector m_halfSize = new Vector();
-            Rectangle rect = new Rectangle();
-            //private Color m_color;
-            private Bitmap m_bitmap;// = new Bitmap(Properties.Resources.Z_Type_GTA2);
-
-            public RigidBody2()
-            {
-                //set these defaults so we dont get divide by zeros
-                m_mass = 1.0f;
-                m_inertia = 1.0f;
-                m_fuel = 100;
-            }
-
-            //intialize out parameters
-            public void Setup(Vector halfSize, float mass, Bitmap color)
-            {
-                //store physical parameters
-                m_halfSize = halfSize;
-                m_mass = mass;
-                m_bitmap = color;
-                m_inertia = (1.0f / 12.0f) * (halfSize.X * halfSize.X) * (halfSize.Y * halfSize.Y) * mass;
-
-                //generate our viewable rectangle
-                rect.X = (int)-m_halfSize.X;
-                rect.Y = (int)-m_halfSize.Y;
-                rect.Width = (int)(m_halfSize.X * 2.0f);
-                rect.Height = (int)(m_halfSize.Y * 2.0f);
-            }
-            #endregion
-
-            public void SetLocation(Vector position, float angle)
-            {
-                m_position = position;
-                m_angle = angle;
-            }
-
-            public Vector GetPosition()
-            {
-                return m_position;
-            }
-
-            public void SetVelocity(float i)
-            {
-                m_velocity *= i;
-            }
-
-            public float GetVelocity()
-            {
-                return m_angularVelocity;
-            }
 
             public void UpdateFuel(float timestep, float throttle, out double fuel)
             {
