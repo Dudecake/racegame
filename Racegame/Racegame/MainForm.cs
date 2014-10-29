@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
         Point[] innerPerimeterUpper = new Point[13];
         Point[] innerPerimeterLower = new Point[11];
         Point[] outerWall = new Point[5];
-        Rectangle garage = new Rectangle(-30, -18, 85, 35);
+        Rectangle garage = new Rectangle(-50, -12, 85, 30);
         Rectangle pitsStop = new Rectangle(0, -35, 5, 5);
 
         Vehicle1 vehicle1 = new Vehicle1();
