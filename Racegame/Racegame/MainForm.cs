@@ -23,8 +23,8 @@ namespace WindowsFormsApplication1
 
         Point[] outerPerimeter = new Point[7];
         Point[] outerPerimeter2 = new Point[48];
-        Point[] innerPerimeterUpper = new Point[9];
-        Point[] innerPerimeterLower = new Point[6];
+        Point[] innerPerimeterUpper = new Point[13];
+        Point[] innerPerimeterLower = new Point[11];
         Point[] outerWall = new Point[5];
         Rectangle garage = new Rectangle(-47, -18, 85, 35);
 
@@ -84,10 +84,12 @@ namespace WindowsFormsApplication1
             Thread input = new Thread(new ThreadStart(ProcessInput));
             Thread input2 = new Thread(new ThreadStart(ProcessInput2));
             Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
+            Thread collide = new Thread(new ThreadStart(Collision));
 
             input.Start();
             input2.Start();
             constrain.Start();
+            collide.Start();
 
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -162,11 +164,15 @@ namespace WindowsFormsApplication1
             innerPerimeterUpper[1] = new Point(3, 77);
             innerPerimeterUpper[2] = new Point(123, 40);
             innerPerimeterUpper[3] = new Point(123, -41);
-            innerPerimeterUpper[4] = new Point(108, -44);
-            innerPerimeterUpper[5] = new Point(34, 16);
-            innerPerimeterUpper[6] = new Point(-53, -18);
-            innerPerimeterUpper[7] = new Point(-120, -36);
-            innerPerimeterUpper[8] = new Point(-118, 37);
+            innerPerimeterUpper[4] = new Point(34, -16);
+            innerPerimeterUpper[5] = new Point(-53, -18);
+            innerPerimeterUpper[6] = new Point(-120, -36);
+            innerPerimeterUpper[7] = new Point(-118, 37);
+            innerPerimeterUpper[8] = new Point(123, 40);
+            innerPerimeterUpper[9] = new Point(-120, -36);
+            innerPerimeterUpper[10] = new Point(3, 77);
+            innerPerimeterUpper[11] = new Point(123, -41);
+            innerPerimeterUpper[12] = new Point(-118, 37);
 
             innerPerimeterLower[0] = new Point(2, -83);
             innerPerimeterLower[1] = new Point(-95, -47);
@@ -174,6 +180,11 @@ namespace WindowsFormsApplication1
             innerPerimeterLower[3] = new Point(32, -34);
             innerPerimeterLower[4] = new Point(82, -53);
             innerPerimeterLower[5] = new Point(2, -83);
+            innerPerimeterUpper[6] = new Point(-53, -34);
+            innerPerimeterLower[7] = new Point(82, -53);
+            innerPerimeterLower[8] = new Point(-93, -47);
+            innerPerimeterLower[9] = new Point(32, -34);
+            innerPerimeterLower[10] = new Point(2, -83);
 
             outerWall[0] = new Point(-171, -128);
             outerWall[1] = new Point(-171, 128);
@@ -277,11 +288,12 @@ namespace WindowsFormsApplication1
             //ProcessInput2();
 
             y1 = vehicle2.GetPosition();
-            x1 = new Rectangle((int)y1.X - (13 / 2), (int)y1.Y - (13 / 2), 13, 13);
+            x1 = new Rectangle((int)y1.X - (12 / 2), (int)y1.Y - (12 / 2), 13, 13);
             y2 = vehicle1.GetPosition();
-            x2 = new Rectangle((int)y2.X - (13 / 2), (int)y2.Y - (13 / 2), 13, 13);
+            x2 = new Rectangle((int)y2.X - (12 / 2), (int)y2.Y - (12 / 2), 13, 13);
 
-            CheckCollision();
+            //CheckCollision();
+            //CheckCollision2();
 
             //apply vehicle controls
             vehicle1.SetSteering(steering);
@@ -313,7 +325,7 @@ namespace WindowsFormsApplication1
             {
                 ConstrainVehicle();
                 ConstrainVehicle2();
-                Thread.Sleep(10);
+                Thread.Sleep(100);
             }
         }
 
@@ -572,7 +584,17 @@ namespace WindowsFormsApplication1
             return true;
         }
 
-        private void CheckCollision()
+        private void Collision()
+        {
+            while (running)
+            {
+                CheckCollision1();
+                CheckCollision2();
+                Thread.Sleep(1);
+            }
+        }
+
+        private void CheckCollision1()
         {
             /*
             for (int i = 0; i < outerPerimeter.Length - 1; i++)
@@ -618,6 +640,55 @@ namespace WindowsFormsApplication1
             if (x2.IntersectsWith(garage))
             {
                 vehicle1.SetVelocity(-0.5f);
+            }
+        }
+
+        private void CheckCollision2()
+        {
+            /*
+            for (int i = 0; i < outerPerimeter.Length - 1; i++)
+            {
+                if (LineIntersectsRect(outerPerimeter[i], outerPerimeter[i + 1], x2))
+                {
+                    brakes2 = 4;
+                }
+            }
+            */
+            for (int i = 0; i < outerPerimeter2.Length - 1; i++)
+            {
+                if (LineIntersectsRect(outerPerimeter2[i], outerPerimeter2[i + 1], x1))
+                {
+                    brakes2 = 4;
+                }
+            }
+            for (int i = 0; i < innerPerimeterUpper.Length - 1; i++)
+            {
+                if (LineIntersectsRect(innerPerimeterUpper[i], innerPerimeterUpper[i + 1], x1))
+                {
+                    brakes2 = 4;
+                }
+            }
+            for (int i = 0; i < innerPerimeterLower.Length - 1; i++)
+            {
+                if (LineIntersectsRect(innerPerimeterLower[i], innerPerimeterLower[i + 1], x1))
+                {
+                    brakes2 = 4;
+                }
+            }
+            for (int i = 0; i < outerWall.Length - 1; i++)
+            {
+                if (LineIntersectsRect(outerWall[i], outerWall[i + 1], x1))
+                {
+                    vehicle2.SetVelocity(-0.5f);
+                }
+            }
+            if (x2.IntersectsWith(x1))
+            {
+                vehicle2.SetVelocity(-0.5f);
+            }
+            if (x1.IntersectsWith(garage))
+            {
+                vehicle2.SetVelocity(-0.5f);
             }
         }
 
