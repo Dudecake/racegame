@@ -21,6 +21,9 @@ namespace WindowsFormsApplication1
 
         bool running = true;
 
+        double f1;
+        double f2;
+
         Point[] outerPerimeter = new Point[7];
         Point[] outerPerimeter2 = new Point[48];
         Point[] innerPerimeterUpper = new Point[13];
@@ -287,9 +290,6 @@ namespace WindowsFormsApplication1
         {
             //get elapsed time since last frame
             float etime = timer.GetETime();
-
-            double f1;
-            double f2;
             //process input
             //ProcessInput();
             //ProcessInput2();
@@ -325,8 +325,22 @@ namespace WindowsFormsApplication1
 
             //redraw our screenconstra
             screen.Invalidate();
+            int P = Convert.ToInt32(f1);
+            int Q = Convert.ToInt32(f2);
+            if (P < 0) P = 0;
+            if (Q < 0) Q = 0;
+            this.Text = String.Format("{0}FPS", fps);
+            
+            progressBar1.Value = Convert.ToInt32(P);
+            progressBar1.Maximum = 100;
+            progressBar1.Step = 1;
+            progressBar1.Minimum = 0;
 
-            this.Text = String.Format("{0}FPS {1} {2}", fps, f1, f2);
+            progressBar2.Value = Convert.ToInt32(Q);
+            progressBar2.Maximum = 100;
+            progressBar2.Step = 1;
+            progressBar2.Minimum = 0;
+            
         }
 
         private void ConstrainVehicles()
@@ -1462,5 +1476,7 @@ namespace WindowsFormsApplication1
             }
         }
         #endregion
+
+        
     }
 }
