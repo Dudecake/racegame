@@ -378,8 +378,8 @@ namespace WindowsFormsApplication1
             progressBar2.Value = Convert.ToInt32(Q);
             label1.Text = String.Format("{0} RPM", Math.Abs(vehicle1.GetWheelVelocity()));
             label2.Text = String.Format("{0} RPM", Math.Abs(vehicle2.GetWheelVelocity()));
-            label3.Text = Convert.ToString(veh1r);
-            label4.Text = Convert.ToString(veh2r);
+            label3.Text = String.Format("Lap{0}", veh1r);
+            label4.Text = String.Format("Lap{0}", veh2r);
             label5.Text = veh1;
             label6.Text = veh2;
             if (close) this.Close();
@@ -825,7 +825,7 @@ namespace WindowsFormsApplication1
                 {
                     veh2c3 = true;
                 }
-                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && !veh1r2 && !veh1r3)
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh2c1 && veh2c2 && veh2c3 && !veh2r1 && !veh2r2 && !veh2r3)
                 {
                     veh2r1 = true;
                     veh2c1 = false;
@@ -833,7 +833,7 @@ namespace WindowsFormsApplication1
                     veh2c3 = false;
                     veh2r++;
                 }
-                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && !veh1r2 && !veh1r3)
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh2c1 && veh2c2 && veh2c3 && veh2r1 && !veh2r2 && !veh2r3)
                 {
                     veh2r2 = true;
                     veh2c1 = false;
@@ -841,12 +841,13 @@ namespace WindowsFormsApplication1
                     veh2c3 = false;
                     veh2r++;
                 }
-                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && veh1r2 && !veh1r3)
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh2c1 && veh2c2 && veh2c3 && veh2r1 && veh2r2 && !veh2r3)
                 {
                     veh2r3 = true;
                     veh2c1 = false;
                     veh2c2 = false;
                     veh2c3 = false;
+                    close = true;
                 }
                 if (x1.IntersectsWith(pitsStop))
                 {
