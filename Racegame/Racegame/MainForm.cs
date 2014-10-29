@@ -585,7 +585,7 @@ namespace WindowsFormsApplication1
             e.Handled = true;
         }
         #endregion
-
+        
         #region Render
         //rendering - only when screen is invalidated
         private void screen_Paint(object sender, PaintEventArgs e)
@@ -1336,7 +1336,7 @@ namespace WindowsFormsApplication1
 
                     //calculate super fake friction forces
                     //calculate response force
-                    Vector responseForce = -sideVel * 2.0f;
+                    Vector responseForce = -sideVel * 3.0f;
                     responseForce -= forwardVel;
 
                     //calculate torque on wheel
@@ -1382,7 +1382,7 @@ namespace WindowsFormsApplication1
 
             public void SetThrottle(float throttle)
             {
-                const float torque = 60.0f;
+                const float torque = 75.0f;
 
                 //apply transmission torque to back wheels
                 wheels[0].AddTransmissionTorque(throttle * torque / 2);
