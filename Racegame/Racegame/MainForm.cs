@@ -52,7 +52,7 @@ namespace WindowsFormsApplication1
         Point[] innerPerimeterUpper = new Point[13];
         Point[] innerPerimeterLower = new Point[11];
         Point[] outerWall = new Point[5];
-        Rectangle garage = new Rectangle(-47, -18, 85, 35);
+        Rectangle garage = new Rectangle(-30, -18, 85, 35);
         Rectangle pitsStop = new Rectangle(0, -35, 5, 5);
 
         Vehicle1 vehicle1 = new Vehicle1();
@@ -377,18 +377,14 @@ namespace WindowsFormsApplication1
             int Q = Convert.ToInt32(f2);
             if (P < 0) P = 0;
             if (Q < 0) Q = 0;
-            this.Text = String.Format("{0}FPS {1}", fps, veh1);
+            this.Text = String.Format("{0}FPS", fps);
             
             progressBar1.Value = Convert.ToInt32(P);
-            progressBar1.Maximum = 100;
-            progressBar1.Step = 1;
-            progressBar1.Minimum = 0;
-
             progressBar2.Value = Convert.ToInt32(Q);
-            progressBar2.Maximum = 100;
-            progressBar2.Step = 1;
-            progressBar2.Minimum = 0;
-            
+            label1.Text = vehicle1.GetVelocity().ToString();
+            Vector lepra = vehicle1.GetVelocity1();
+
+            label2.Text = String.Format("{0} {1}", lepra.X, lepra.Y);
         }
 
         private void ConstrainVehicles()
@@ -1162,6 +1158,16 @@ namespace WindowsFormsApplication1
                 m_velocity *= i;
             }
 
+            public float GetVelocity()
+            {
+                return m_angularVelocity;
+            }
+
+            public Vector GetVelocity1()
+            {
+                return m_velocity;
+            }
+
             public void UpdateFuel(float timestep, float throttle, out double fuel)
             {
                 m_fuel -= 2 * timestep * Math.Abs(throttle);
@@ -1264,9 +1270,6 @@ namespace WindowsFormsApplication1
             }
             #endregion
         }
-
-
-
         class Vehicle2 : RigidBody2
         {
             private class Wheel
@@ -1490,6 +1493,11 @@ namespace WindowsFormsApplication1
             public void SetVelocity(float i)
             {
                 m_velocity *= i;
+            }
+
+            public float GetVelocity()
+            {
+                return m_angularVelocity;
             }
 
             public void UpdateFuel(float timestep, float throttle, out double fuel)
