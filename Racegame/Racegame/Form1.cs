@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1
             switch (comboBox2.SelectedIndex)
             {
                 case 1:
-                    
+                    break;
             }
         }
 

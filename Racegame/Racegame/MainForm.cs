@@ -91,6 +91,9 @@ namespace WindowsFormsApplication1
         float throttle2 = 0; //0 is coasting, 1 is full throttle
         float brakes2 = 0; //0 is no brakes, 1 is full brakes
 
+        float mod1;
+        float mod2;
+
         Bitmap Backbuffer;
         Bitmap m_map = new Bitmap(Properties.Resources.design_1, 342, 257);
 
@@ -131,6 +134,9 @@ namespace WindowsFormsApplication1
             timer2.Start();
             checkpoint1.Start();
             checkpoint2.Start();
+
+            mod1 = 1;
+            mod2 = 2;
 
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -347,10 +353,10 @@ namespace WindowsFormsApplication1
 
             //apply vehicle controls
             vehicle1.SetSteering(steering);
-            vehicle1.SetThrottle(throttle); //menu.Checked
+            vehicle1.SetThrottle(throttle * mod1); //menu.Checked
             vehicle1.SetBrakes(brakes);
             vehicle2.SetSteering(steering2);
-            vehicle2.SetThrottle(throttle2); //menu.Checked
+            vehicle2.SetThrottle(throttle2 * mod2); //menu.Checked
             vehicle2.SetBrakes(brakes2);
 
             //integrate vehicle physics
@@ -372,6 +378,8 @@ namespace WindowsFormsApplication1
             int Q = Convert.ToInt32(f2);
             if (P < 0) P = 0;
             if (Q < 0) Q = 0;
+            if (P == 0) mod1 = 0.125f;
+            if (Q == 0) mod2 = 0.125f;
             this.Text = String.Format("{0}FPS", fps);
             
             progressBar1.Value = Convert.ToInt32(P);
@@ -878,7 +886,7 @@ namespace WindowsFormsApplication1
                 ts2 = raceTime.Elapsed;
                 veh1 = String.Format("{0:00}:{1:00}.{2:00}",
             ts2.Minutes - ts1.Minutes, ts2.Seconds - ts1.Seconds,
-            (ts2.Milliseconds / 10) - (ts1.Milliseconds / 10));
+            (ts2.Milliseconds / 10));
                 Thread.Sleep(10);
             }
             while (!veh1r3)
@@ -886,7 +894,7 @@ namespace WindowsFormsApplication1
                 ts3 = raceTime.Elapsed;
                 veh1 = String.Format("{0:00}:{1:00}.{2:00}",
             ts3.Minutes - ts2.Minutes, ts3.Seconds - ts2.Seconds,
-            (ts3.Milliseconds / 10) - (ts2.Milliseconds / 10));
+            (ts3.Milliseconds / 10));
                 Thread.Sleep(10);
             }
         }
@@ -912,7 +920,7 @@ namespace WindowsFormsApplication1
                 ts2 = raceTime.Elapsed;
                 veh2 = String.Format("{0:00}:{1:00}.{2:00}",
             ts2.Minutes - ts1.Minutes, ts2.Seconds - ts1.Seconds,
-            (ts2.Milliseconds / 10) - (ts1.Milliseconds  / 10));
+            (ts2.Milliseconds / 10));
                 Thread.Sleep(10);
             }
             while (!veh2r3)
@@ -920,7 +928,7 @@ namespace WindowsFormsApplication1
                 ts3 = raceTime.Elapsed;
                 veh2 = String.Format("{0:00}:{1:00}.{2:00}",
             ts3.Minutes - ts2.Minutes, ts3.Seconds - ts2.Minutes,
-            (ts3.Milliseconds / 10) - (ts2.Milliseconds / 10));
+            (ts3.Milliseconds / 10));
                 Thread.Sleep(10);
             }
         }
@@ -1181,7 +1189,7 @@ namespace WindowsFormsApplication1
 
             public void UpdateFuel(float timestep, float throttle, out double fuel)
             {
-                m_fuel -= 2 * timestep * Math.Abs(throttle);
+                m_fuel -= 3 * timestep * Math.Abs(throttle);
                 fuel = m_fuel;
             }
 
@@ -1524,7 +1532,7 @@ namespace WindowsFormsApplication1
 
             public void UpdateFuel(float timestep, float throttle, out double fuel)
             {
-                m_fuel -= 2 * timestep * Math.Abs(throttle);
+                m_fuel -= 3 * timestep * Math.Abs(throttle);
                 fuel = m_fuel;
             }
 
