@@ -61,8 +61,6 @@ namespace WindowsFormsApplication1
         Vehicle vehicle1 = new Vehicle();
         Vehicle vehicle2 = new Vehicle();
 
-        Autos auto = new Autos();
-
         //graphics
         Graphics graphics; //gdi+
         Bitmap backbuffer;
@@ -101,11 +99,14 @@ namespace WindowsFormsApplication1
         Rectangle x1;
         Vector y2;
         Rectangle x2;
+
+        Bitmap[] playerAutos;// = auto.GetAutos();
+
         #endregion
 
         #region initialization
 
-        public MainForm()
+        public MainForm(Cars autos)
         {
             InitializeComponent();
             Application.Idle += new EventHandler(ApplicationIdle);
@@ -116,6 +117,8 @@ namespace WindowsFormsApplication1
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown2);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
             Init(screen.Size);
+
+            this.playerAutos = autos.GetAutos();
 
             Thread input = new Thread(new ThreadStart(ProcessInput));
             Thread input2 = new Thread(new ThreadStart(ProcessInput2));
@@ -262,8 +265,8 @@ namespace WindowsFormsApplication1
             gameTime.Start();
             raceTime.Start();
             timer.GetETime(); //reset timer
-            Bitmap[] autos = auto.GetAutos();
             #region Vehicle selection
+            /*
             for (byte i = 0; i < 2; i++)
             {
                 switch (rand.Next(10))
@@ -300,10 +303,11 @@ namespace WindowsFormsApplication1
                         break;
                 }
             }
+            */
             #endregion
-            vehicle1.Setup(new Vector(7, 13) / 2.0f, 5, autos[0]);
+            vehicle1.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[0]);
             vehicle1.SetLocation(new Vector(210, -7), 0);
-            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, autos[1]);
+            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[1]);
             vehicle2.SetLocation(new Vector(190, -7), 0);
         }
         #endregion

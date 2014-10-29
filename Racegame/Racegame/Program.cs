@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsApplication1
 {
@@ -14,10 +15,11 @@ namespace WindowsFormsApplication1
         [STAThread]
         static void Main()
         {
+            Cars cars = new Cars();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-            Application.Run(new MainForm());
+            Application.Run(new Form1(cars));
+            Application.Run(new MainForm(cars));
             Application.Run(new Form2());
         }
     }

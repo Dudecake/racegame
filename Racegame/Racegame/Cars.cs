@@ -7,17 +7,18 @@ using System.Drawing;
 
 namespace WindowsFormsApplication1
 {
-    class Autos
+    public class Cars
     {
-        Bitmap[] autos = new Bitmap[2];
-
+        Bitmap[] autos;
+ 
         public Bitmap[] GetAutos()
         {
             return autos;
         }
-        public void SetAutos(Bitmap[] auto)
+        public void SetAutos(Bitmap[] autos)
         {
-            autos = auto;
+            this.autos = autos;
+            Console.Write("i");
         }
     }
 }
