@@ -24,34 +24,46 @@ namespace WindowsFormsApplication1
         double f1;
         double f2;
 
-        TimeSpan veh1r1;
-        TimeSpan veh1r2;
-        TimeSpan veh1r3;
-
-        TimeSpan veh2r1;
-        TimeSpan veh2r2;
-        TimeSpan veh2r3;
-
         bool veh1r11 = false;
         bool veh1r21 = false;
         bool veh1r31 = false;
+
+        bool veh1c1 = false;
+        bool veh1c2 = false;
+        bool veh1c3 = false;
 
         bool veh2r11 = false;
         bool veh2r21 = false;
         bool veh2r31 = false;
 
+        bool veh2c1 = false;
+        bool veh2c2 = false;
+        bool veh2c3 = false;
+
         string veh1;
         string veh2;
 
+        Point[] startLine = new Point[2];
+        Point[] checkPoint1 = new Point[2];
+        Point[] checkPoint2 = new Point[2];
+        Point[] checkpoint3 = new Point[2];
         Point[] outerPerimeter = new Point[7];
         Point[] outerPerimeter2 = new Point[48];
         Point[] innerPerimeterUpper = new Point[13];
         Point[] innerPerimeterLower = new Point[11];
         Point[] outerWall = new Point[5];
         Rectangle garage = new Rectangle(-47, -18, 85, 35);
+        Rectangle pitsStop = new Rectangle(0, -35, 5, 5);
 
         Vehicle1 vehicle1 = new Vehicle1();
         Vehicle2 vehicle2 = new Vehicle2();
+
+        Thread input = new Thread(new ThreadStart(ProcessInput));
+        Thread input2 = new Thread(new ThreadStart(ProcessInput2));
+        Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
+        Thread collide = new Thread(new ThreadStart(Collision));
+        Thread timer1 = new Thread(new ThreadStart(Timers1));
+        Thread timer2 = new Thread(new ThreadStart(Timers2));
 
         //graphics
         Graphics graphics; //gdi+
@@ -104,7 +116,13 @@ namespace WindowsFormsApplication1
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
             Init(screen.Size);
 
-            SetupThreads();
+
+            input.Start();
+            input2.Start();
+            constrain.Start();
+            collide.Start();
+            timer1.Start();
+            timer2.Start();
 
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -115,6 +133,25 @@ namespace WindowsFormsApplication1
             this.Load += new EventHandler(Form1_CreateBackBuffer);
 
             #region Lijnen
+            /*
+            -19, -8
+            -57, -8
+            4, 78
+            4, 121
+            124, 1
+            164, 1
+            4, 122
+            4, -16
+            */
+            startLine[0] = new Point(-19, -8);
+            startLine[1] = new Point(-57, -8);
+            checkPoint1[0] = new Point(4, 78);
+            checkPoint1[1] = new Point(4, 121);
+            checkPoint2[0] = new Point(124, 1);
+            checkPoint2[1] = new Point(164, 1);
+            checkpoint3[0] = new Point(4, 122);
+            checkpoint3[1] = new Point(4, -16);
+
             outerPerimeter[0] = new Point(-157, 63);
             outerPerimeter[1] = new Point(1, 123);
             outerPerimeter[2] = new Point(162, 61);
@@ -195,7 +232,7 @@ namespace WindowsFormsApplication1
             innerPerimeterLower[3] = new Point(32, -34);
             innerPerimeterLower[4] = new Point(82, -53);
             innerPerimeterLower[5] = new Point(2, -83);
-            innerPerimeterUpper[6] = new Point(-53, -34);
+            innerPerimeterLower[6] = new Point(-53, -34);
             innerPerimeterLower[7] = new Point(82, -53);
             innerPerimeterLower[8] = new Point(-93, -47);
             innerPerimeterLower[9] = new Point(32, -34);
@@ -208,21 +245,6 @@ namespace WindowsFormsApplication1
             outerWall[4] = new Point(-171, -128);
 
             #endregion
-        }
-
-        private void SetupThreads()
-        {
-            Thread input = new Thread(new ThreadStart(ProcessInput));
-            Thread input2 = new Thread(new ThreadStart(ProcessInput2));
-            Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
-            Thread collide = new Thread(new ThreadStart(Collision));
-            Thread timers = new Thread(new ThreadStart(Timers1));
-
-            input.Start();
-            input2.Start();
-            constrain.Start();
-            collide.Start();
-            timers.Start();
         }
 
         //intialize rendering
@@ -743,6 +765,7 @@ namespace WindowsFormsApplication1
 
         private void Timers1()
         {
+
             TimeSpan ts1;
             TimeSpan ts2;
             TimeSpan ts3;

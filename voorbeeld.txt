@@ -1,4 +1,5 @@
 http://itools.subhashbose.com/grapher/index.php
+A field initializer cannot reference the non-static field, method, or property?
 
 using System;
 using System.Drawing;
