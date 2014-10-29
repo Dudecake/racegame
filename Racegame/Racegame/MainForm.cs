@@ -44,6 +44,9 @@ namespace WindowsFormsApplication1
         string veh1;
         string veh2;
 
+        byte veh1r = 0;
+        byte veh2r = 0;
+
         Point[] startLine = new Point[2];
         Point[] checkPoint1 = new Point[2];
         Point[] checkPoint2 = new Point[2];
@@ -373,8 +376,12 @@ namespace WindowsFormsApplication1
             
             progressBar1.Value = Convert.ToInt32(P);
             progressBar2.Value = Convert.ToInt32(Q);
-            label1.Text = Math.Abs(vehicle1.GetWheelVelocity()).ToString();
-            label2.Text = Math.Abs(vehicle2.GetWheelVelocity()).ToString();
+            label1.Text = String.Format("{0} RPM", Math.Abs(vehicle1.GetWheelVelocity()));
+            label2.Text = String.Format("{0} RPM", Math.Abs(vehicle2.GetWheelVelocity()));
+            label3.Text = Convert.ToString(veh1r);
+            label4.Text = Convert.ToString(veh2r);
+            label5.Text = veh1;
+            label6.Text = veh2;
             if (close) this.Close();
         }
 
@@ -776,6 +783,7 @@ namespace WindowsFormsApplication1
                     veh1c1 = false;
                     veh1c2 = false;
                     veh1c3 = false;
+                    veh1r++;
                 }
                 if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && !veh1r2 && !veh1r3)
                 {
@@ -783,6 +791,7 @@ namespace WindowsFormsApplication1
                     veh1c1 = false;
                     veh1c2 = false;
                     veh1c3 = false;
+                    veh1r++;
                 }
                 if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && veh1r2 && !veh1r3)
                 {
@@ -822,6 +831,7 @@ namespace WindowsFormsApplication1
                     veh2c1 = false;
                     veh2c2 = false;
                     veh2c3 = false;
+                    veh2r++;
                 }
                 if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && !veh1r2 && !veh1r3)
                 {
@@ -829,6 +839,7 @@ namespace WindowsFormsApplication1
                     veh2c1 = false;
                     veh2c2 = false;
                     veh2c3 = false;
+                    veh2r++;
                 }
                 if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && veh1r2 && !veh1r3)
                 {
