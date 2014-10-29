@@ -32,17 +32,17 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.screen)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -52,24 +52,25 @@
             // 
             this.screen.InitialImage = null;
             this.screen.Location = new System.Drawing.Point(0, 0);
-            this.screen.Margin = new System.Windows.Forms.Padding(4);
             this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size(1365, 945);
+            this.screen.Size = new System.Drawing.Size(1024, 768);
             this.screen.TabIndex = 0;
             this.screen.TabStop = false;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 3);
+            this.progressBar1.Location = new System.Drawing.Point(2, 2);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Size = new System.Drawing.Size(75, 19);
             this.progressBar1.TabIndex = 1;
             // 
             // progressBar2
             // 
-            this.progressBar2.Location = new System.Drawing.Point(3, 3);
+            this.progressBar2.Location = new System.Drawing.Point(2, 2);
+            this.progressBar2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(100, 23);
+            this.progressBar2.Size = new System.Drawing.Size(75, 19);
             this.progressBar2.TabIndex = 2;
             // 
             // panel1
@@ -82,9 +83,60 @@
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.progressBar1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 65);
+            this.panel1.Size = new System.Drawing.Size(150, 53);
             this.panel1.TabIndex = 3;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Enabled = false;
+            this.textBox3.Location = new System.Drawing.Point(87, 25);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(19, 20);
+            this.textBox3.TabIndex = 8;
+            this.textBox3.Text = "Lf";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(110, 25);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(19, 20);
+            this.textBox4.TabIndex = 9;
+            this.textBox4.Text = "Dwn";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Enabled = false;
+            this.textBox5.Location = new System.Drawing.Point(130, 25);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(19, 20);
+            this.textBox5.TabIndex = 10;
+            this.textBox5.Text = "Rg";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Enabled = false;
+            this.textBox6.Location = new System.Drawing.Point(110, 2);
+            this.textBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(19, 20);
+            this.textBox6.TabIndex = 7;
+            this.textBox6.Text = "Up";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(2, 26);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(76, 20);
+            this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "PLAYER 1";
             // 
             // panel2
             // 
@@ -95,111 +147,71 @@
             this.panel2.Controls.Add(this.textBox10);
             this.panel2.Controls.Add(this.progressBar2);
             this.panel2.Controls.Add(this.textBox1);
-            this.panel2.Location = new System.Drawing.Point(1165, 0);
+            this.panel2.Location = new System.Drawing.Point(874, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 65);
+            this.panel2.Size = new System.Drawing.Size(150, 53);
             this.panel2.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(3, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "PLAYER 2";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(3, 32);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "PLAYER 1";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Enabled = false;
-            this.textBox6.Location = new System.Drawing.Point(146, 3);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(24, 22);
-            this.textBox6.TabIndex = 7;
-            this.textBox6.Text = "Up";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(116, 31);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(24, 22);
-            this.textBox3.TabIndex = 8;
-            this.textBox3.Text = "Lf";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(146, 31);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(24, 22);
-            this.textBox4.TabIndex = 9;
-            this.textBox4.Text = "Dwn";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Enabled = false;
-            this.textBox5.Location = new System.Drawing.Point(173, 31);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(24, 22);
-            this.textBox5.TabIndex = 10;
-            this.textBox5.Text = "Rg";
             // 
             // textBox7
             // 
             this.textBox7.Enabled = false;
-            this.textBox7.Location = new System.Drawing.Point(112, 31);
+            this.textBox7.Location = new System.Drawing.Point(84, 25);
+            this.textBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(24, 22);
+            this.textBox7.Size = new System.Drawing.Size(19, 20);
             this.textBox7.TabIndex = 8;
             this.textBox7.Text = "A";
             // 
             // textBox8
             // 
             this.textBox8.Enabled = false;
-            this.textBox8.Location = new System.Drawing.Point(172, 32);
+            this.textBox8.Location = new System.Drawing.Point(129, 26);
+            this.textBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(24, 22);
+            this.textBox8.Size = new System.Drawing.Size(19, 20);
             this.textBox8.TabIndex = 9;
             this.textBox8.Text = "D";
             // 
             // textBox9
             // 
             this.textBox9.Enabled = false;
-            this.textBox9.Location = new System.Drawing.Point(142, 31);
+            this.textBox9.Location = new System.Drawing.Point(106, 25);
+            this.textBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(24, 22);
+            this.textBox9.Size = new System.Drawing.Size(19, 20);
             this.textBox9.TabIndex = 10;
             this.textBox9.Text = "S";
             // 
             // textBox10
             // 
             this.textBox10.Enabled = false;
-            this.textBox10.Location = new System.Drawing.Point(142, 4);
+            this.textBox10.Location = new System.Drawing.Point(106, 3);
+            this.textBox10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(24, 22);
+            this.textBox10.Size = new System.Drawing.Size(19, 20);
             this.textBox10.TabIndex = 11;
             this.textBox10.Text = "W";
             // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(2, 26);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(76, 20);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "PLAYER 2";
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1365, 923);
+            this.ClientSize = new System.Drawing.Size(1024, 754);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.screen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

@@ -24,6 +24,25 @@ namespace WindowsFormsApplication1
         double f1;
         double f2;
 
+        TimeSpan veh1r1;
+        TimeSpan veh1r2;
+        TimeSpan veh1r3;
+
+        TimeSpan veh2r1;
+        TimeSpan veh2r2;
+        TimeSpan veh2r3;
+
+        bool veh1r11 = false;
+        bool veh1r21 = false;
+        bool veh1r31 = false;
+
+        bool veh2r11 = false;
+        bool veh2r21 = false;
+        bool veh2r31 = false;
+
+        string veh1;
+        string veh2;
+
         Point[] outerPerimeter = new Point[7];
         Point[] outerPerimeter2 = new Point[48];
         Point[] innerPerimeterUpper = new Point[13];
@@ -44,6 +63,7 @@ namespace WindowsFormsApplication1
         private int fps;
         private int fpsCounter;
         private Stopwatch gameTime = new Stopwatch();
+        private Stopwatch raceTime = new Stopwatch();
 
         //keyboard controls
         bool AHeld = false, DHeld = false;
@@ -196,11 +216,13 @@ namespace WindowsFormsApplication1
             Thread input2 = new Thread(new ThreadStart(ProcessInput2));
             Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
             Thread collide = new Thread(new ThreadStart(Collision));
+            Thread timers = new Thread(new ThreadStart(Timers1));
 
             input.Start();
             input2.Start();
             constrain.Start();
             collide.Start();
+            timers.Start();
         }
 
         //intialize rendering
@@ -212,6 +234,7 @@ namespace WindowsFormsApplication1
             backbuffer = new Bitmap(buffersize.Width, buffersize.Height);
             graphics = Graphics.FromImage(backbuffer);
             gameTime.Start();
+            raceTime.Start();
             timer.GetETime(); //reset timer
             Bitmap[] autos = new Bitmap[2];
             #region Vehicle selection
@@ -329,7 +352,7 @@ namespace WindowsFormsApplication1
             int Q = Convert.ToInt32(f2);
             if (P < 0) P = 0;
             if (Q < 0) Q = 0;
-            this.Text = String.Format("{0}FPS", fps);
+            this.Text = String.Format("{0}FPS {1}", fps, veh1);
             
             progressBar1.Value = Convert.ToInt32(P);
             progressBar1.Maximum = 100;
@@ -717,6 +740,74 @@ namespace WindowsFormsApplication1
         }
 
         #endregion
+
+        private void Timers1()
+        {
+            TimeSpan ts1;
+            TimeSpan ts2;
+            TimeSpan ts3;
+            ts1 = raceTime.Elapsed;
+            ts2 = raceTime.Elapsed;
+            ts3 = raceTime.Elapsed;
+            while (!veh1r11)
+            {
+                ts1 = raceTime.Elapsed;
+                veh1 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts1.Minutes, ts1.Seconds,
+            ts1.Milliseconds / 10);
+                Thread.Sleep(10);
+            }
+            while (!veh1r21)
+            {
+                ts2 = raceTime.Elapsed;
+                veh1 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts2.Minutes - ts1.Minutes, ts2.Seconds - ts1.Seconds,
+            (ts2.Milliseconds / 10) - (ts1.Milliseconds / 10));
+                Thread.Sleep(10);
+            }
+            while (!veh1r31)
+            {
+                ts3 = raceTime.Elapsed;
+                veh1 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts3.Minutes - ts2.Minutes, ts3.Seconds - ts2.Seconds,
+            (ts3.Milliseconds / 10) - (ts2.Milliseconds / 10));
+                Thread.Sleep(10);
+            }
+        }
+
+        private void Timers2()
+        {
+            TimeSpan ts1;
+            TimeSpan ts2;
+            TimeSpan ts3;
+            ts1 = raceTime.Elapsed;
+            ts2 = raceTime.Elapsed;
+            ts3 = raceTime.Elapsed;
+            while (!veh2r11)
+            {
+                ts1 = raceTime.Elapsed;
+                veh2 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts1.Minutes, ts1.Seconds,
+            ts1.Milliseconds / 10);
+                Thread.Sleep(10);
+            }
+            while (!veh2r21)
+            {
+                ts2 = raceTime.Elapsed;
+                veh2 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts2.Minutes - ts1.Minutes, ts2.Seconds - ts1.Seconds,
+            (ts2.Milliseconds / 10) - (ts1.Milliseconds  / 10));
+                Thread.Sleep(10);
+            }
+            while (!veh2r31)
+            {
+                ts3 = raceTime.Elapsed;
+                veh2 = String.Format("{0:00}:{1:00}.{2:00}",
+            ts3.Minutes - ts2.Minutes, ts3.Seconds - ts2.Minutes,
+            (ts3.Milliseconds / 10) - (ts2.Milliseconds / 10));
+                Thread.Sleep(10);
+            }
+        }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
