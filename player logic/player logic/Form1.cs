@@ -58,6 +58,7 @@ namespace player_logic
                 textBox1.Text = string.Format("{0}", stopWatch.Elapsed);
                 Alpha = true;
             }
+            int i = Convert.ToInt32(stopHorloge.Elapsed);
         }
 
         private void button5_Click(object sender, EventArgs e)
