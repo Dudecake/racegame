@@ -384,8 +384,8 @@ namespace WindowsFormsApplication1
             
             progressBar1.Value = Convert.ToInt32(P);
             progressBar2.Value = Convert.ToInt32(Q);
-            label1.Text = String.Format("{0} RPM", Math.Abs(vehicle1.GetWheelVelocity()));
-            label2.Text = String.Format("{0} RPM", Math.Abs(vehicle2.GetWheelVelocity()));
+            label1.Text = String.Format("{0} RPM", Math.Round(Math.Abs(vehicle1.GetWheelVelocity()), 2));
+            label2.Text = String.Format("{0} RPM", Math.Round(Math.Abs(vehicle2.GetWheelVelocity()), 2));
             label3.Text = String.Format("Lap{0}", veh1r);
             label4.Text = String.Format("Lap{0}", veh2r);
             label5.Text = veh1;
@@ -1163,10 +1163,6 @@ namespace WindowsFormsApplication1
             }
             #endregion
 
-            public Rectangle GetRect()
-            {
-                return rect;
-            }
             public void SetLocation(Vector position, float angle)
             {
                 m_position = position;
@@ -1505,11 +1501,6 @@ namespace WindowsFormsApplication1
                 rect.Height = (int)(m_halfSize.Y * 2.0f);
             }
             #endregion
-
-            public Rectangle GetRect()
-            {
-                return rect;
-            }
 
             public void SetLocation(Vector position, float angle)
             {
