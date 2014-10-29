@@ -304,6 +304,9 @@
   <ItemGroup>
     <None Include="Resources\smw_glowing_question_block_3d_by_redyoshiu-d58qk45.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\8bit.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

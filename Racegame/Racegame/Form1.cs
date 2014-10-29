@@ -18,7 +18,8 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            _soundPlayer = new SoundPlayer("8bit.wav");
+
+            _soundPlayer = new SoundPlayer(@"C:\Users\Rutger\Documents\GitHub\racegame\Racegame\Racegame\Resources\8bit.wav");
         }
 
         private void button1_Click(object sender, EventArgs e)
