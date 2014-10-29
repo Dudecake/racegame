@@ -1007,7 +1007,7 @@ namespace WindowsFormsApplication1
 
                     //calculate super fake friction forces
                     //calculate response force
-                    Vector responseForce = -sideVel * 2.0f;
+                    Vector responseForce = -sideVel * 3.0f;
                     responseForce -= forwardVel;
 
                     //calculate torque on wheel
