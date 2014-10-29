@@ -288,6 +288,8 @@ namespace WindowsFormsApplication1
             //get elapsed time since last frame
             float etime = timer.GetETime();
 
+            double f1;
+            double f2;
             //process input
             //ProcessInput();
             //ProcessInput2();
@@ -312,6 +314,9 @@ namespace WindowsFormsApplication1
             vehicle1.Update(etime);
             vehicle2.Update(etime);
 
+            vehicle1.UpdateFuel(etime, throttle, out f1);
+            vehicle2.UpdateFuel(etime, throttle2, out f2);
+
             //keep the vehicle on the screen
             //ConstrainVehicle();
             //ConstrainVehicle2();
@@ -321,7 +326,7 @@ namespace WindowsFormsApplication1
             //redraw our screenconstra
             screen.Invalidate();
 
-            this.Text = String.Format("{0}FPS", fps);
+            this.Text = String.Format("{0}FPS {1} {2}", fps, f1, f2);
         }
 
         private void ConstrainVehicles()
@@ -883,12 +888,14 @@ namespace WindowsFormsApplication1
             Rectangle rect = new Rectangle();
             //private Color m_color;
             private Bitmap m_bitmap;// = new Bitmap(Properties.Resources.Z_Type_GTA2);
+            private double m_fuel; 
 
             public RigidBody1()
             {
                 //set these defaults so we dont get divide by zeros
                 m_mass = 1.0f;
                 m_inertia = 1.0f;
+                m_fuel = 100;
             }
 
             //intialize out parameters
@@ -928,6 +935,11 @@ namespace WindowsFormsApplication1
                 m_velocity *= i;
             }
 
+            public void UpdateFuel(float timestep, float throttle, out double fuel)
+            {
+                m_fuel -= 2 * timestep * Math.Abs(throttle);
+                fuel = m_fuel;
+            }
 
             #region Update
             public void Update(float timeStep)
@@ -1194,6 +1206,7 @@ namespace WindowsFormsApplication1
             private float m_angularVelocity;
             private float m_torque;
             private float m_inertia;
+            private double m_fuel;
 
             //graphical properties
             private Vector m_halfSize = new Vector();
@@ -1206,6 +1219,7 @@ namespace WindowsFormsApplication1
                 //set these defaults so we dont get divide by zeros
                 m_mass = 1.0f;
                 m_inertia = 1.0f;
+                m_fuel = 100;
             }
 
             //intialize out parameters
@@ -1244,6 +1258,12 @@ namespace WindowsFormsApplication1
             public void SetVelocity(float i)
             {
                 m_velocity *= i;
+            }
+
+            public void UpdateFuel(float timestep, float throttle, out double fuel)
+            {
+                m_fuel -= 2 * timestep * Math.Abs(throttle);
+                fuel = m_fuel;
             }
 
             #region Update
