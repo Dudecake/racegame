@@ -81,15 +81,7 @@ namespace WindowsFormsApplication1
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
             Init(screen.Size);
 
-            Thread input = new Thread(new ThreadStart(ProcessInput));
-            Thread input2 = new Thread(new ThreadStart(ProcessInput2));
-            Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
-            Thread collide = new Thread(new ThreadStart(Collision));
-
-            input.Start();
-            input2.Start();
-            constrain.Start();
-            collide.Start();
+            SetupThreads();
 
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -193,6 +185,19 @@ namespace WindowsFormsApplication1
             outerWall[4] = new Point(-171, -128);
 
             #endregion
+        }
+
+        private void SetupThreads()
+        {
+            Thread input = new Thread(new ThreadStart(ProcessInput));
+            Thread input2 = new Thread(new ThreadStart(ProcessInput2));
+            Thread constrain = new Thread(new ThreadStart(ConstrainVehicles));
+            Thread collide = new Thread(new ThreadStart(Collision));
+
+            input.Start();
+            input2.Start();
+            constrain.Start();
+            collide.Start();
         }
 
         //intialize rendering
@@ -590,7 +595,7 @@ namespace WindowsFormsApplication1
             {
                 CheckCollision1();
                 CheckCollision2();
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
 
