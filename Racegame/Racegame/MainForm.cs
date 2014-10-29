@@ -106,8 +106,10 @@ namespace WindowsFormsApplication1
 
         #region initialization
 
-        public MainForm(Cars autos)
+        public MainForm(Bitmap[] playerAutos)
         {
+            this.playerAutos = playerAutos;
+
             InitializeComponent();
             Application.Idle += new EventHandler(ApplicationIdle);
 
@@ -116,9 +118,9 @@ namespace WindowsFormsApplication1
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(onKeyDown2);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(onKeyUp2);
+            
             Init(screen.Size);
 
-            this.playerAutos = autos.GetAutos();
 
             Thread input = new Thread(new ThreadStart(ProcessInput));
             Thread input2 = new Thread(new ThreadStart(ProcessInput2));
@@ -265,50 +267,17 @@ namespace WindowsFormsApplication1
             gameTime.Start();
             raceTime.Start();
             timer.GetETime(); //reset timer
-            #region Vehicle selection
-            /*
-            for (byte i = 0; i < 2; i++)
+            try
             {
-                switch (rand.Next(10))
-                {
-                    case 0:
-                        autos[i] = Properties.Resources._61px_Jefferson_GTA2;
-                        break;
-                    case 1:
-                        autos[i] = Properties.Resources._62px_AnistonBD4_GTA2;
-                        break;
-                    case 2:
-                        autos[i] = Properties.Resources._62px_Arachnid_GTA2;
-                        break;
-                    case 3:
-                        autos[i] = Properties.Resources._62px_Stinger_GTA2;
-                        break;
-                    case 4:
-                        autos[i] = Properties.Resources._63px_A_Type_GTA2;
-                        break;
-                    case 5:
-                        autos[i] = Properties.Resources._63px_Beamer_GTA2;
-                        break;
-                    case 6:
-                        autos[i] = Properties.Resources._63px_FuroreGT_GTA2;
-                        break;
-                    case 7:
-                        autos[i] = Properties.Resources._63px_MichelliRoadster_GTA2;
-                        break;
-                    case 8:
-                        autos[i] = Properties.Resources.Dementia_GTA2;
-                        break;
-                    case 9:
-                        autos[i] = Properties.Resources.Z_Type_GTA2;
-                        break;
-                }
+                vehicle1.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[0]);
+                vehicle1.SetLocation(new Vector(210, -7), 0);
+                vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[1]);
+                vehicle2.SetLocation(new Vector(190, -7), 0);
             }
-            */
-            #endregion
-            vehicle1.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[0]);
-            vehicle1.SetLocation(new Vector(210, -7), 0);
-            vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[1]);
-            vehicle2.SetLocation(new Vector(190, -7), 0);
+            catch (NullReferenceException exs)
+            {
+                Console.WriteLine(exs.StackTrace);
+            }
         }
         #endregion
 
@@ -1236,6 +1205,7 @@ namespace WindowsFormsApplication1
                 }
                 catch (OverflowException exc)
                 {
+                    Console.WriteLine(exc);
                     //physics overflow :(
                 }
 

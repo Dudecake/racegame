@@ -14,20 +14,21 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         Bitmap[] playerAutos = new Bitmap[2];
-        Cars autos;
+        Cars cars;
 
         private SoundPlayer _soundPlayer;
 
-        public Form1(Cars autos)
+        public Form1(Cars cars)
         {
             InitializeComponent();
-            this.autos = autos;
+            this.cars = cars;
             _soundPlayer = new SoundPlayer(Properties.Resources._8bit);
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            autos.SetAutos(playerAutos);
+            cars.SetAutos(playerAutos);
             _soundPlayer.Play();
             this.Close();
         }
