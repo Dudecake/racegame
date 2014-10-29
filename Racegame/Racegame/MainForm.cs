@@ -115,6 +115,8 @@ namespace WindowsFormsApplication1
             Thread collide = new Thread(new ThreadStart(Collision));
             Thread timer1 = new Thread(new ThreadStart(Timers1));
             Thread timer2 = new Thread(new ThreadStart(Timers2));
+            Thread checkpoint1 = new Thread(new ThreadStart(Checkpoints1));
+            Thread checkpoint2 = new Thread(new ThreadStart(Checkpoints2));
 
             input.Start();
             input2.Start();
@@ -122,6 +124,8 @@ namespace WindowsFormsApplication1
             collide.Start();
             timer1.Start();
             timer2.Start();
+            checkpoint1.Start();
+            checkpoint2.Start();
 
             this.SetStyle(
             ControlStyles.UserPaint |
@@ -763,18 +767,98 @@ namespace WindowsFormsApplication1
         #endregion
 
         #region Timers
-        private void Checkpoints()
+        private void Checkpoints1()
         {
             while (running)
             {
+                if (LineIntersectsRect(checkPoint1[0], checkPoint1[1], x2))
+                {
+                    veh1c1 = true;
+                }
+                if (LineIntersectsRect(checkPoint2[0], checkPoint2[1], x2))
+                {
+                    veh1c2 = true;
+                }
+                if (LineIntersectsRect(checkpoint3[0], checkpoint3[1], x2))
+                {
+                    veh1c3 = true;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && !veh1r2 && !veh1r3)
+                {
+                    veh1r1 = true;
+                    veh1c1 = false;
+                    veh1c2 = false;
+                    veh1c3 = false;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && !veh1r2 && !veh1r3)
+                {
+                    veh1r2 = true;
+                    veh1c1 = false;
+                    veh1c2 = false;
+                    veh1c3 = false;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && veh1r2 && !veh1r3)
+                {
+                    veh1r3 = true;
+                    veh1c1 = false;
+                    veh1c2 = false;
+                    veh1c3 = false;
+                }
+                if (x2.IntersectsWith(pitsStop))
+                {
+                    vehicle1.SetFuel();
+                }
+                Thread.Sleep(100);
+            }
+        }
 
-                Thread.Sleep(10);
+        private void Checkpoints2()
+        {
+            while (running)
+            {
+                if (LineIntersectsRect(checkPoint1[0], checkPoint1[1], x1))
+                {
+                    veh2c1 = true;
+                }
+                if (LineIntersectsRect(checkPoint2[0], checkPoint2[1], x1))
+                {
+                    veh2c2 = true;
+                }
+                if (LineIntersectsRect(checkpoint3[0], checkpoint3[1], x1))
+                {
+                    veh2c3 = true;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && !veh1r2 && !veh1r3)
+                {
+                    veh2r1 = true;
+                    veh2c1 = false;
+                    veh2c2 = false;
+                    veh2c3 = false;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && !veh1r2 && !veh1r3)
+                {
+                    veh2r2 = true;
+                    veh2c1 = false;
+                    veh2c2 = false;
+                    veh2c3 = false;
+                }
+                if (LineIntersectsRect(startLine[0], startLine[1], x1) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && veh1r2 && !veh1r3)
+                {
+                    veh2r3 = true;
+                    veh2c1 = false;
+                    veh2c2 = false;
+                    veh2c3 = false;
+                }
+                if (x1.IntersectsWith(pitsStop))
+                {
+                    vehicle2.SetFuel();
+                }
+                Thread.Sleep(100);
             }
         }
 
         private void Timers1()
         {
-
             TimeSpan ts1;
             TimeSpan ts2;
             TimeSpan ts3;
