@@ -1053,7 +1053,7 @@ namespace WindowsFormsApplication1
 
             public void SetThrottle(float throttle)
             {
-                const float torque = 60.0f;
+                const float torque = 75.0f;
 
                 //apply transmission torque to back wheels
                 wheels[0].AddTransmissionTorque(throttle * torque / 2);
