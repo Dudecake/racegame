@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
         #region Variabelen
 
         bool running = true;
+        bool close = false;
 
         double f1;
         double f2;
@@ -137,23 +138,13 @@ namespace WindowsFormsApplication1
             this.Load += new EventHandler(Form1_CreateBackBuffer);
 
             #region Lijnen
-            /*
-            -19, -8
-            -57, -8
-            4, 78
-            4, 121
-            124, 1
-            164, 1
-            4, 122
-            4, -16
-            */
-            startLine[0] = new Point(-19, -8);
-            startLine[1] = new Point(-57, -8);
+            startLine[0] = new Point(-119, -8);
+            startLine[1] = new Point(-157, -8);
             checkPoint1[0] = new Point(4, 78);
             checkPoint1[1] = new Point(4, 121);
             checkPoint2[0] = new Point(124, 1);
             checkPoint2[1] = new Point(164, 1);
-            checkpoint3[0] = new Point(4, 122);
+            checkpoint3[0] = new Point(4, -122);
             checkpoint3[1] = new Point(4, -16);
 
             outerPerimeter[0] = new Point(-157, 63);
@@ -384,6 +375,7 @@ namespace WindowsFormsApplication1
             progressBar2.Value = Convert.ToInt32(Q);
             label1.Text = Math.Abs(vehicle1.GetWheelVelocity()).ToString();
             label2.Text = Math.Abs(vehicle2.GetWheelVelocity()).ToString();
+            if (close) this.Close();
         }
 
         private void ConstrainVehicles()
@@ -792,12 +784,13 @@ namespace WindowsFormsApplication1
                     veh1c2 = false;
                     veh1c3 = false;
                 }
-                if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && !veh1r1 && veh1r2 && !veh1r3)
+                if (LineIntersectsRect(startLine[0], startLine[1], x2) && veh1c1 && veh1c2 && veh1c3 && veh1r1 && veh1r2 && !veh1r3)
                 {
                     veh1r3 = true;
                     veh1c1 = false;
                     veh1c2 = false;
                     veh1c3 = false;
+                    close = true;
                 }
                 if (x2.IntersectsWith(pitsStop))
                 {
