@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
         bool running = true;
 
         Point[] outerPerimeter = new Point[7];
-        Point[] outerPerimeter2 = new Point[50];
+        Point[] outerPerimeter2 = new Point[48];
         Point[] innerPerimeterUpper = new Point[9];
         Point[] innerPerimeterLower = new Point[6];
         Point[] outerWall = new Point[5];
@@ -148,8 +148,15 @@ namespace WindowsFormsApplication1
             outerPerimeter2[37] = new Point(50, -128);
             outerPerimeter2[38] = new Point(25, -128);
 
-            outerPerimeter2[39] = new Point(25, -128);
-            outerPerimeter2[40] = new Point(171, -60);
+            outerPerimeter2[39] = new Point(-25, -128);
+            outerPerimeter2[40] = new Point(-171, -70);
+            outerPerimeter2[41] = new Point(-171, -85);
+            outerPerimeter2[42] = new Point(-60, -128);
+            outerPerimeter2[43] = new Point(-90, -128);
+            outerPerimeter2[44] = new Point(-171, -100);
+            outerPerimeter2[45] = new Point(-130, -128);
+            outerPerimeter2[46] = new Point(-171, -110);
+            outerPerimeter2[47] = new Point(-171, 32);
 
             innerPerimeterUpper[0] = new Point(-118, 37);
             innerPerimeterUpper[1] = new Point(3, 77);
@@ -576,7 +583,7 @@ namespace WindowsFormsApplication1
                 }
             }
             */
-            for (int i = 0; i < 39 /*outerPerimeter2.Length*/ - 1; i++)
+            for (int i = 0; i < outerPerimeter2.Length - 1; i++)
             {
                 if (LineIntersectsRect(outerPerimeter2[i], outerPerimeter2[i + 1], x2))
                 {
