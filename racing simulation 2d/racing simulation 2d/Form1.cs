@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace racing_simulation_2d
@@ -31,6 +32,11 @@ namespace racing_simulation_2d
         //game objects
         Vehicle vehicle = new Vehicle();
 
+        private int fps;
+        private int fpsCounter;
+        private Stopwatch gameTime = new Stopwatch();
+
+
         public frmMain()
         {
             InitializeComponent();
@@ -52,6 +58,8 @@ namespace racing_simulation_2d
             graphics = Graphics.FromImage(backbuffer);
 
             timer.GetETime(); //reset timer
+
+            gameTime.Start();
 
             vehicle.Setup(new Vector(3, 8)/2.0f, 5, Color.Red);
             vehicle.SetLocation(new Vector(0, 0), 0);
@@ -98,6 +106,10 @@ namespace racing_simulation_2d
 
             //keep the vehicle on the screen
             ConstrainVehicle();
+
+            CheckFps();
+
+            this.Text = String.Format("{0} FPS",fps);
 
             //redraw our screen
             screen.Invalidate();
@@ -196,6 +208,22 @@ namespace racing_simulation_2d
             // While the application is still idle, run frame routine.
             DoFrame();
         }
+
+        private void CheckFps()
+        {
+            if (gameTime.ElapsedMilliseconds > 1000)
+            {
+                fps = fpsCounter;
+                fpsCounter = 0;
+                gameTime.Reset();
+                gameTime.Start();
+            }
+            else
+            {
+                fpsCounter++;
+            }
+        }
+
 
         private void MenuExit_Click(object sender, EventArgs e)
         {
