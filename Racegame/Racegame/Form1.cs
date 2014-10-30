@@ -226,6 +226,7 @@ namespace WindowsFormsApplication1
                     break;
             }
 #endregion
+            if (comboBox2.SelectedIndex != -1) button1.Enabled = true;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -421,6 +422,7 @@ namespace WindowsFormsApplication1
                     break;
             }
 #endregion
+            if (comboBox1.SelectedIndex != -1) button1.Enabled = true;
         }
     }
 }

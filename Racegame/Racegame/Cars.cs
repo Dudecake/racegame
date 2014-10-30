@@ -18,7 +18,6 @@ namespace WindowsFormsApplication1
         public void SetAutos(Bitmap[] autos)
         {
             this.autos = autos;
-            Console.Write("i");
         }
     }
 }
