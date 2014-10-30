@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,10 +49,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>EBBE8B6E6DA1F1B087B8DEA949E30875B0A5C28B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>FEECDCDB5A811759BA386F1DF51ABDDD340B7CC8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Racegame_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Racegame_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -130,6 +131,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Racegame_1_TemporaryKey.pfx" />
     <None Include="Racegame_TemporaryKey.pfx" />
     <None Include="Resources\Z-Type-GTA2.png" />
   </ItemGroup>

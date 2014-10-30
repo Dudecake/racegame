@@ -65,7 +65,7 @@ namespace WindowsFormsApplication1
         Graphics graphics; //gdi+
         Bitmap backbuffer;
         Size buffersize;
-        const float screenScale = 3.0f;
+        const float screenScale = 1.0f;
         Timer timer = new Timer();
 
         private int fps;
@@ -93,7 +93,7 @@ namespace WindowsFormsApplication1
         float mod2;
 
         Bitmap Backbuffer;
-        Bitmap m_map = new Bitmap(Properties.Resources.design_1, 342, 257);
+        Bitmap m_map = new Bitmap(Properties.Resources.design_1, 1024, 768);
 
         Vector y1;
         Rectangle x1;
@@ -152,106 +152,106 @@ namespace WindowsFormsApplication1
             this.Load += new EventHandler(Form1_CreateBackBuffer);
 
             #region Lijnen
-            startLine[0] = new Point(-119, -8);
-            startLine[1] = new Point(-157, -8);
-            checkPoint1[0] = new Point(4, 78);
-            checkPoint1[1] = new Point(4, 121);
-            checkPoint2[0] = new Point(124, 1);
-            checkPoint2[1] = new Point(164, 1);
-            checkpoint3[0] = new Point(4, -122);
-            checkpoint3[1] = new Point(4, -16);
+            startLine[0] = new Point(-119 * 3, -8 * 3);
+            startLine[1] = new Point(-157 * 3, -8 * 3);
+            checkPoint1[0] = new Point(4 * 3, 78 * 3);
+            checkPoint1[1] = new Point(4 * 3, 121 * 3);
+            checkPoint2[0] = new Point(124 * 3, 1 * 3);
+            checkPoint2[1] = new Point(164 * 3, 1 * 3);
+            checkpoint3[0] = new Point(4 * 3, -122 * 3);
+            checkpoint3[1] = new Point(4 * 3, -16 * 3);
 
-            outerPerimeter[0] = new Point(-157, 63);
-            outerPerimeter[1] = new Point(1, 123);
-            outerPerimeter[2] = new Point(162, 61);
-            outerPerimeter[3] = new Point(162, -60);
-            outerPerimeter[4] = new Point(6, -121);
-            outerPerimeter[5] = new Point(-155, -61);
-            outerPerimeter[6] = new Point(-157, 63);
+            outerPerimeter[0] = new Point(-157 * 3, 63 * 3);
+            outerPerimeter[1] = new Point(1 * 3, 123 * 3);
+            outerPerimeter[2] = new Point(162 * 3, 61 * 3);
+            outerPerimeter[3] = new Point(162 * 3, -60 * 3);
+            outerPerimeter[4] = new Point(6 * 3, -121 * 3);
+            outerPerimeter[5] = new Point(-155 * 3, -61 * 3);
+            outerPerimeter[6] = new Point(-157 * 3, 63 * 3);
 
-            outerPerimeter2[0] = new Point(-156, 128);
-            outerPerimeter2[1] = new Point(-171, 113);
-            outerPerimeter2[2] = new Point(-171, 98);
-            outerPerimeter2[3] = new Point(-136, 128);
-            outerPerimeter2[4] = new Point(-121, 128);
-            outerPerimeter2[5] = new Point(-171, 83);
-            outerPerimeter2[6] = new Point(-171, 68);
-            outerPerimeter2[7] = new Point(-100, 128);
-            outerPerimeter2[8] = new Point(-80, 128);
-            outerPerimeter2[9] = new Point(-171, 53);
-            outerPerimeter2[10] = new Point(-171, 43);
-            outerPerimeter2[11] = new Point(-55, 128);
-            outerPerimeter2[12] = new Point(-30, 128);
-            outerPerimeter2[13] = new Point(-171, 35);
-            outerPerimeter2[14] = new Point(-10, 128);
+            outerPerimeter2[0] = new Point(-156 * 3, 128 * 3);
+            outerPerimeter2[1] = new Point(-171 * 3, 113 * 3);
+            outerPerimeter2[2] = new Point(-171 * 3, 98 * 3);
+            outerPerimeter2[3] = new Point(-136 * 3, 128 * 3);
+            outerPerimeter2[4] = new Point(-121 * 3, 128 * 3);
+            outerPerimeter2[5] = new Point(-171 * 3, 83 * 3);
+            outerPerimeter2[6] = new Point(-171 * 3, 68 * 3);
+            outerPerimeter2[7] = new Point(-100 * 3, 128 * 3);
+            outerPerimeter2[8] = new Point(-80 * 3, 128 * 3);
+            outerPerimeter2[9] = new Point(-171 * 3, 53 * 3);
+            outerPerimeter2[10] = new Point(-171 * 3, 43 * 3);
+            outerPerimeter2[11] = new Point(-55 * 3, 128 * 3);
+            outerPerimeter2[12] = new Point(-30 * 3, 128 * 3);
+            outerPerimeter2[13] = new Point(-171 * 3, 35 * 3);
+            outerPerimeter2[14] = new Point(-10 * 3, 128 * 3);
 
-            outerPerimeter2[15] = new Point(156, 128);
-            outerPerimeter2[16] = new Point(171, 113);
-            outerPerimeter2[17] = new Point(171, 98);
-            outerPerimeter2[18] = new Point(136, 128);
-            outerPerimeter2[19] = new Point(121, 128);
-            outerPerimeter2[20] = new Point(171, 83);
-            outerPerimeter2[21] = new Point(171, 68);
-            outerPerimeter2[22] = new Point(100, 128);
-            outerPerimeter2[23] = new Point(80, 128);
-            outerPerimeter2[24] = new Point(171, 60);
-            outerPerimeter2[25] = new Point(50, 128);
-            outerPerimeter2[26] = new Point(25, 128);
-            outerPerimeter2[27] = new Point(171, 60);
+            outerPerimeter2[15] = new Point(156 * 3, 128 * 3);
+            outerPerimeter2[16] = new Point(171 * 3, 113 * 3);
+            outerPerimeter2[17] = new Point(171 * 3, 98 * 3);
+            outerPerimeter2[18] = new Point(136 * 3, 128 * 3);
+            outerPerimeter2[19] = new Point(121 * 3, 128 * 3);
+            outerPerimeter2[20] = new Point(171 * 3, 83 * 3);
+            outerPerimeter2[21] = new Point(171 * 3, 68 * 3);
+            outerPerimeter2[22] = new Point(100 * 3, 128 * 3);
+            outerPerimeter2[23] = new Point(80 * 3, 128 * 3);
+            outerPerimeter2[24] = new Point(171 * 3, 60 * 3);
+            outerPerimeter2[25] = new Point(50 * 3, 128 * 3);
+            outerPerimeter2[26] = new Point(25 * 3, 128 * 3);
+            outerPerimeter2[27] = new Point(171 * 3, 60 * 3);
 
-            outerPerimeter2[28] = new Point(171, -113);
-            outerPerimeter2[29] = new Point(136, -128);
-            outerPerimeter2[30] = new Point(121, -128);
-            outerPerimeter2[31] = new Point(171, -98);
-            outerPerimeter2[32] = new Point(171, -83);
-            outerPerimeter2[33] = new Point(100, -128);
-            outerPerimeter2[34] = new Point(80, -128);
-            outerPerimeter2[35] = new Point(171, -75);
-            outerPerimeter2[36] = new Point(171, -65);
-            outerPerimeter2[37] = new Point(50, -128);
-            outerPerimeter2[38] = new Point(25, -128);
+            outerPerimeter2[28] = new Point(171 * 3, -113 * 3);
+            outerPerimeter2[29] = new Point(136 * 3, -128 * 3);
+            outerPerimeter2[30] = new Point(121 * 3, -128 * 3);
+            outerPerimeter2[31] = new Point(171 * 3, -98 * 3);
+            outerPerimeter2[32] = new Point(171 * 3, -83 * 3);
+            outerPerimeter2[33] = new Point(100 * 3, -128 * 3);
+            outerPerimeter2[34] = new Point(80 * 3, -128 * 3);
+            outerPerimeter2[35] = new Point(171 * 3, -75 * 3);
+            outerPerimeter2[36] = new Point(171 * 3, -65 * 3);
+            outerPerimeter2[37] = new Point(50 * 3, -128 * 3);
+            outerPerimeter2[38] = new Point(25 * 3, -128 * 3);
 
-            outerPerimeter2[39] = new Point(-25, -128);
-            outerPerimeter2[40] = new Point(-171, -70);
-            outerPerimeter2[41] = new Point(-171, -85);
-            outerPerimeter2[42] = new Point(-60, -128);
-            outerPerimeter2[43] = new Point(-90, -128);
-            outerPerimeter2[44] = new Point(-171, -100);
-            outerPerimeter2[45] = new Point(-130, -128);
-            outerPerimeter2[46] = new Point(-171, -110);
-            outerPerimeter2[47] = new Point(-171, 32);
+            outerPerimeter2[39] = new Point(-25 * 3, -128 * 3);
+            outerPerimeter2[40] = new Point(-171 * 3, -70 * 3);
+            outerPerimeter2[41] = new Point(-171 * 3, -85 * 3);
+            outerPerimeter2[42] = new Point(-60 * 3, -128 * 3);
+            outerPerimeter2[43] = new Point(-90 * 3, -128 * 3);
+            outerPerimeter2[44] = new Point(-171 * 3, -100 * 3);
+            outerPerimeter2[45] = new Point(-130 * 3, -128 * 3);
+            outerPerimeter2[46] = new Point(-171 * 3, -110 * 3);
+            outerPerimeter2[47] = new Point(-171 * 3, 32 * 3);
 
-            innerPerimeterUpper[0] = new Point(-118, 37);
-            innerPerimeterUpper[1] = new Point(3, 77);
-            innerPerimeterUpper[2] = new Point(123, 40);
-            innerPerimeterUpper[3] = new Point(123, -41);
-            innerPerimeterUpper[4] = new Point(34, -16);
-            innerPerimeterUpper[5] = new Point(-53, -18);
-            innerPerimeterUpper[6] = new Point(-120, -36);
-            innerPerimeterUpper[7] = new Point(-118, 37);
-            innerPerimeterUpper[8] = new Point(123, 40);
-            innerPerimeterUpper[9] = new Point(-120, -36);
-            innerPerimeterUpper[10] = new Point(3, 77);
-            innerPerimeterUpper[11] = new Point(123, -41);
-            innerPerimeterUpper[12] = new Point(-118, 37);
+            innerPerimeterUpper[0] = new Point(-118 * 3, 37 * 3);
+            innerPerimeterUpper[1] = new Point(3 * 3, 77 * 3);
+            innerPerimeterUpper[2] = new Point(123 * 3, 40 * 3);
+            innerPerimeterUpper[3] = new Point(123 * 3, -41 * 3);
+            innerPerimeterUpper[4] = new Point(34 * 3, -16 * 3);
+            innerPerimeterUpper[5] = new Point(-53 * 3, -18 * 3);
+            innerPerimeterUpper[6] = new Point(-120 * 3, -36 * 3);
+            innerPerimeterUpper[7] = new Point(-118 * 3, 37 * 3);
+            innerPerimeterUpper[8] = new Point(123 * 3, 40 * 3);
+            innerPerimeterUpper[9] = new Point(-120 * 3, -36 * 3);
+            innerPerimeterUpper[10] = new Point(3 * 3, 77 * 3);
+            innerPerimeterUpper[11] = new Point(123 * 3, -41 * 3);
+            innerPerimeterUpper[12] = new Point(-118 * 3, 37 * 3);
 
-            innerPerimeterLower[0] = new Point(2, -83);
-            innerPerimeterLower[1] = new Point(-95, -47);
-            innerPerimeterLower[2] = new Point(-53, -34);
-            innerPerimeterLower[3] = new Point(32, -34);
-            innerPerimeterLower[4] = new Point(82, -53);
-            innerPerimeterLower[5] = new Point(2, -83);
-            innerPerimeterLower[6] = new Point(-53, -34);
-            innerPerimeterLower[7] = new Point(82, -53);
-            innerPerimeterLower[8] = new Point(-93, -47);
-            innerPerimeterLower[9] = new Point(32, -34);
-            innerPerimeterLower[10] = new Point(2, -83);
+            innerPerimeterLower[0] = new Point(2 * 3, -83 * 3);
+            innerPerimeterLower[1] = new Point(-95 * 3, -47 * 3);
+            innerPerimeterLower[2] = new Point(-53 * 3, -34 * 3);
+            innerPerimeterLower[3] = new Point(32 * 3, -34 * 3);
+            innerPerimeterLower[4] = new Point(82 * 3, -53 * 3);
+            innerPerimeterLower[5] = new Point(2 * 3, -83 * 3);
+            innerPerimeterLower[6] = new Point(-53 * 3, -34 * 3);
+            innerPerimeterLower[7] = new Point(82 * 3, -53 * 3);
+            innerPerimeterLower[8] = new Point(-93 * 3, -47 * 3);
+            innerPerimeterLower[9] = new Point(32 * 3, -34 * 3);
+            innerPerimeterLower[10] = new Point(2 * 3, -83 * 3);
 
-            outerWall[0] = new Point(-171, -128);
-            outerWall[1] = new Point(-171, 128);
-            outerWall[2] = new Point(171, 128);
-            outerWall[3] = new Point(171, -128);
-            outerWall[4] = new Point(-171, -128);
+            outerWall[0] = new Point(-171 * 3, -128 * 3);
+            outerWall[1] = new Point(-171 * 3, 128 * 3);
+            outerWall[2] = new Point(171 * 3, 128 * 3);
+            outerWall[3] = new Point(171 * 3, -128 * 3);
+            outerWall[4] = new Point(-171 * 3, -128 * 3);
 
             #endregion
         }
@@ -269,9 +269,9 @@ namespace WindowsFormsApplication1
             timer.GetETime(); //reset timer
             try
             {
-                vehicle1.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[0]);
+                vehicle1.Setup(new Vector(21, 39) / 2.0f, 5, this.playerAutos[0]);
                 vehicle1.SetLocation(new Vector(210, -7), 0);
-                vehicle2.Setup(new Vector(7, 13) / 2.0f, 5, this.playerAutos[1]);
+                vehicle2.Setup(new Vector(21, 39) / 2.0f, 5, this.playerAutos[1]);
                 vehicle2.SetLocation(new Vector(190, -7), 0);
             }
             catch (NullReferenceException exs)
@@ -287,7 +287,7 @@ namespace WindowsFormsApplication1
         {
             //clear back buffer
             graphics.Clear(Color.Black);
-            graphics.DrawImage(m_map, -171, -128);
+            graphics.DrawImage(m_map, -512, -384);
             graphics.ResetTransform();
             graphics.ScaleTransform(screenScale, -screenScale);
             graphics.TranslateTransform(buffersize.Width / 2.0f / screenScale, -buffersize.Height / 2.0f / screenScale);
